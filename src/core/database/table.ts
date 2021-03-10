@@ -1,9 +1,18 @@
-import { iColumn, iDatabase, iMap, iParser, iTable, iValueGenerator } from '../interfaces';
+import { runInThisContext } from 'vm';
+import { iColumn, iDatabase, iMap, iParser, iTable, iValueGenerator } from '../../interfaces';
+import { NamedMap } from '../utils/map';
 
 export class Table implements iTable {
   name: string;
   database: iDatabase;
-  columns: iMap<iColumn>;
+  columns: NamedMap<iColumn>;
+
+
+  public constructor(database: iDatabase, name: string) {
+    this.name = name;
+    this.database = database;
+  }
+
 
   public addColumn(columnKey: string, type: string | iParser, valueGen: iValueGenerator, columnName?: string) :iTable {
     return null;

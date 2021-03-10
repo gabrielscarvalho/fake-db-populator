@@ -1,6 +1,6 @@
-import { Database } from './src/database/database';
+import { PostgresDatabase } from './src/impl/PostgresDatabase';
 
-const database: Database = new Database();
+const database: PostgresDatabase = new PostgresDatabase();
 
 database.addTable('tableA');
 

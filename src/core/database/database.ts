@@ -1,0 +1,38 @@
+import { ParserNotFoundException } from '../exception/parser-not-found.exception';
+import { TableNotFoundException } from '../exception/table-not-found.exception';
+import { iDatabase, iParser, iTable } from '../../interfaces';
+import { Table } from './table';
+import { NamedMap } from '../utils/map';
+import { Optional } from '../utils/optional';
+
+export class Database implements iDatabase {
+
+  public tables: NamedMap<iTable>;
+  public parsers: NamedMap<iParser>;
+
+  public constructor() {
+    this.tables = new NamedMap<iTable>();
+    this.parsers = new NamedMap<iParser>();
+  }
+
+  public addParser(parser: iParser): iDatabase {
+    this.parsers.add(parser.type, parser);
+    return this;
+  }
+
+  public getParser(parserName: string): iParser {
+    const optParser: Optional<iParser> = this.parsers.get(parserName, { throwIfNotExists: true });
+    return optParser.get({ skipValidation: true });
+  }
+
+  public addTable(tableName: string): iTable {
+    const table = new Table(this, tableName);
+    this.tables.add(tableName, table, { throwIfExists : true });
+    return table;
+  }
+
+  public getTable(tableName: string): iTable {
+    const optTable: Optional<iTable> = this.tables.get(tableName, { throwIfNotExists: true });
+    return optTable.get({ skipValidation: true });
+  }
+}

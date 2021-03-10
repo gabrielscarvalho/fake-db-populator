@@ -1,6 +1,10 @@
+import { Optional } from './core/utils/optional';
 
 export interface iMap<T> {
-  findByProp: (propName: string, value: any)
+  has: (name: string) => boolean ;
+  add: (name: string, content: T, config: { throwIfExists: boolean }) => iMap<T>;
+  get: (name: string, config: { throwIfNotExists: boolean }) => Optional<T>;
+  delete: (name: string, config: { throwIfNotExists: boolean }) => boolean;
 }
 
 export interface iParser {
@@ -61,6 +65,8 @@ export interface iTable {
 }
 
 export interface iDatabase {
+  parsers: iMap<iParser>;
+  tables: iMap<iTable>;
 
   addParser: (parser: iParser) => iDatabase;
   getParser: (parserName: string) => iParser;

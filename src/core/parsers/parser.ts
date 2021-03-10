@@ -1,4 +1,4 @@
-import { iParser } from '../interfaces';
+import { iParser } from '../../interfaces';
 
 
 export abstract class Parser {
