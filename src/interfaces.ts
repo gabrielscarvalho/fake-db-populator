@@ -29,6 +29,11 @@ export interface iDataRowColumn {
    * Useful for example, for geting the last generated id.
   */
   getRawValueAsValueGen: iValueGenerator; 
+
+  /**
+   * Set the value and prepared the parsed value.
+   */
+  setValue: (rawValue: any) => void;
 }
 
 export interface iDataRow {
@@ -37,7 +42,13 @@ export interface iDataRow {
   table: iTable;
 
   new: (queryCommand: QueryCommand, table: iTable, extraData: object) => iDataRow;
-  getValue:(columnName: string) => iDataRowColumn;
+  getColumnData:(columnName: string) => iDataRowColumn;
+
+  getRawValue: (columnName: string) => any;
+
+  setRawValue: (columnName: string, newValue: any) => void;
+
+  print: () => void;
 }
 
 export interface iColumn {
@@ -76,6 +87,13 @@ export interface iTable {
    * @param extraData object that contains the column key and value to be replaced.
    */
   createNewDataRow: (queryCommand: QueryCommand, extraData: object) => iDataRow;
+
+  /**
+   * Function that can be called after the data is generate.
+   * It is a place to fix info before releasing the DataRow
+   * 
+  */
+  afterGenerateData: (fn: (dataRow: iDataRow) => iDataRow) => iTable;
 }
 
 export interface iDatabase {

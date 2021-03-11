@@ -6,7 +6,7 @@ interface LastValueConfig {
   throwErrorIfNotExists: boolean;
 }
 
-export const LastValue = (column: iColumn, defaultValue: any, config: LastValueConfig = { throwErrorIfNotExists : false }) : iValueGenerator => {
+export const LastValue = (column: iColumn, defaultValue: any = null, config: LastValueConfig = { throwErrorIfNotExists : false }) : iValueGenerator => {
 
   return () => {
 
@@ -14,10 +14,7 @@ export const LastValue = (column: iColumn, defaultValue: any, config: LastValueC
 
     if (optLastDataRow.isPresent()) {
       const lastDataRow: iDataRow = optLastDataRow.get();
-      
-      const lastDataRowColumn: iDataRowColumn = lastDataRow.getValue(column.key);
-      
-      return lastDataRowColumn.rawValue;
+      return lastDataRow.getRawValue(column.key);
     }
 
     if (config.throwErrorIfNotExists) {

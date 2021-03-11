@@ -10,6 +10,7 @@ export class Table implements iTable {
   public database: iDatabase;
   public columns: NamedMap<iColumn>;
   public dataRows: iDataRow[];
+  protected _afterGenDataFn: (dataRow: iDataRow) => iDataRow = (dataRow: iDataRow) => (dataRow);
 
   public constructor(database: iDatabase, name: string) {
     this.name = name;
@@ -41,8 +42,12 @@ export class Table implements iTable {
 
   public createNewDataRow(queryCommand: QueryCommand, extraData: object) : iDataRow { 
     const dataRow = new DataRow().new(queryCommand, this, extraData);
-    this.dataRows.push(dataRow);
+    this.dataRows.push(this._afterGenDataFn(dataRow));
     return dataRow;
   }
 
+  public afterGenerateData(fn: (dataRow: iDataRow) => iDataRow) : iTable {
+    this._afterGenDataFn = fn;
+    return this;
+  };
 }
