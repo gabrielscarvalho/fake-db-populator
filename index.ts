@@ -15,28 +15,28 @@ autoIncrement
 
 
 const tUser = database.addTable('user')
-  .addColumn('id', 'number', autoIncrement.valueGen('user.id'))
+  .addColumn('id', 'int', autoIncrement.valueGen('user.id'))
   .addColumn('name', 'string', Random.Name())
   .addColumn('lastname', 'string', Random.LastName())
   .addColumn('email', 'string', Random.Email())
-  .addColumn('age', 'number', Random.Number(18, 30));
+  .addColumn('age', 'int', Random.Number(18, 30));
 
 
 const tAddress = database.addTable('address')
-  .addColumn('id', 'number', autoIncrement.valueGen('address.id'))
-  .addColumn('user_id', 'number', LastValue(tUser.getColumn('id')))
+  .addColumn('id', 'int', autoIncrement.valueGen('address.id'))
+  .addColumn('user_id', 'int', LastValue(tUser.getColumn('id')))
   .addColumn('receiver', 'string', Random.Name());
 
 
 const tOrder = database.addTable('order')
-  .addColumn('id', 'number', autoIncrement.valueGen('order.id'))
-  .addColumn('user_id', 'number', LastValue(tUser.getColumn('id')))
+  .addColumn('id', 'int', autoIncrement.valueGen('order.id'))
+  .addColumn('user_id', 'int', LastValue(tUser.getColumn('id')))
   .addColumn('user_email', 'string', LastValue(tUser.getColumn('email')))
-  .addColumn('delivery_address_id', 'number', LastValue(tAddress.getColumn('id')))
+  .addColumn('delivery_address_id', 'int', LastValue(tAddress.getColumn('id')))
   .addColumn('total_price', 'number', Random.Number(100, 900))
-  .addColumn('freight_price', 'number', Random.Number(1, 5))
-  .addColumn('item_price', 'number', Random.Number(1, 5))
-  .addColumn('discount_price', 'number', Random.Number(1, 5))
+  .addColumn('freight_price', 'number', Random.Number(10, 50))
+  .addColumn('item_price', 'number', Random.Number(90, 160))
+  .addColumn('discount_price', 'number', Random.Number(10, 30))
   .afterGenerateData((dataRow: iDataRow) => {
 
     const freight = dataRow.getRawValue('freight_price');
