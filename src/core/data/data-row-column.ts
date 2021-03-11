@@ -1,4 +1,4 @@
-import { iColumn, iDataRowColumn, iDataRow } from '../../interfaces';
+import { iColumn, iDataRowColumn, iDataRow, iValueGenerator } from '../../interfaces';
 import { DataRow } from './data-row';
 
 
@@ -8,6 +8,12 @@ export class DataRowColumn implements iDataRowColumn {
 
   public constructor( public dataRow: iDataRow,  public column: iColumn, public rawValue: any){
     this.parsedValue = this.column.parser.parse(rawValue);
+  }
+
+  public getRawValueAsValueGen(): iValueGenerator {
+    return () => {
+      return this.rawValue;
+    }
   }
 
 }

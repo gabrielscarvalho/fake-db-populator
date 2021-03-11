@@ -29,9 +29,11 @@ export class Table implements iTable {
     return this;
   }
 
-  public addForeignColumn(columnKey: string, referenceColumn: iColumn, columnName?: string): iTable {
-    return null;
+  public getColumn(columnKey: string): iColumn {
+    const column: Optional<iColumn> =this.columns.get(columnKey, { throwIfNotExists: true});
+    return column.get({ skipValidation: true });
   }
+
 
   public getLastDataRow() : Optional<iDataRow> {
     return this.dataRows.length > 0 ? Optional.fromValue(this.dataRows[this.dataRows.length -1]) : Optional.fromNullable();
@@ -39,6 +41,7 @@ export class Table implements iTable {
 
   public createNewDataRow(queryCommand: QueryCommand, extraData: object) : iDataRow { 
     const dataRow = new DataRow().new(queryCommand, this, extraData);
+    this.dataRows.push(dataRow);
     return dataRow;
   }
 

@@ -10,8 +10,9 @@ export class AutoIncrement {
   }
 
 
-  public initialId(uniqueName: string, initialValue: number) {
+  public initialId(uniqueName: string, initialValue: number): AutoIncrement {
     this.ids.add(uniqueName, initialValue, { throwIfExists: true});
+    return this;
   }
 
 

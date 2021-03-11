@@ -23,6 +23,12 @@ export interface iDataRowColumn {
   column: iColumn;
   rawValue: any;
   parsedValue: string;
+
+  /**
+   * Creates a value generator that will return the raw value.
+   * Useful for example, for geting the last generated id.
+  */
+  getRawValueAsValueGen: iValueGenerator; 
 }
 
 export interface iDataRow {
@@ -53,6 +59,9 @@ export interface iTable {
   */
   getLastDataRow: () => Optional<iDataRow>;
 
+
+  getColumn: (columnKey: string) => iColumn;
+
   /**
    * Adds a new column to the table.
    * @param columnKey the unique name or nickname.
@@ -61,14 +70,6 @@ export interface iTable {
    * @param columnName the real name of the column in case of nicknames at columnKey
   */
   addColumn: (columnKey: string, type: string | iParser, valueGen: iValueGenerator, columnName?: string) => iTable;
-
-  /**
-   * Adds a new foreign column.
-   * @param columnKey the unique name or nickname.
-   * @param referenceColumn the column that is related.
-   * @param columnName the real name of the column in case of nicknames at columnKey
-  */
-  addForeignColumn: (columnKey: string, referenceColumn: iColumn, columnName?: string) => iTable;
 
   /**
    * Creates a new data object.
