@@ -2,7 +2,7 @@ import { Chance } from 'chance';
 import { iValueGenerator } from '../../interfaces';
 const chance = new Chance();
 
-export const RandomNumber: iValueGenerator = ({ min = 0, max = 999, decimals = 0 }): () => number => {
+export const RandomNumber = ({ min = 0, max = 999, decimals = 0 }): iValueGenerator => {
 
   return () => {
     if (decimals && decimals > 0) {

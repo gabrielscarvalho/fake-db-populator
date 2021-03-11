@@ -6,10 +6,12 @@ const database: PostgresDatabase = new PostgresDatabase();
 
 const autoIncrement = new AutoIncrement();
 
+autoIncrement
+  .initialId('tableA.id', 5);
 
 
 database.addTable('tableA')
-  .addColumn('id', 'number', autoIncrement.valueGen('tableA.id'))
+  .addColumn('id', 'number', autoIncrement.valueGen('tableA.id', 2))
   .addColumn('name', 'string', RandomNumber({ min: 1, max: 3 }) )
   .addColumn('surname', 'number', RandomNumber({ min: 0, max: 30}));
 

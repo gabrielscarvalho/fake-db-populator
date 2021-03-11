@@ -16,7 +16,7 @@ export interface iParser {
   parse(val: any): string;
 }
 
-export type iValueGenerator = (...args: any[]) => () => any;
+export type iValueGenerator = () => any;
 
 export interface iDataRowColumn {
   dataRow: iDataRow;
