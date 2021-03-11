@@ -9,15 +9,15 @@ export class Table implements iTable {
   public name: string;
   public database: iDatabase;
   public columns: NamedMap<iColumn>;
-  public dataRows: iDataRow[];
+
   protected _afterGenDataFn: (dataRow: iDataRow) => iDataRow = (dataRow: iDataRow) => (dataRow);
 
   public constructor(database: iDatabase, name: string) {
     this.name = name;
     this.database = database;
     this.columns = new NamedMap<iColumn>();
-    this.dataRows = [];
   }
+
   data: iDataRow[];
 
   public addColumn(columnKey: string, type: string, valueGen: iValueGenerator, columnName?: string) :iTable {
@@ -35,14 +35,14 @@ export class Table implements iTable {
     return column.get({ skipValidation: true });
   }
 
-
   public getLastDataRow() : Optional<iDataRow> {
-    return this.dataRows.length > 0 ? Optional.fromValue(this.dataRows[this.dataRows.length -1]) : Optional.fromNullable();
+    return this.database.getLastDataRow(this.name);
   }
 
-  public createNewDataRow(queryCommand: QueryCommand, extraData: object) : iDataRow { 
-    const dataRow = new DataRow().new(queryCommand, this, extraData);
-    this.dataRows.push(this._afterGenDataFn(dataRow));
+  public createNewDataRowAndStore(queryCommand: QueryCommand, extraData: object) : iDataRow { 
+    const dataRow = this._afterGenDataFn(new DataRow().new(queryCommand, this, extraData));
+    
+    this.database.addDataRow(dataRow);
     return dataRow;
   }
 

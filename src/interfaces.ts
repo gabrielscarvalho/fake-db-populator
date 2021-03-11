@@ -86,7 +86,7 @@ export interface iTable {
    * Creates a new data object.
    * @param extraData object that contains the column key and value to be replaced.
    */
-  createNewDataRow: (queryCommand: QueryCommand, extraData: object) => iDataRow;
+  createNewDataRowAndStore: (queryCommand: QueryCommand, extraData: object) => iDataRow;
 
   /**
    * Function that can be called after the data is generate.
@@ -109,6 +109,13 @@ export interface iDatabase {
 
   insert: (tableName: string, extraData: object) => iDataRow;
 
+  /**
+   * Return the last DataRow generated - if present.
+  */
+  getLastDataRow: (tableName: string) => Optional<iDataRow>;
+
+
+  addDataRow: (dataRow: iDataRow) => iDatabase;
 }
 
 

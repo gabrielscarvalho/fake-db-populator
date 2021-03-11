@@ -8,10 +8,12 @@ export abstract class Database implements iDatabase {
 
   public tables: NamedMap<iTable>;
   public parsers: NamedMap<iParser>;
+  public dataRows: iDataRow[];
 
   public constructor() {
     this.tables = new NamedMap<iTable>();
     this.parsers = new NamedMap<iParser>();
+    this.dataRows = [];
   }
 
   public addParser(parser: iParser): iDatabase {
@@ -35,9 +37,28 @@ export abstract class Database implements iDatabase {
     return optTable.get({ skipValidation: true });
   }
 
+  public getLastDataRow(tableName: string): Optional<iDataRow> {
+
+    let lastRow: iDataRow = null;
+    this.dataRows.forEach((dataRow: iDataRow) => {
+
+      if (dataRow.table.name === tableName) {
+        lastRow = dataRow;
+      }
+    });
+
+    return Optional.fromValue(lastRow);
+  }
+
 
   public insert(tableName: string, extraData: object): iDataRow {
-    return this.getTable(tableName)
-      .createNewDataRow(QueryCommand.INSERT, extraData);
+    const dataRow: iDataRow = this.getTable(tableName)
+      .createNewDataRowAndStore(QueryCommand.INSERT, extraData);
+    return dataRow;
+  }
+
+  public addDataRow(dataRow: iDataRow): iDatabase {
+    this.dataRows.push(dataRow);
+    return this;
   }
 }
