@@ -1,3 +1,4 @@
+import QueryCommand from './core/query-builder/query-command.enum';
 import { Optional } from './core/utils/optional';
 
 export interface iMap<T> {
@@ -5,6 +6,9 @@ export interface iMap<T> {
   add: (name: string, content: T, config: { throwIfExists: boolean }) => iMap<T>;
   get: (name: string, config: { throwIfNotExists: boolean }) => Optional<T>;
   delete: (name: string, config: { throwIfNotExists: boolean }) => boolean;
+  find: (filter: any) => Optional<T>;
+  getKeys: () => string[];
+  getValues: () =>T[];  
 }
 
 export interface iParser {
@@ -12,39 +16,41 @@ export interface iParser {
   parse(val: any): string;
 }
 
-export interface iValueGenerator {
+export type iValueGenerator = (...args: any[]) => () => any;
 
-}
-
-export interface iDataCol {
-  columnName: string;
+export interface iDataRowColumn {
+  dataRow: iDataRow;
+  column: iColumn;
   rawValue: any;
   parsedValue: string;
 }
 
 export interface iDataRow {
-  cols: iMap<iDataCol>;
+  data: iMap<iDataRowColumn>;
+  queryCommand: QueryCommand;
+  table: iTable;
+
+  getValue:(columnName: string) => iDataRowColumn;
 }
-
-export interface iDataTable {
-
-}
-
-
 
 export interface iColumn {
   table: iTable;
   key: string;
   name: string;
-  type: iParser;
+  parser: iParser;
   valueGen: iValueGenerator;
 }
 
 export interface iTable {
   name: string;
   database: iDatabase;
-
+  data: iDataRow[];
   columns: iMap<iColumn>;
+
+  /**
+   * Return the last DataRow generated - if present.
+  */
+  getLastDataRow: () => Optional<iDataRow>;
 
   /**
    * Adds a new column to the table.
@@ -62,6 +68,12 @@ export interface iTable {
    * @param columnName the real name of the column in case of nicknames at columnKey
   */
   addForeignColumn: (columnKey: string, referenceColumn: iColumn, columnName?: string) => iTable;
+
+  /**
+   * Creates a new data object.
+   * @param extraData object that contains the column key and value to be replaced.
+   */
+  createNewDataRow: (extraData: object) => iDataRow;
 }
 
 export interface iDatabase {
@@ -73,5 +85,13 @@ export interface iDatabase {
 
   addTable: (tableName: string) => iTable;
   getTable: (tableName: string) => iTable;
+
+
+  insert: (tableName: string, extraData: object) => iDataRow;
+
 }
 
+
+export interface iQueryBuilder {
+  insert: (tableName: string, extraData: object) => iQueryBuilder;
+}

@@ -1,25 +1,48 @@
+import { keyBy } from 'lodash';
 import { runInThisContext } from 'vm';
-import { iColumn, iDatabase, iMap, iParser, iTable, iValueGenerator } from '../../interfaces';
+import { iColumn, iDatabase, iDataRow, iMap, iParser, iTable, iValueGenerator } from '../../interfaces';
+import { DataRow } from '../data/data-row';
+import QueryCommand from '../query-builder/query-command.enum';
 import { NamedMap } from '../utils/map';
+import { Optional } from '../utils/optional';
+import { Column } from './column';
 
 export class Table implements iTable {
-  name: string;
-  database: iDatabase;
-  columns: NamedMap<iColumn>;
-
+  public name: string;
+  public database: iDatabase;
+  public columns: NamedMap<iColumn>;
+  public dataRows: iDataRow[];
 
   public constructor(database: iDatabase, name: string) {
     this.name = name;
     this.database = database;
+    this.columns = new NamedMap<iColumn>();
+    this.dataRows = [];
   }
+  data: iDataRow[];
 
+  public addColumn(columnKey: string, type: string, valueGen: iValueGenerator, columnName?: string) :iTable {
 
-  public addColumn(columnKey: string, type: string | iParser, valueGen: iValueGenerator, columnName?: string) :iTable {
-    return null;
+    const parser = this.database.getParser(type);
+    const realColumnName = columnName ? columnName : columnKey;
+    const column: iColumn = new Column(this, columnKey, realColumnName, parser, valueGen);
+
+    this.columns.add(columnKey, column, { throwIfExists: true });
+    return this;
   }
 
   public addForeignColumn(columnKey: string, referenceColumn: iColumn, columnName?: string): iTable {
     return null;
   }
-  
+
+  public getLastDataRow() : Optional<iDataRow> {
+    return this.dataRows.length > 0 ? Optional.fromValue(this.dataRows[this.dataRows.length -1]) : Optional.fromNullable();
+  }
+
+  public createNewDataRow(queryCommand: QueryCommand, extraData: object) : iDataRow { 
+      const dataRow = new DataRow(queryCommand);
+
+
+  }
+
 }

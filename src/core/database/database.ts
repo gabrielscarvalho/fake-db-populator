@@ -1,6 +1,4 @@
-import { ParserNotFoundException } from '../exception/parser-not-found.exception';
-import { TableNotFoundException } from '../exception/table-not-found.exception';
-import { iDatabase, iParser, iTable } from '../../interfaces';
+import { iDatabase, iDataRow, iParser, iTable } from '../../interfaces';
 import { Table } from './table';
 import { NamedMap } from '../utils/map';
 import { Optional } from '../utils/optional';
@@ -34,5 +32,10 @@ export class Database implements iDatabase {
   public getTable(tableName: string): iTable {
     const optTable: Optional<iTable> = this.tables.get(tableName, { throwIfNotExists: true });
     return optTable.get({ skipValidation: true });
+  }
+
+
+  public insert(tableName: string, extraData: object): iDataRow => {
+    
   }
 }

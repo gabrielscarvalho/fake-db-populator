@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { iMap } from '../../interfaces';
 import { Optional } from './optional';
 
@@ -57,4 +58,18 @@ export class NamedMap<T> implements iMap<T> {
     return names;
   }
 
+  public getValues(): T[] {
+    const values: T[] = [];
+
+    this.data.forEach((val) => {
+        values.push(val);
+    });
+
+    return values;
+  }
+
+  public find(filter: any): Optional<T> {
+    const x : T = _.find<T>(this.getValues(), filter);
+    return Optional.fromValue(x);
+  }   
 }
