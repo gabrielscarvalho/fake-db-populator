@@ -40,6 +40,15 @@ export class DataRow implements iDataRow {
     this.getColumnData(columnName).setValue(newRawValue)
   }
 
+  public getColumnsName() :string[] {
+    return this.data.getKeys();
+  }
+
+  public getColumnsParsedValue() :string[] {
+    return this.data.getValues().map((dataRowColumn: iDataRowColumn) => {
+      return dataRowColumn.parsedValue;
+    });
+  }
 
   public print(): void {
     const obj = new Object();

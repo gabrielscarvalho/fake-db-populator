@@ -48,6 +48,10 @@ export interface iDataRow {
 
   setRawValue: (columnName: string, newValue: any) => void;
 
+
+  getColumnsName: () => string[];
+  getColumnsParsedValue: () => string[];
+
   print: () => void;
 }
 
@@ -116,6 +120,8 @@ export interface iDatabase {
 
 
   addDataRow: (dataRow: iDataRow) => iDatabase;
+
+  toSQL: () => string[];
 }
 
 

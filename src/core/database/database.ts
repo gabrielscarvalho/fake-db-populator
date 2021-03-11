@@ -57,8 +57,14 @@ export abstract class Database implements iDatabase {
     return dataRow;
   }
 
+
   public addDataRow(dataRow: iDataRow): iDatabase {
     this.dataRows.push(dataRow);
     return this;
+  }
+
+ 
+  public toSQL(): string[]{
+    throw new Error('Method requires specific impl for each database. Check PostgresqlDatabase example.');
   }
 }

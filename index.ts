@@ -60,6 +60,7 @@ const order3 = database.insert('order', {});
 const user2 = database.insert('user', { name: 'John'});
 const address2 = database.insert('address', {});
 
-
+console.log(database.toSQL());
 
 console.log('hellow');
+
