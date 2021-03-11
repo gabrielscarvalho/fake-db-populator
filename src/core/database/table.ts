@@ -1,6 +1,4 @@
-import { keyBy } from 'lodash';
-import { runInThisContext } from 'vm';
-import { iColumn, iDatabase, iDataRow, iMap, iParser, iTable, iValueGenerator } from '../../interfaces';
+import { iColumn, iDatabase, iDataRow, iTable, iValueGenerator } from '../../interfaces';
 import { DataRow } from '../data/data-row';
 import QueryCommand from '../query-builder/query-command.enum';
 import { NamedMap } from '../utils/map';
@@ -40,9 +38,8 @@ export class Table implements iTable {
   }
 
   public createNewDataRow(queryCommand: QueryCommand, extraData: object) : iDataRow { 
-      const dataRow = new DataRow(queryCommand);
-
-
+    const dataRow = new DataRow().new(queryCommand, this, extraData);
+    return dataRow;
   }
 
 }

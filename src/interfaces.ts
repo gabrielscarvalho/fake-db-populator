@@ -30,6 +30,7 @@ export interface iDataRow {
   queryCommand: QueryCommand;
   table: iTable;
 
+  new: (queryCommand: QueryCommand, table: iTable, extraData: object) => iDataRow;
   getValue:(columnName: string) => iDataRowColumn;
 }
 
@@ -73,7 +74,7 @@ export interface iTable {
    * Creates a new data object.
    * @param extraData object that contains the column key and value to be replaced.
    */
-  createNewDataRow: (extraData: object) => iDataRow;
+  createNewDataRow: (queryCommand: QueryCommand, extraData: object) => iDataRow;
 }
 
 export interface iDatabase {

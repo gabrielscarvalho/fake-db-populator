@@ -2,8 +2,9 @@ import { iDatabase, iDataRow, iParser, iTable } from '../../interfaces';
 import { Table } from './table';
 import { NamedMap } from '../utils/map';
 import { Optional } from '../utils/optional';
+import QueryCommand from '../query-builder/query-command.enum';
 
-export class Database implements iDatabase {
+export abstract class Database implements iDatabase {
 
   public tables: NamedMap<iTable>;
   public parsers: NamedMap<iParser>;
@@ -35,7 +36,8 @@ export class Database implements iDatabase {
   }
 
 
-  public insert(tableName: string, extraData: object): iDataRow => {
-    
+  public insert(tableName: string, extraData: object): iDataRow {
+    return this.getTable(tableName)
+      .createNewDataRow(QueryCommand.INSERT, extraData);
   }
 }
