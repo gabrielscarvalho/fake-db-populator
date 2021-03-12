@@ -1,6 +1,8 @@
 import { Random } from './src/core/value-generator/random';
 import { AutoIncrement } from './src/core/value-generator/auto-increment';
 import { LastValue } from './src/core/value-generator/last-value';
+import { DateGen } from './src/core/value-generator/date';
+import { Fixed } from './src/core/value-generator/fixed';
 import { PostgresDatabase } from './src/impl/PostgresDatabase';
 import { iDataRow } from './src/interfaces';
 
@@ -19,7 +21,9 @@ const tUser = database.addTable('user')
   .addColumn('name', 'string', Random.Name())
   .addColumn('lastname', 'string', Random.LastName())
   .addColumn('email', 'string', Random.Email())
-  .addColumn('age', 'int', Random.Number(18, 30));
+  .addColumn('age', 'int', Random.Number(18, 30))
+  .addColumn('created_at', 'date', DateGen.between({ year: { min: 2010, max: 2015 }}))
+  .addColumn('telephone', 'string', Fixed('55 098915651'));
 
 
 const tAddress = database.addTable('address')

@@ -1,6 +1,8 @@
 import { Database } from '../core/database/database';
+import { DateParser } from '../core/parsers/date.parser';
 import { IntParser } from '../core/parsers/int.parser';
 import { NumberParser } from '../core/parsers/number.parser';
+import { RawParser } from '../core/parsers/raw.parser';
 import { StringParser } from '../core/parsers/string.parser';
 import QueryCommand from '../core/query-builder/query-command.enum';
 import { iDatabase, iDataRow } from '../interfaces';
@@ -12,6 +14,8 @@ export class PostgresDatabase extends Database implements iDatabase {
     this.addParser(new StringParser());
     this.addParser(new NumberParser());
     this.addParser(new IntParser());
+    this.addParser(new DateParser());
+    this.addParser(new RawParser());
   }
 
 
