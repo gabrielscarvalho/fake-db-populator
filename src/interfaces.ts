@@ -14,6 +14,8 @@ export interface iMap<T> {
 export interface iParser {
   type: string;
   parse(val: any): string;
+  description?: string;
+  reservedWords: iDatabaseReservedWords;
 }
 
 export type iValueGenerator = () => any;
@@ -103,6 +105,7 @@ export interface iTable {
 export interface iDatabase {
   parsers: iMap<iParser>;
   tables: iMap<iTable>;
+  reservedWords: iDatabaseReservedWords;
 
   addParser: (parser: iParser) => iDatabase;
   getParser: (parserName: string) => iParser;
@@ -111,6 +114,12 @@ export interface iDatabase {
   getTable: (tableName: string) => iTable;
 
 
+  /**
+   * Create a new insert data command.
+   * @param tableName the table name
+   * @param extraData which manually informed data must be put?
+   * @return iDataRow
+  */
   insert: (tableName: string, extraData: object) => iDataRow;
 
   /**
@@ -118,13 +127,48 @@ export interface iDatabase {
   */
   getLastDataRow: (tableName: string) => Optional<iDataRow>;
 
-
+  /**
+   * Add a new dataRow. Don't use it manually!
+  */
   addDataRow: (dataRow: iDataRow) => iDatabase;
 
+  /**
+   * Convert all data to SQL
+   * @return string[]
+  */
   toSQL: () => string[];
+
+  /**
+   * Print all parsers descriptions.
+   * @return void
+  */
+  printParsers: () => void;
 }
 
 
 export interface iQueryBuilder {
   insert: (tableName: string, extraData: object) => iQueryBuilder;
+}
+
+
+export interface iDatabaseReservedWords {
+  /**
+   * Which reserved word represents null values?
+   * @default 'null'
+  */
+  null: string;
+  /**
+   * Which character represents the quotes on every insert?
+   * @default '"'
+  */
+  quotes: string;
+
+  /**
+   * Represents the values of true and false.
+   * @default 'true' and 'false'
+  */
+  boolean: {
+    false: string;
+    true: string;
+  }
 }

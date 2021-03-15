@@ -1,5 +1,7 @@
 import { Database } from '../core/database/database';
+import { BooleanParser } from '../core/parsers/boolean.parser';
 import { DateParser } from '../core/parsers/date.parser';
+import { DateTimeParser } from '../core/parsers/datetime.parser';
 import { IntParser } from '../core/parsers/int.parser';
 import { NumberParser } from '../core/parsers/number.parser';
 import { RawParser } from '../core/parsers/raw.parser';
@@ -11,11 +13,13 @@ export class PostgresDatabase extends Database implements iDatabase {
 
   public constructor() {
     super();
-    this.addParser(new StringParser());
-    this.addParser(new NumberParser());
-    this.addParser(new IntParser());
-    this.addParser(new DateParser());
-    this.addParser(new RawParser());
+    this.addParser(new StringParser(this.reservedWords));
+    this.addParser(new NumberParser(this.reservedWords));
+    this.addParser(new IntParser(this.reservedWords));
+    this.addParser(new DateParser(this.reservedWords));
+    this.addParser(new DateTimeParser(this.reservedWords));
+    this.addParser(new RawParser(this.reservedWords));
+    this.addParser(new BooleanParser(this.reservedWords));
   }
 
 

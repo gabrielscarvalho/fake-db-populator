@@ -5,4 +5,5 @@ export class IntParser extends NumberParser implements iParser {
 
   public type: string = 'int';
   public precision: number = 0;
+  public description: string = 'Parse number to int';
 }

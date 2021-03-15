@@ -1,13 +1,15 @@
-import { iDatabase, iDataRow, iParser, iTable } from '../../interfaces';
+import { iDatabase, iDataRow, iParser, iDatabaseReservedWords, iTable } from '../../interfaces';
 import { Table } from './table';
 import { NamedMap } from '../utils/map';
 import { Optional } from '../utils/optional';
 import QueryCommand from '../query-builder/query-command.enum';
+import { DatabaseReservedWords } from './reserved-words';
 
 export abstract class Database implements iDatabase {
 
   public tables: NamedMap<iTable>;
   public parsers: NamedMap<iParser>;
+  public reservedWords: iDatabaseReservedWords = new DatabaseReservedWords();
   public dataRows: iDataRow[];
 
   public constructor() {
@@ -66,5 +68,15 @@ export abstract class Database implements iDatabase {
  
   public toSQL(): string[]{
     throw new Error('Method requires specific impl for each database. Check PostgresqlDatabase example.');
+  }
+
+  public printParsers(): void {
+    console.log('|-- PARSERS ------------------------');
+
+    (this.parsers.getValues() || []).forEach((value: iParser) => {
+      const description: string = value.description ? value.description : `Parses to format ${value.type}`;
+      const type = value.type.padEnd(30, ' ')
+      console.log(`\t${type} ${description}`);
+    });
   }
 }

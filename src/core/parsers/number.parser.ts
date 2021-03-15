@@ -1,4 +1,4 @@
-import { iParser } from '../../interfaces';
+import { iDatabaseReservedWords, iParser } from '../../interfaces';
 import { Parser } from './parser';
 
 
@@ -6,6 +6,13 @@ export class NumberParser extends Parser implements iParser {
 
   public type: string = 'number';
   public precision: number = 2;
+  public description: string = 'Parse number to float or int string';
+
+
+  public constructor(reservedWords: iDatabaseReservedWords, precision: number = 2) {
+    super(reservedWords);
+    this.description = `Parse number to number with precision: ${precision}`;
+  }
 
   public parse(val: number): string {
     let preparedValue: string = null;
@@ -19,8 +26,9 @@ export class NumberParser extends Parser implements iParser {
     return (!!val) ? preparedValue : this.getNullString();
   }
 
-  public static withPrecision(precision: number) {
-    const parser = new NumberParser();
+  public static withPrecision(reservedWords: iDatabaseReservedWords, type: string, precision: number) {
+    const parser = new NumberParser(reservedWords, precision);
+    parser.type = type;
     parser.precision = precision;
     return parser;
   }
