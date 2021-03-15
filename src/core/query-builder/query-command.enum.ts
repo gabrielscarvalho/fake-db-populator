@@ -2,7 +2,7 @@
 export enum QueryCommand {
   INSERT,
   DELETE,
-  UPDATE
+  COMMENT
 };
 
 

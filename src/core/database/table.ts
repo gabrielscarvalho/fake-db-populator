@@ -57,8 +57,8 @@ export class Table implements iTable {
     return this.database.getLastDataRow(this.name);
   }
 
-  public createNewDataRowAndStore(queryCommand: QueryCommand, extraData: object) : iDataRow { 
-    const dataRow = this._afterGenDataFn(new DataRow().new(queryCommand, this, extraData));
+  public createNewDataRowAndStore(queryCommand: QueryCommand, extraData: object = {}, comment: string = null) : iDataRow { 
+    const dataRow = this._afterGenDataFn(new DataRow(queryCommand, this, extraData, comment));
     
     this.database.addDataRow(dataRow);
     return dataRow;

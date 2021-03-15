@@ -72,14 +72,14 @@ export class DateGen {
     
     const dateRange = Object.assign(_.cloneDeep(DateGen.getDefaultDateRange()), range);
 
-    const year = chance.integer(dateRange.year);
-    const month = chance.integer(dateRange.month);
-    const day = chance.integer(dateRange.day);
-    const hour = chance.integer(dateRange.hour);
-    const minute = chance.integer(dateRange.minute);
-    const second = chance.integer(dateRange.second);
-
     return () => {
+      const year = chance.integer(dateRange.year);
+      const month = chance.integer(dateRange.month);
+      const day = chance.integer(dateRange.day);
+      const hour = chance.integer(dateRange.hour);
+      const minute = chance.integer(dateRange.minute);
+      const second = chance.integer(dateRange.second);
+
       return new Date(year, month, day, hour, minute, second);
     }
   }

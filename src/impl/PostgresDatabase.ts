@@ -25,6 +25,10 @@ export class PostgresDatabase extends Database implements iDatabase {
   }
 
 
+  protected createComment(comment: string): string {
+    return `/* ${comment} */ `;
+  }
+
   protected createInsertQuery(dataRow: iDataRow) : string {
     const columns: string = dataRow.getColumnsName().join(', ');
     const values: string  = dataRow.getColumnsParsedValue().join(', ');

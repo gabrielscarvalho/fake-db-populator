@@ -53,24 +53,25 @@ export abstract class Database implements iDatabase {
     return Optional.fromValue(lastRow);
   }
 
-
-  public insert(tableName: string, extraData: object): iDataRow {
+  public insert(tableName: string, extraData: object = {}, comment: string = null): iDataRow {
     const dataRow: iDataRow = this.getTable(tableName)
-      .createNewDataRowAndStore(QueryCommand.INSERT, extraData);
+      .createNewDataRowAndStore(QueryCommand.INSERT, extraData, comment);
     return dataRow;
   }
-
 
   public addDataRow(dataRow: iDataRow): iDatabase {
     this.dataRows.push(dataRow);
     return this;
   }
 
-
-
   public toSQL(): string[] {
     const sqls = [];
     this.dataRows.forEach((dataRow: iDataRow) => {
+
+      if (!!dataRow.comment) {
+        sqls.push(this.createComment(dataRow.comment));
+      }
+
       sqls.push(this.createCommand(dataRow));
     });
     return sqls;
@@ -81,15 +82,21 @@ export abstract class Database implements iDatabase {
 
     const queries: string[] = [];
 
+    queries.push(this.createComment(' --- ROLLBACK'));
+
     const alreadyExecuted: iDataRow[] = (this.dataRows || []).filter((dataRow: iDataRow) => {
       return dataRow.hasCreatedQuery;
     });
 
     const deleteRows = _.cloneDeep(alreadyExecuted).reverse();
 
-    (deleteRows || []).forEach((dataRow: iDataRow) => {
+    (deleteRows || []).forEach((dataRow: iDataRow) => {     
       dataRow.queryCommand = QueryCommand.DELETE;
       queries.push(this.createCommand(dataRow));
+
+      if (!!dataRow.comment) {
+        queries.push(this.createComment(dataRow.comment));
+      }
     });
 
     return queries;
@@ -105,17 +112,16 @@ export abstract class Database implements iDatabase {
     });
   }
 
-
   protected createCommand(dataRow: iDataRow): string {
     let query: string = null;
-
+ 
     if (dataRow.queryCommand === QueryCommand.INSERT) {
       query = this.createInsertQuery(dataRow);
 
     } else if (dataRow.queryCommand === QueryCommand.DELETE) {
       query = this.createDeleteQuery(dataRow);
     }
-
+    
     if (query === null) {
       throw new Error(`Impl not found to query command:  [${dataRow.queryCommand}].`);
     }
@@ -123,6 +129,12 @@ export abstract class Database implements iDatabase {
     dataRow.hasCreatedQuery = true;
     return query;
   }
+
+  /**
+   * Creates the insert query command.
+   * @return string
+  */
+ protected abstract createComment(comment: string): string;
 
 
   /**

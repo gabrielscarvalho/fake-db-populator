@@ -1,4 +1,5 @@
 import { iColumn, iDataRow, iDataRowColumn, iTable } from '../../interfaces';
+import { Table } from '../database/table';
 import QueryCommand from '../query-builder/query-command.enum';
 import { NamedMap } from '../utils/map';
 import { Optional } from '../utils/optional';
@@ -9,21 +10,18 @@ export class DataRow implements iDataRow {
 
 
   public data: NamedMap<DataRowColumn>;
-  public queryCommand: QueryCommand;
-  public table: iTable;
-  public extraData: object;
   public hasCreatedQuery: boolean = false;
 
-  public new(queryCommand: QueryCommand, table: iTable, extraData: object): iDataRow {
 
-    this.queryCommand = queryCommand;
-    this.table = table;
-    this.extraData = extraData;
+  public constructor(
+    public queryCommand: QueryCommand, 
+    public table: iTable, 
+    public extraData: object = {}, 
+    public comment: string = null) {
+
     this.hasCreatedQuery = false;
     this.data = new NamedMap<DataRowColumn>();
     this.generateData();
-
-    return this;
   }
 
   public getColumnData(columnName: string): iDataRowColumn {

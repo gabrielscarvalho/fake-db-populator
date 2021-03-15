@@ -43,9 +43,7 @@ export interface iDataRow {
   queryCommand: QueryCommand;
   hasCreatedQuery: boolean;
   table: iTable;
-
-  new: (queryCommand: QueryCommand, table: iTable, extraData: object) => iDataRow;
-
+  comment: string;
 
   /**
    * Return all iDataRowColumn of columns that represent the primary key.
@@ -135,7 +133,7 @@ export interface iTable {
    * Creates a new data object.
    * @param extraData object that contains the column key and value to be replaced.
    */
-  createNewDataRowAndStore: (queryCommand: QueryCommand, extraData: object) => iDataRow;
+  createNewDataRowAndStore: (queryCommand: QueryCommand, extraData: object, comment?: string) => iDataRow;
 
   /**
    * Function that can be called after the data is generate.
@@ -163,7 +161,7 @@ export interface iDatabase {
    * @param extraData which manually informed data must be put?
    * @return iDataRow
   */
-  insert: (tableName: string, extraData: object) => iDataRow;
+  insert: (tableName: string, extraData: object, comment?: string) => iDataRow;
 
   /**
    * Return the last DataRow generated - if present.

@@ -58,23 +58,30 @@ const tOrder = database.addTable('order')
     return dataRow;
   });
 
-const user = database.insert('user', { name: 'John'});
+const user = database.insert('user', { name: 'John'}, 'Creating first user data');
 
 const address = database.insert('address', {});
 
-const order1 = database.insert('order', {});
+const order1 = database.insert('order', {}, '---- 1st user 3 orders');
 const order2 = database.insert('order', {});
 const order3 = database.insert('order', {});
 
 
-const user2 = database.insert('user', { name: 'John'});
+const user2 = database.insert('user', {}, 'Creating second user');
 const address2 = database.insert('address', {});
 
-database.printParsers();
 
-console.log(database.toSQL());
+database.insert('user', {}, 'Creating third user');
+database.insert('address', {});
 
 
-console.log('Rollback!: ', database.rollback());
-console.log('hellow');
+database.insert('user', {}, 'Creating forth user');
+database.insert('address', {});
+
+
+console.log(database.toSQL().join('\n'));
+
+
+console.log('Rollback!: ', database.rollback().join('\n'));
+console.log('hellow'); 
 
