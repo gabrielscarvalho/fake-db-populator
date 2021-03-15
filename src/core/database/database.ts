@@ -5,6 +5,7 @@ import { Optional } from '../utils/optional';
 import QueryCommand from '../query-builder/query-command.enum';
 import { DatabaseReservedWords } from './reserved-words';
 import _ from 'lodash';
+import { EntityParser } from '../parsers/entity.parser';
 
 export abstract class Database implements iDatabase {
 
@@ -12,11 +13,13 @@ export abstract class Database implements iDatabase {
   public parsers: NamedMap<iParser>;
   public reservedWords: iDatabaseReservedWords = new DatabaseReservedWords();
   public dataRows: iDataRow[];
+  private entityParser: EntityParser;
 
   public constructor() {
     this.tables = new NamedMap<iTable>();
     this.parsers = new NamedMap<iParser>();
     this.dataRows = [];
+    this.entityParser = new EntityParser(this.reservedWords);
   }
 
   public addParser(parser: iParser): iDatabase {
@@ -27,6 +30,10 @@ export abstract class Database implements iDatabase {
   public getParser(parserName: string): iParser {
     const optParser: Optional<iParser> = this.parsers.get(parserName, { throwIfNotExists: true });
     return optParser.get({ skipValidation: true });
+  }
+
+  public getEntityParser(): EntityParser {
+    return this.entityParser;
   }
 
   public addTable(tableName: string): iTable {

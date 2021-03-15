@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { iDatabaseReservedWords } from '../../interfaces';
 import { DateParser } from './date.parser';
 

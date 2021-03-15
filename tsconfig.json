@@ -4,8 +4,8 @@
       "allowJs": true,
       "target": "es5",
       "esModuleInterop": true,
-      "sourceMap": true,
-      "inlineSourceMap": true,
+      "allowSyntheticDefaultImports": true,
+      "sourceMap": true
   },
   "include": [
       "./src/**/*"

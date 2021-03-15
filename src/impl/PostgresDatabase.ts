@@ -29,25 +29,32 @@ export class PostgresDatabase extends Database implements iDatabase {
   }
 
   protected createInsertQuery(dataRow: iDataRow) : string {
-    const columns: string = dataRow.getColumnsName().join(', ');
+    const columns: string = dataRow.getColumnsName().map((columnName: string) => {
+      return this.getEntityParser().parse(columnName);
+    }).join(', ');  
+    
     const values: string  = dataRow.getColumnsParsedValue().join(', ');
-    const table = dataRow.table.name;
+    
+    const table = this.getEntityParser().parse(dataRow.table.name);
+
     return `INSERT INTO ${table} (${columns}) VALUES (${values});`;
   }
 
 
   protected createDeleteQuery(dataRow: iDataRow): string {
-    const table = dataRow.table.name;
+    const tableName: string = this.getEntityParser().parse(dataRow.table.name);
 
     const dataRowColumns: iDataRowColumn[] = dataRow.getUniqueKeyColumns();
 
     const whereData: string[] = [];
     (dataRowColumns || []).forEach((dataRowColumn: iDataRowColumn) => {
-      whereData.push(`${dataRowColumn.getColumnName()}=${dataRowColumn.parsedValue}`);
+
+      const columnName: string = this.getEntityParser().parse(dataRowColumn.getColumnName());
+      whereData.push(`${columnName}=${dataRowColumn.parsedValue}`);
     });
 
     const where = whereData.join(' AND ');
 
-    return `DELETE FROM ${table} WHERE ${where};`;
+    return `DELETE FROM ${tableName} WHERE ${where};`;
   }
 }

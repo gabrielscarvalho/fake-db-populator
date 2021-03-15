@@ -1,13 +1,18 @@
 import { iDatabaseReservedWords } from '../../interfaces';
 
 
+const SINGLE_QUOTES = "'";
+const DOUBLE_QUOTES = '"';
+
+
 export class DatabaseReservedWords implements iDatabaseReservedWords {
   public null: string = 'null';
-  public quotes: string = '"';
+  public quotesForValues: string = SINGLE_QUOTES;
+  public quotesForEntities: string = DOUBLE_QUOTES;
 
   public boolean = {
-    true: 'TRUE',
-    false: 'FALSE'
+    true: 'true',
+    false: 'false'
   }
 
 }

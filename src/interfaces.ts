@@ -211,7 +211,14 @@ export interface iDatabaseReservedWords {
    * Which character represents the quotes on every insert?
    * @default '"'
   */
-  quotes: string;
+  quotesForValues: string;
+
+  /**
+   * PostgreSQL for example, use double quotes for columns definitions: ex: "name"
+   * and single quotes for value definitions: ex: 'john'.
+   * This field is for column defitions.
+   */
+  quotesForEntities: string;
 
   /**
    * Represents the values of true and false.

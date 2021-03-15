@@ -1,6 +1,6 @@
 import moment from 'moment';
+
 import { iDatabaseReservedWords, iParser } from '../../interfaces';
-import { NumberParser } from './number.parser';
 import { Parser } from './parser';
 
 export class DateParser extends Parser implements iParser {
