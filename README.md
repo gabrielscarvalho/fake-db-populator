@@ -25,5 +25,24 @@ DELETE  FROM  address  WHERE id=1;
 DELETE  FROM user WHERE id=1;
 ```
 
+## Examples
+
+Clone [random-db-populator](https://github.com/gabrielscarvalho/random-db-populator-example) and check the [scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios).  
+
+
 ## Available databases:
 * Postgres
+
+## Next steps
+
+* Create @types package
+* Add MySQL
+* Add Oracle
+* Unit tests
+
+## Talk to me
+Email: gabriel.scarvalho310@gmail.com
+[LinkedIn](https://www.linkedin.com/in/gabriel-santos-carvalho-3b1978142/)
+
+
+
