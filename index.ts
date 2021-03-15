@@ -11,8 +11,8 @@ const database: PostgresDatabase = new PostgresDatabase();
 const autoIncrement = new AutoIncrement();
 
 autoIncrement
-  .initialId('user.id', 1)
-  .initialId('address.id', 2)
+  .initialId('user.id', 0)
+  .initialId('address.id', 0)
   .initialId('order.id', 200);
 
 
@@ -21,7 +21,6 @@ const tUser = database.addTable('user')
   .addColumn('name', 'string', Random.Name())
   .addColumn('lastname', 'string', Random.LastName())
   .addColumn('email', 'string', Random.Email())
-  .addColumn('bought_times', 'int', Random.Number(18, 30))
   .addColumn('gender','string', Random.PickOne(['M', 'F']))
   .addColumn('is_active','boolean', Random.Boolean())
   .addColumn('birth', 'date', DateGen.between({ year: { min: 2000, max: 2005 }}))
@@ -58,24 +57,22 @@ const tOrder = database.addTable('order')
     return dataRow;
   });
 
+  /*
 database.insert('user', { name: 'John'}, 'Creating first user data');
-
 database.insert('address', {});
 
 database.insert('order', {}, '---- 1st user 3 orders');
 database.insert('order', {});
-database.insert('order', {});
+database.insert('order', {});*/
 
 
-database.insert('user', {}, 'Creating second user');
+database.insert('user', { name: 'John'});
 database.insert('address', {});
 
-
-database.insert('user', {}, 'Creating third user');
+database.insert('user', { name: 'Mark'});
 database.insert('address', {});
 
-
-database.insert('user', {}, 'Creating forth user');
+database.insert('user', { name: 'Joe'});
 database.insert('address', {});
 
 
