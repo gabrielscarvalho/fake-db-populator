@@ -1,4 +1,3 @@
-import { DataRowColumn } from '../core/data/data-row-column';
 import { Database } from '../core/database/database';
 import { BooleanParser } from '../core/parsers/boolean.parser';
 import { DateParser } from '../core/parsers/date.parser';
@@ -7,7 +6,6 @@ import { IntParser } from '../core/parsers/int.parser';
 import { NumberParser } from '../core/parsers/number.parser';
 import { RawParser } from '../core/parsers/raw.parser';
 import { StringParser } from '../core/parsers/string.parser';
-import QueryCommand from '../core/query-builder/query-command.enum';
 import { iDatabase, iDataRow, iDataRowColumn } from '../interfaces';
 
 export class PostgresDatabase extends Database implements iDatabase {
@@ -15,6 +13,7 @@ export class PostgresDatabase extends Database implements iDatabase {
 
   public constructor() {
     super();
+
     this.addParser(new StringParser(this.reservedWords));
     this.addParser(new NumberParser(this.reservedWords));
     this.addParser(new IntParser(this.reservedWords));
