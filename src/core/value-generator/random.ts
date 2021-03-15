@@ -1,8 +1,16 @@
 import { Chance } from 'chance';
 import { iValueGenerator } from '../../interfaces';
+import { randexp } from 'randexp';
 const chance = new Chance();
 
 export class Random {
+
+  public static PATTERNS = {
+    brazil: {
+      POSTAL_CODE: /^\d{5}-\d{3}$/,
+      PHONE: /^([0-9]{2}) [0-9]{4}-[0-9]{4}$/,
+    }
+  }
 
   public static Number(min: number = 0, max: number = 999, decimals: number = 5): iValueGenerator {
     return () => {
@@ -27,10 +35,19 @@ export class Random {
   * Returns a random number with specific length
   * @see docs https://chancejs.com/basics/string.html
   */
-  public static NumberWithLength(length: number) {
+  public static NumberWithLength(length: number): iValueGenerator {
     return Random.String({ length, numeric: true, alpha: false })
   }
 
+  /**
+  * Returns a random value from a regex.
+  * @see docs https://www.npmjs.com/package/randexp
+  */
+  public static FromRegularExpression(pattern: RegExp): iValueGenerator {
+    return () => {
+      return randexp(pattern);
+    }
+  }
 
   /**
   * Returns a random item from list

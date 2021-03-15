@@ -2,6 +2,7 @@
 exports.__esModule = true;
 exports.Random = void 0;
 var chance_1 = require("chance");
+var randexp_1 = require("randexp");
 var chance = new chance_1.Chance();
 var Random = /** @class */ (function () {
     function Random() {
@@ -17,23 +18,45 @@ var Random = /** @class */ (function () {
             return chance.integer({ min: min, max: max });
         };
     };
-    Random.String = function (prefix, length) {
-        if (length === void 0) { length = 5; }
-        return function () { return prefix + '' + chance.string({ length: length, alpha: true }); };
+    /**
+    * Returns a random item from list
+    * @see docs https://chancejs.com/basics/string.html
+    */
+    Random.String = function (options) {
+        if (options === void 0) { options = { length: 8, alpha: true }; }
+        return function () {
+            return chance.string(options);
+        };
     };
     /**
-       * Returns a random item from list
-       * @see docs https://chancejs.com/text/pickone.html
-      */
+    * Returns a random number with specific length
+    * @see docs https://chancejs.com/basics/string.html
+    */
+    Random.NumberWithLength = function (length) {
+        return Random.String({ length: length, numeric: true, alpha: false });
+    };
+    /**
+    * Returns a random value from a regex.
+    * @see docs https://www.npmjs.com/package/randexp
+    */
+    Random.FromRegularExpression = function (pattern) {
+        return function () {
+            return randexp_1.randexp(pattern);
+        };
+    };
+    /**
+    * Returns a random item from list
+    * @see docs https://chancejs.com/text/pickone.html
+    */
     Random.PickOne = function (list) {
         return function () {
             return chance.pickone(list);
         };
     };
     /**
-       * Returns a random word
-       * @see docs https://chancejs.com/text/bool.html
-      */
+     * Returns a random word
+     * @see docs https://chancejs.com/text/bool.html
+    */
     Random.Boolean = function (options) {
         if (options === void 0) { options = { likelihood: 50 }; }
         return function () {
@@ -41,19 +64,29 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random char
+     * Returns a random first name
+     * @see docs https://chancejs.com/person/first.html
+     */
+    Random.FirstName = function (options) {
+        if (options === void 0) { options = { nationality: 'us' }; }
+        return function () {
+            return chance.first(options);
+        };
+    };
+    /**
+    * Returns a random name
     * @see docs https://chancejs.com/person/name.html
     */
-    Random.Name = function (options) {
+    Random.FullName = function (options) {
         if (options === void 0) { options = { nationality: 'en' }; }
         return function () {
             return chance.name(options);
         };
     };
     /**
-      * Returns a random char
-      * @see docs https://chancejs.com/person/last.html
-      */
+    * Returns a random char
+    * @see docs https://chancejs.com/person/last.html
+    */
     Random.LastName = function (options) {
         if (options === void 0) { options = { nationality: 'en' }; }
         return function () {
@@ -61,9 +94,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-      * Returns a random email
-      * @see docs https://chancejs.com/web/email.html
-     */
+    * Returns a random email
+    * @see docs https://chancejs.com/web/email.html
+    */
     Random.Email = function (options) {
         if (options === void 0) { options = {}; }
         return function () {
@@ -71,9 +104,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-       * Returns a random word
-       * @see docs https://chancejs.com/text/word.html
-      */
+     * Returns a random word
+     * @see docs https://chancejs.com/text/word.html
+    */
     Random.Word = function (options) {
         if (options === void 0) { options = { syllables: 3 }; }
         return function () {
@@ -81,9 +114,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-      * Returns a random word
-      * @see docs https://chancejs.com/text/word.html
-      */
+    * Returns a random word
+    * @see docs https://chancejs.com/text/word.html
+    */
     Random.Sentence = function (options) {
         if (options === void 0) { options = { words: 3 }; }
         return function () {
@@ -111,9 +144,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-      * Returns a random char
-      * @see docs https://chancejs.com/miscellaneous/hash.html
-      */
+    * Returns a random char
+    * @see docs https://chancejs.com/miscellaneous/hash.html
+    */
     Random.Char = function (options) {
         if (options === void 0) { options = { alpha: true }; }
         return function () {
@@ -121,13 +154,58 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-      * Returns a random cpf
-      * @see docs https://chancejs.com/person/cpf.html
-      */
+    * Returns a random cpf
+    * @see docs https://chancejs.com/person/cpf.html
+    */
     Random.Cpf = function () {
         return function () {
             return chance.cpf();
         };
+    };
+    /**
+     * Returns a random avatar image url
+     * @see docs https://chancejs.com/web/avatar.html
+     */
+    Random.AvatarURL = function (options) {
+        if (options === void 0) { options = {}; }
+        return function () {
+            return chance.first(options);
+        };
+    };
+    /**
+     * Returns a random address
+     * @see docs https://chancejs.com/location/street.html
+     */
+    Random.Street = function (options) {
+        if (options === void 0) { options = { country: 'us' }; }
+        return function () {
+            return chance.street(options);
+        };
+    };
+    /**
+     * Returns a random city
+     * @see docs https://chancejs.com/location/city.html
+     */
+    Random.City = function () {
+        return function () {
+            return chance.city();
+        };
+    };
+    /**
+     * Returns a random country
+     * @see docs https://chancejs.com/location/country.html
+     */
+    Random.Country = function (options) {
+        if (options === void 0) { options = { full: true }; }
+        return function () {
+            return chance.country(options);
+        };
+    };
+    Random.PATTERNS = {
+        brazil: {
+            POSTAL_CODE: /^\d{5}-\d{3}$/,
+            PHONE: /^([0-9]{2}) [0-9]{4}-[0-9]{4}$/
+        }
     };
     return Random;
 }());

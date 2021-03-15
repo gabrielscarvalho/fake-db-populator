@@ -1,6 +1,6 @@
 
-const { PostgresDatabase } = require('./dist/shortcut/database');
-const { AutoIncrement, Random, DateGen } = require('./dist/shortcut/value-gen');
+import { PostgresDatabase } from './src/index'
+import { AutoIncrement, Random, DateGen } from './src/index';
 
 
 const database = new PostgresDatabase();
@@ -18,7 +18,8 @@ const tUser = database.addTable('user')
   .addColumn('name', 'string', Random.FirstName())
   .addColumn('surname', 'string', Random.LastName())
   .addColumn('email', 'string', Random.Email())
-  .addColumn('postcode', 'string', Random.Email())
+  .addColumn('post_code', 'string', Random.FromRegularExpression(Random.PATTERNS.brazil.POSTAL_CODE))
+  .addColumn('phone', 'string', Random.FromRegularExpression(Random.PATTERNS.brazil.PHONE))
   .addColumn('gender','string', Random.PickOne(['M', 'F']))
   .addColumn('is_active','boolean', Random.Boolean())
   .addColumn('birth', 'date', DateGen.between({ year: { min: 2000, max: 2005 }}))
