@@ -17,12 +17,22 @@ export class Random {
     return () => prefix + '' + chance.string({ length, alpha: true });
   }
 
+  /**
+     * Returns a random item from list
+     * @see docs https://chancejs.com/text/pickone.html
+    */
+  public static PickOne(list: any[]): iValueGenerator {
+    return () => {
+      return chance.pickone(list);
+    }
+  }
+
 
   /**
      * Returns a random word
      * @see docs https://chancejs.com/text/bool.html
     */
-   public static Boolean(options: object = { likelihood: 50 }): iValueGenerator {
+  public static Boolean(options: object = { likelihood: 50 }): iValueGenerator {
     return () => {
       return chance.bool(options);
     }

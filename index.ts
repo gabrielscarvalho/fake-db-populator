@@ -21,8 +21,11 @@ const tUser = database.addTable('user')
   .addColumn('name', 'string', Random.Name())
   .addColumn('lastname', 'string', Random.LastName())
   .addColumn('email', 'string', Random.Email())
-  .addColumn('age', 'int', Random.Number(18, 30))
-  .addColumn('created_at', 'date', DateGen.between({ year: { min: 2010, max: 2015 }}))
+  .addColumn('bought_times', 'int', Random.Number(18, 30))
+  .addColumn('gender','string', Random.PickOne(['M', 'F']))
+  .addColumn('is_active','boolean', Random.Boolean())
+  .addColumn('birth', 'date', DateGen.between({ year: { min: 2000, max: 2005 }}))
+  .addColumn('updated_at', 'datetime', DateGen.between({ year: { min: 2019, max: 2020 }}))
   .addColumn('telephone', 'string', Fixed('55 098915651'));
 
 
@@ -66,7 +69,7 @@ const address2 = database.insert('address', {});
 
 database.printParsers();
 
-// console.log(database.toSQL());
+console.log(database.toSQL());
 
 console.log('hellow');
 
