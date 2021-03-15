@@ -36,6 +36,12 @@ export interface iDataRowColumn {
    * Set the value and prepared the parsed value.
    */
   setValue: (rawValue: any) => void;
+
+  /**
+   * Shortcut to get the column name.
+   * @return string
+   */
+  getColumnName: () => string;
 }
 
 export interface iDataRow {
@@ -87,7 +93,6 @@ export interface iDataRow {
 
 export interface iColumn {
   table: iTable;
-  key: string;
   name: string;
   parser: iParser;
   isPartOfUniqueKey: boolean;
@@ -118,16 +123,15 @@ export interface iTable {
   getLastDataRow: () => Optional<iDataRow>;
 
 
-  getColumn: (columnKey: string) => iColumn;
+  getColumn: (columnName: string) => iColumn;
 
   /**
    * Adds a new column to the table.
-   * @param columnKey the unique name or nickname.
+   * @param columnName the unique name or nickname.
    * @param type the type of the column. 'string', 'number', or created parsers.
    * @param valueGen the function that will generate the value.
-   * @param columnName the real name of the column in case of nicknames at columnKey
   */
-  addColumn: (columnKey: string, type: string | iParser, valueGen: iValueGenerator, columnName?: string) => iTable;
+  addColumn: (columnName: string, type: string | iParser, valueGen: iValueGenerator) => iTable;
 
   /**
    * Creates a new data object.

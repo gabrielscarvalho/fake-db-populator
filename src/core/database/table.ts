@@ -38,18 +38,17 @@ export class Table implements iTable {
     return uniqueColumns;
   }
 
-  public addColumn(columnKey: string, type: string, valueGen: iValueGenerator, columnName?: string) :iTable {
+  public addColumn(columnName: string, type: string, valueGen: iValueGenerator) :iTable {
 
     const parser = this.database.getParser(type);
-    const realColumnName = columnName ? columnName : columnKey;
-    const column: iColumn = new Column(this, columnKey, realColumnName, parser, valueGen);
+    const column: iColumn = new Column(this, columnName, parser, valueGen);
 
-    this.columns.add(columnKey, column, { throwIfExists: true });
+    this.columns.add(columnName, column, { throwIfExists: true });
     return this;
   }
 
-  public getColumn(columnKey: string): iColumn {
-    const column: Optional<iColumn> =this.columns.get(columnKey, { throwIfNotExists: true});
+  public getColumn(columnName: string): iColumn {
+    const column: Optional<iColumn> =this.columns.get(columnName, { throwIfNotExists: true});
     return column.get({ skipValidation: true });
   }
 

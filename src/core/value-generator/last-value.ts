@@ -14,11 +14,11 @@ export const LastValue = (column: iColumn, defaultValue: any = null, config: Las
 
     if (optLastDataRow.isPresent()) {
       const lastDataRow: iDataRow = optLastDataRow.get();
-      return lastDataRow.getRawValue(column.key);
+      return lastDataRow.getRawValue(column.name);
     }
 
     if (config.throwErrorIfNotExists) {
-      throw new Error(`There was no last value for column: [${column.table.name}.${column.key}]. Assure to create a register to this table before or change the flag throwErrorIfNotExists to false.`);
+      throw new Error(`There was no last value for column: [${column.table.name}.${column.name}]. Assure to create a register to this table before or change the flag throwErrorIfNotExists to false.`);
     }
 
     return defaultValue;

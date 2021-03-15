@@ -72,8 +72,8 @@ export class DataRow implements iDataRow {
 
       let value = null;
 
-      if ((this.extraData || {}).hasOwnProperty(column.key)) {
-        const forcedValue = this.extraData[column.key];
+      if ((this.extraData || {}).hasOwnProperty(column.name)) {
+        const forcedValue = this.extraData[column.name];
         value = forcedValue;
       } else {
         value = column.valueGen();

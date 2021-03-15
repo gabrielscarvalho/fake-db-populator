@@ -58,9 +58,9 @@ const tOrder = database.addTable('order')
     return dataRow;
   });
 
-const user = database.insert('user', { name: 'John'}, 'Creating first user data');
+database.insert('user', { name: 'John'}, 'Creating first user data');
 
-const address = database.insert('address', {});
+database.insert('address', {});
 
 database.insert('order', {}, '---- 1st user 3 orders');
 database.insert('order', {});

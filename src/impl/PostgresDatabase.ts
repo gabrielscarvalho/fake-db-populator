@@ -43,7 +43,7 @@ export class PostgresDatabase extends Database implements iDatabase {
 
     const whereData: string[] = [];
     (dataRowColumns || []).forEach((dataRowColumn: iDataRowColumn) => {
-      whereData.push(`${dataRowColumn.column.key}=${dataRowColumn.parsedValue}`);
+      whereData.push(`${dataRowColumn.getColumnName()}=${dataRowColumn.parsedValue}`);
     });
 
     const where = whereData.join(' AND ');

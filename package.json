@@ -1,5 +1,5 @@
 {
-  "name": "insertable",
+  "name": "fake-db-populator",
   "version": "1.0.0",
   "description": "",
   "main": "generator.js",
@@ -16,7 +16,7 @@
       "./src/**/*.ts"
     ]
   },
-  "author": "gabriel santos carvalho",
+  "author": {  "name": "gabriel santos carvalho", "email": "gabriel.scarvalho310@gmail.com"},
   "license": "ISC",
   "dependencies": {
     "@types/lodash": "^4.14.168",
