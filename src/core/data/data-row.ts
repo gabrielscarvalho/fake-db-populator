@@ -76,7 +76,11 @@ export class DataRow implements iDataRow {
         const forcedValue = this.extraData[column.name];
         value = forcedValue;
       } else {
-        value = column.valueGen();
+        try {
+          value = column.valueGen();
+        } catch (err) {
+          throw new Error(`Error while calculating the value of column: ${column.table.name}.${column.name}: ${err.message}`, );
+        }
       }
 
       const dataColumn: iDataRowColumn = new DataRowColumn(this, column, value);

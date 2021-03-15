@@ -75,7 +75,7 @@ export class Random {
    * Returns a random first name
    * @see docs https://chancejs.com/person/first.html
    */
-  public static FirstName(options: { gender?: 'male' | 'female', nationality: 'us' } = { nationality: 'us' }): iValueGenerator {
+  public static FirstName(options: { gender?: 'male' | 'female', nationality?: 'us' } = {}): iValueGenerator {
     return () => {
       return chance.first(options);
     }
