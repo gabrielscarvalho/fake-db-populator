@@ -60,7 +60,12 @@ var DataRow = /** @class */ (function () {
                 value = forcedValue;
             }
             else {
-                value = column.valueGen();
+                try {
+                    value = column.valueGen();
+                }
+                catch (err) {
+                    throw new Error("Error while calculating the value of column: " + column.table.name + "." + column.name + ": " + err.message);
+                }
             }
             var dataColumn = new data_row_column_1.DataRowColumn(_this, column, value);
             _this.data.add(column.name, dataColumn, { throwIfExists: true });

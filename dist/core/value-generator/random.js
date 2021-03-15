@@ -68,7 +68,7 @@ var Random = /** @class */ (function () {
      * @see docs https://chancejs.com/person/first.html
      */
     Random.FirstName = function (options) {
-        if (options === void 0) { options = { nationality: 'us' }; }
+        if (options === void 0) { options = {}; }
         return function () {
             return chance.first(options);
         };

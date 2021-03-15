@@ -45,7 +45,7 @@ export declare class Random {
      */
     static FirstName(options?: {
         gender?: 'male' | 'female';
-        nationality: 'us';
+        nationality?: 'us';
     }): iValueGenerator;
     /**
     * Returns a random name
