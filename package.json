@@ -1,11 +1,11 @@
 {
   "name": "random-db-populator",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "generator.js",
   "scripts": {
     "sql": "ts-node index.ts",
-    "convert": "rm output/ -rf && tsc ./src/**/*.ts --outDir ./output --esModuleInterop",
+    "convert": "rm output/ -rf && tsc ./src/**/*.ts --outDir ./output --esModuleInterop --declaration",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watchAll=false"
   },
