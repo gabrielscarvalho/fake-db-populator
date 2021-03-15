@@ -1,6 +1,6 @@
 {
-  "name": "fake-db-populator",
-  "version": "0.0.1",
+  "name": "random-db-populator",
+  "version": "0.0.2",
   "description": "",
   "main": "generator.js",
   "scripts": {

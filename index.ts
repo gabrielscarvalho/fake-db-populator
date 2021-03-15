@@ -5,79 +5,54 @@ import { DateGen } from './src/core/value-generator/date';
 import { Fixed } from './src/core/value-generator/fixed';
 import { PostgresDatabase } from './src/impl/PostgresDatabase';
 import { iDataRow } from './src/interfaces';
+import { Database } from './src/core/database/database';
+import { Table } from './src/core/database/table';
+import { Column } from './src/core/database/column';
+import { Parser } from './src/core/parsers/parser';
+import { NumberParser } from './src/core/parsers/number.parser';
+import { StringParser } from './src/core/parsers/string.parser';
+import { IntParser } from './src/core/parsers/int.parser';
+import { RawParser } from './src/core/parsers/raw.parser';
+import { DateParser } from './src/core/parsers/date.parser';
+import { DateTimeParser } from './src/core/parsers/datetime.parser';
+import { BooleanParser } from './src/core/parsers/boolean.parser';
+import { DataRow } from './src/core/data/data-row';
+import { DataRowColumn } from './src/core/data/data-row-column';
+import { DatabaseReservedWords } from './src/core/database/reserved-words';
+import { NamedMap } from './src/core/utils/map';
+import { Optional } from './src/core/utils/optional';
 
-const database: PostgresDatabase = new PostgresDatabase();
+export const RandomDbGenerator = {
+  database: {
+    DatabaseReservedWords,
+    Database,
+    Table,
+    Column,
+    impl: {
+      PostgresDatabase
+    }
+  },
+  valueGenerator: {
+    Random, AutoIncrement, LastValue, DateGen, Fixed
+  },
+  util: {
+    NamedMap,
+    Optional
+  },
+  data: {
+    DataRow,
+    DataRowColumn
+  },
+  parser: {
+    Parser,
+    NumberParser,
+    StringParser,
+    IntParser,
+    RawParser,
+    DateParser,
+    DateTimeParser,
+    BooleanParser
+  }
+};
 
-const autoIncrement = new AutoIncrement();
-
-autoIncrement
-  .initialId('user.id', 0)
-  .initialId('address.id', 0)
-  .initialId('order.id', 200);
-
-
-const tUser = database.addTable('user')
-  .addColumn('id', 'int', autoIncrement.valueGen('user.id'))
-  .addColumn('name', 'string', Random.Name())
-  .addColumn('lastname', 'string', Random.LastName())
-  .addColumn('email', 'string', Random.Email())
-  .addColumn('gender','string', Random.PickOne(['M', 'F']))
-  .addColumn('is_active','boolean', Random.Boolean())
-  .addColumn('birth', 'date', DateGen.between({ year: { min: 2000, max: 2005 }}))
-  .addColumn('updated_at', 'datetime', DateGen.between({ year: { min: 2019, max: 2020 }}))
-  .addColumn('telephone', 'string', Fixed('55 098915651'))
-  .setUniqueKeys('id', 'email');
-
-
-const tAddress = database.addTable('address')
-  .addColumn('id', 'int', autoIncrement.valueGen('address.id'))
-  .addColumn('user_id', 'int', LastValue(tUser.getColumn('id')))
-  .addColumn('receiver', 'string', Random.Name())
-  .setUniqueKeys('id');;
-
-
-const tOrder = database.addTable('order')
-  .addColumn('id', 'int', autoIncrement.valueGen('order.id'))
-  .addColumn('user_id', 'int', LastValue(tUser.getColumn('id')))
-  .addColumn('user_email', 'string', LastValue(tUser.getColumn('email')))
-  .addColumn('delivery_address_id', 'int', LastValue(tAddress.getColumn('id')))
-  .addColumn('total_price', 'number', Random.Number(100, 900))
-  .addColumn('freight_price', 'number', Random.Number(10, 50))
-  .addColumn('item_price', 'number', Random.Number(90, 160))
-  .addColumn('discount_price', 'number', Random.Number(10, 30))
-  .setUniqueKeys('id')
-  .afterGenerateData((dataRow: iDataRow) => {
-
-    const freight = dataRow.getRawValue('freight_price');
-    const items = dataRow.getRawValue('item_price');
-    const discount = dataRow.getRawValue('discount_price');
-
-    dataRow.setRawValue('total_price', (items + freight - discount));
-    
-    return dataRow;
-  });
-
-  /*
-database.insert('user', { name: 'John'}, 'Creating first user data');
-database.insert('address', {});
-
-database.insert('order', {}, '---- 1st user 3 orders');
-database.insert('order', {});
-database.insert('order', {});*/
-
-
-database.insert('user', { name: 'John'});
-database.insert('address', {});
-
-database.insert('user', { name: 'Mark'});
-database.insert('address', {});
-
-database.insert('user', { name: 'Joe'});
-database.insert('address', {});
-
-
-console.log(database.toSQL().join('\n'));
-console.log(database.rollback().join('\n'));
-
-console.log('hellow'); 
 
