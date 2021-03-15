@@ -1,6 +1,6 @@
 
 # Random Db Populator
-Make it easier to populate your test environments, creating inserts with **consistent random data**. With a clear language, you can focus on what makes your scenario unique.
+Make it easier to populate your **POSTGRES** test environments, creating inserts with **consistent random data**. With a clear language, you can focus on what makes your scenario unique. (Other databases will be added soon.)
 
 **Example**: insert a user which name is **John** and is **inactive**.  John must have **2 addresses**.
 All other params I accept a random (but still valid) value.
