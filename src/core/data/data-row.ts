@@ -12,13 +12,14 @@ export class DataRow implements iDataRow {
   public queryCommand: QueryCommand;
   public table: iTable;
   public extraData: object;
+  public hasCreatedQuery: boolean = false;
 
   public new(queryCommand: QueryCommand, table: iTable, extraData: object): iDataRow {
 
     this.queryCommand = queryCommand;
     this.table = table;
     this.extraData = extraData;
-
+    this.hasCreatedQuery = false;
     this.data = new NamedMap<DataRowColumn>();
     this.generateData();
 
@@ -34,10 +35,16 @@ export class DataRow implements iDataRow {
     return this.getColumnData(columnName).rawValue;
   }
 
-
-
   public setRawValue(columnName: string, newRawValue: any) : void {
     this.getColumnData(columnName).setValue(newRawValue)
+  }
+
+  public getUniqueKeyColumns(): iDataRowColumn[] {
+    const columns: iColumn[] = this.table.getUniqueKeyColumns();
+
+    return (columns || []).map((column: iColumn) => {
+      return this.getColumnData(column.name);
+    });   
   }
 
   public getColumnsName() :string[] {

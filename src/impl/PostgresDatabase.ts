@@ -1,3 +1,4 @@
+import { DataRowColumn } from '../core/data/data-row-column';
 import { Database } from '../core/database/database';
 import { BooleanParser } from '../core/parsers/boolean.parser';
 import { DateParser } from '../core/parsers/date.parser';
@@ -7,9 +8,10 @@ import { NumberParser } from '../core/parsers/number.parser';
 import { RawParser } from '../core/parsers/raw.parser';
 import { StringParser } from '../core/parsers/string.parser';
 import QueryCommand from '../core/query-builder/query-command.enum';
-import { iDatabase, iDataRow } from '../interfaces';
+import { iDatabase, iDataRow, iDataRowColumn } from '../interfaces';
 
 export class PostgresDatabase extends Database implements iDatabase {
+ 
 
   public constructor() {
     super();
@@ -23,27 +25,26 @@ export class PostgresDatabase extends Database implements iDatabase {
   }
 
 
-   
-  public toSQL(): string[] {
-    const sqls = [];
-    this.dataRows.forEach((dataRow: iDataRow) => {
-      sqls.push(this.createCommand(dataRow));
-    });
-    return sqls;
-  }
-
-  protected createCommand(dataRow: iDataRow): string {
-    if(dataRow.queryCommand === QueryCommand.INSERT) {
-      return this.createInsert(dataRow);
-    }
-    throw new Error(`Impl not found to query command:  [${dataRow.queryCommand}].`);
-  }
-
-  protected createInsert(dataRow: iDataRow): string {
+  protected createInsertQuery(dataRow: iDataRow) : string {
     const columns: string = dataRow.getColumnsName().join(', ');
     const values: string  = dataRow.getColumnsParsedValue().join(', ');
     const table = dataRow.table.name;
     return `INSERT INTO ${table} (${columns}) VALUES (${values});`;
   }
 
+
+  protected createDeleteQuery(dataRow: iDataRow): string {
+    const table = dataRow.table.name;
+
+    const dataRowColumns: iDataRowColumn[] = dataRow.getUniqueKeyColumns();
+
+    const whereData: string[] = [];
+    (dataRowColumns || []).forEach((dataRowColumn: iDataRowColumn) => {
+      whereData.push(`${dataRowColumn.column.key}=${dataRowColumn.parsedValue}`);
+    });
+
+    const where = whereData.join(' AND ');
+
+    return `DELETE FROM ${table} WHERE ${where};`;
+  }
 }

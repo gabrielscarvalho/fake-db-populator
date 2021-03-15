@@ -6,6 +6,7 @@ export class Column implements iColumn {
   public name: string;
   public parser: iParser;
   public valueGen: iValueGenerator;
+  public isPartOfUniqueKey: false;
 
 
   public constructor(table: iTable, key: string, name: string, parser: iParser, valueGen: iValueGenerator) {

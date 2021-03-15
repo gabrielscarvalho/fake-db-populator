@@ -20,6 +20,24 @@ export class Table implements iTable {
 
   data: iDataRow[];
 
+
+  public setUniqueKeys(...columnNames: string[]): iTable {
+
+    (columnNames || []).forEach((columnName: string) => {
+      const column = this.getColumn(columnName);
+      column.isPartOfUniqueKey = true;
+    });
+
+    return this;
+  }
+
+  public getUniqueKeyColumns() : iColumn[] {
+    const uniqueColumns = (this.columns.getValues() || []).filter((column: iColumn) => {
+      return column.isPartOfUniqueKey;
+    });
+    return uniqueColumns;
+  }
+
   public addColumn(columnKey: string, type: string, valueGen: iValueGenerator, columnName?: string) :iTable {
 
     const parser = this.database.getParser(type);

@@ -26,13 +26,15 @@ const tUser = database.addTable('user')
   .addColumn('is_active','boolean', Random.Boolean())
   .addColumn('birth', 'date', DateGen.between({ year: { min: 2000, max: 2005 }}))
   .addColumn('updated_at', 'datetime', DateGen.between({ year: { min: 2019, max: 2020 }}))
-  .addColumn('telephone', 'string', Fixed('55 098915651'));
+  .addColumn('telephone', 'string', Fixed('55 098915651'))
+  .setUniqueKeys('id', 'email');
 
 
 const tAddress = database.addTable('address')
   .addColumn('id', 'int', autoIncrement.valueGen('address.id'))
   .addColumn('user_id', 'int', LastValue(tUser.getColumn('id')))
-  .addColumn('receiver', 'string', Random.Name());
+  .addColumn('receiver', 'string', Random.Name())
+  .setUniqueKeys('id');;
 
 
 const tOrder = database.addTable('order')
@@ -44,6 +46,7 @@ const tOrder = database.addTable('order')
   .addColumn('freight_price', 'number', Random.Number(10, 50))
   .addColumn('item_price', 'number', Random.Number(90, 160))
   .addColumn('discount_price', 'number', Random.Number(10, 30))
+  .setUniqueKeys('id')
   .afterGenerateData((dataRow: iDataRow) => {
 
     const freight = dataRow.getRawValue('freight_price');
@@ -71,5 +74,7 @@ database.printParsers();
 
 console.log(database.toSQL());
 
+
+console.log('Rollback!: ', database.rollback());
 console.log('hellow');
 

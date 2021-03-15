@@ -4,6 +4,7 @@ import { NamedMap } from '../utils/map';
 import { Optional } from '../utils/optional';
 import QueryCommand from '../query-builder/query-command.enum';
 import { DatabaseReservedWords } from './reserved-words';
+import _ from 'lodash';
 
 export abstract class Database implements iDatabase {
 
@@ -30,7 +31,7 @@ export abstract class Database implements iDatabase {
 
   public addTable(tableName: string): iTable {
     const table = new Table(this, tableName);
-    this.tables.add(tableName, table, { throwIfExists : true });
+    this.tables.add(tableName, table, { throwIfExists: true });
     return table;
   }
 
@@ -65,9 +66,33 @@ export abstract class Database implements iDatabase {
     return this;
   }
 
- 
-  public toSQL(): string[]{
-    throw new Error('Method requires specific impl for each database. Check PostgresqlDatabase example.');
+
+
+  public toSQL(): string[] {
+    const sqls = [];
+    this.dataRows.forEach((dataRow: iDataRow) => {
+      sqls.push(this.createCommand(dataRow));
+    });
+    return sqls;
+  }
+
+
+  public rollback(): string[] {
+
+    const queries: string[] = [];
+
+    const alreadyExecuted: iDataRow[] = (this.dataRows || []).filter((dataRow: iDataRow) => {
+      return dataRow.hasCreatedQuery;
+    });
+
+    const deleteRows = _.cloneDeep(alreadyExecuted).reverse();
+
+    (deleteRows || []).forEach((dataRow: iDataRow) => {
+      dataRow.queryCommand = QueryCommand.DELETE;
+      queries.push(this.createCommand(dataRow));
+    });
+
+    return queries;
   }
 
   public printParsers(): void {
@@ -79,4 +104,37 @@ export abstract class Database implements iDatabase {
       console.log(`\t${type} ${description}`);
     });
   }
+
+
+  protected createCommand(dataRow: iDataRow): string {
+    let query: string = null;
+
+    if (dataRow.queryCommand === QueryCommand.INSERT) {
+      query = this.createInsertQuery(dataRow);
+
+    } else if (dataRow.queryCommand === QueryCommand.DELETE) {
+      query = this.createDeleteQuery(dataRow);
+    }
+
+    if (query === null) {
+      throw new Error(`Impl not found to query command:  [${dataRow.queryCommand}].`);
+    }
+
+    dataRow.hasCreatedQuery = true;
+    return query;
+  }
+
+
+  /**
+   * Creates the insert query command.
+   * @return string
+  */
+  protected abstract createInsertQuery(dataRow: iDataRow): string;
+
+
+  /**
+   * Creates the delete query command.
+   * @return string
+  */
+  protected abstract createDeleteQuery(dataRow: iDataRow): string;
 }

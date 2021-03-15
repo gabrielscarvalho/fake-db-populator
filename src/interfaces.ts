@@ -41,19 +41,49 @@ export interface iDataRowColumn {
 export interface iDataRow {
   data: iMap<iDataRowColumn>;
   queryCommand: QueryCommand;
+  hasCreatedQuery: boolean;
   table: iTable;
 
   new: (queryCommand: QueryCommand, table: iTable, extraData: object) => iDataRow;
+
+
+  /**
+   * Return all iDataRowColumn of columns that represent the primary key.
+   * @return iDataRowColumn[]
+  */
+  getUniqueKeyColumns: () => iDataRowColumn[];
+
+  /**
+   * Return the data from the specified column.
+   * @param columnName
+   * @return iDataRowColumn
+  */
   getColumnData:(columnName: string) => iDataRowColumn;
 
+  /**
+   * Return the raw value of the column (that has not been parsed)
+   * @return any
+  */
   getRawValue: (columnName: string) => any;
 
+  /**
+   * Set manually the new raw value of a column.
+  */
   setRawValue: (columnName: string, newValue: any) => void;
 
-
+  /**
+   * Return all columns name.
+  */
   getColumnsName: () => string[];
+  
+  /**
+   * Return all parsed value
+  */
   getColumnsParsedValue: () => string[];
-
+  
+  /**
+   * Prints the object to help seeing data.
+  */
   print: () => void;
 }
 
@@ -62,6 +92,7 @@ export interface iColumn {
   key: string;
   name: string;
   parser: iParser;
+  isPartOfUniqueKey: boolean;
   valueGen: iValueGenerator;
 }
 
@@ -70,6 +101,18 @@ export interface iTable {
   database: iDatabase;
   data: iDataRow[];
   columns: iMap<iColumn>;
+
+  /**
+   * What defines the register as unique ?
+  */
+  setUniqueKeys: (...columnNames: string[]) => iTable;
+
+
+  /**
+   * Return the list of columns that make a register unique.
+   * @return iColumn[]
+  */
+  getUniqueKeyColumns: () => iColumn[];
 
   /**
    * Return the last DataRow generated - if present.
@@ -135,8 +178,13 @@ export interface iDatabase {
   /**
    * Convert all data to SQL
    * @return string[]
-  */
+   */
   toSQL: () => string[];
+
+  /**
+   * Return all queries to rollback your changes.
+   */
+  rollback: () => string[];
 
   /**
    * Print all parsers descriptions.
