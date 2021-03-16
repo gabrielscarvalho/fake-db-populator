@@ -37,6 +37,9 @@ Others database will be added in the future.
 
 Clone [random-db-populator-example](https://github.com/gabrielscarvalho/random-db-populator-example) and check the [JS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios) or [TS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios-ts).
 
+Here you have a [cleaner typescript version](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/ts-organized-example), which I recommend for development.
+
+
 **Tip**: Use typescript version. It will make it easier!
 
 
