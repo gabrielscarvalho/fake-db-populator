@@ -33,9 +33,11 @@ DELETE FROM "t_user" WHERE "id"=1;
 
 Others database will be added in the future.
 
-## Examples
+# Examples
 
-Clone [random-db-populator](https://github.com/gabrielscarvalho/random-db-populator-example) and check the [JS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios) or [TS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios-ts)).
+Clone [random-db-populator-example](https://github.com/gabrielscarvalho/random-db-populator-example) and check the [JS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios) or [TS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios-ts).
+
+**Tip**: Use typescript version. It will make it easier!
 
 
 ## The Principles
