@@ -27,6 +27,16 @@ DELETE FROM "t_address" WHERE "id"=2;
 DELETE FROM "t_address" WHERE "id"=1;
 DELETE FROM "t_user" WHERE "id"=1;
 ```
+## Available databases:
+
+- Postgres
+
+Others database will be added in the future.
+
+## Examples
+
+Clone [random-db-populator](https://github.com/gabrielscarvalho/random-db-populator-example) and check the [JS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios) or [TS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios-ts)).
+
 
 ## The Principles
 
@@ -160,13 +170,6 @@ database.addColumn(
 
 Return a fixed value. When you don't want to create a random function.
 
-## Examples
-
-Clone [random-db-populator](https://github.com/gabrielscarvalho/random-db-populator-example) and check the [JS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios) or [TS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios-ts)).
-
-## Available databases:
-
-- Postgres
 
 ## Next steps
 
