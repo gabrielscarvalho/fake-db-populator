@@ -8,6 +8,11 @@ export class BooleanParser extends Parser implements iParser {
   public description: string = `Parses values to boolean.`;
 
   public parse(val: any): string {
+
+    if(val === undefined || val === null) {
+        return this.getNullString();
+    }
+
     const bool = this.reservedWords.boolean;
     return (!!val) ? bool.true : bool.false;
   }

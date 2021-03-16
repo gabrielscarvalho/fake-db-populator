@@ -15,6 +15,11 @@ export class NumberParser extends Parser implements iParser {
   }
 
   public parse(val: number): string {
+
+    if (!val) {
+      return this.getNullString();
+    }
+
     let preparedValue: string = null;
   
     if (this.precision === 0) {
@@ -23,7 +28,7 @@ export class NumberParser extends Parser implements iParser {
       preparedValue = parseFloat(String(val)).toFixed(this.precision);
     }
 
-    return (!!val) ? preparedValue : this.getNullString();
+    return preparedValue;
   }
 
   public static withPrecision(reservedWords: iDatabaseReservedWords, type: string, precision: number) {

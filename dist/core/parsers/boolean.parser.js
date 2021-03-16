@@ -24,6 +24,9 @@ var BooleanParser = /** @class */ (function (_super) {
         return _this;
     }
     BooleanParser.prototype.parse = function (val) {
+        if (val === undefined || val === null) {
+            return this.getNullString();
+        }
         var bool = this.reservedWords.boolean;
         return (!!val) ? bool["true"] : bool["false"];
     };

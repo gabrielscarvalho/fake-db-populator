@@ -24,7 +24,12 @@ var StringParser = /** @class */ (function (_super) {
         return _this;
     }
     StringParser.prototype.parse = function (val) {
-        return this.addQuotes(val);
+        if (!!val) {
+            return this.addQuotes(val);
+        }
+        else {
+            return this.getNullString();
+        }
     };
     return StringParser;
 }(parser_1.Parser));

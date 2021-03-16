@@ -17,7 +17,12 @@ export class DataRowColumn implements iDataRowColumn {
 
   public setValue(rawValue: any): void {
     this.rawValue = rawValue;
-    this.parsedValue = this.column.parser.parse(rawValue);
+    try {
+      this.parsedValue = this.column.parser.parse(rawValue);
+    } catch (error) {
+      const columnName = `${this.column.table.name}.${this.column.name}`;
+      throw new Error(`Error while parsing the value of [${columnName}]. Error message: ${error.message}`)
+    }
   }
 
   public getColumnName(): string {

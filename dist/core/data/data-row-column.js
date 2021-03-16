@@ -14,7 +14,13 @@ var DataRowColumn = /** @class */ (function () {
     };
     DataRowColumn.prototype.setValue = function (rawValue) {
         this.rawValue = rawValue;
-        this.parsedValue = this.column.parser.parse(rawValue);
+        try {
+            this.parsedValue = this.column.parser.parse(rawValue);
+        }
+        catch (error) {
+            var columnName = this.column.table.name + "." + this.column.name;
+            throw new Error("Error while parsing the value of [" + columnName + "]. Error message: " + error.message);
+        }
     };
     DataRowColumn.prototype.getColumnName = function () {
         return this.column.name;

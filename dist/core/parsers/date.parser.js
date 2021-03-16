@@ -30,6 +30,9 @@ var DateParser = /** @class */ (function (_super) {
         return _this;
     }
     DateParser.prototype.parse = function (val) {
+        if (!val) {
+            return this.getNullString();
+        }
         var dateString = moment_1["default"](val).format(this.format);
         return this.addQuotes(dateString);
     };

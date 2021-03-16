@@ -14,6 +14,10 @@ export class DateParser extends Parser implements iParser {
   }
 
   public parse(val: Date): string {
+    if (!val) {
+      return this.getNullString();
+    }
+
     const dateString: string = moment(val).format(this.format);
     return this.addQuotes(dateString);
   }

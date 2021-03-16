@@ -27,6 +27,9 @@ var NumberParser = /** @class */ (function (_super) {
         return _this;
     }
     NumberParser.prototype.parse = function (val) {
+        if (!val) {
+            return this.getNullString();
+        }
         var preparedValue = null;
         if (this.precision === 0) {
             preparedValue = String(parseInt(String(val)));
@@ -34,7 +37,7 @@ var NumberParser = /** @class */ (function (_super) {
         else {
             preparedValue = parseFloat(String(val)).toFixed(this.precision);
         }
-        return (!!val) ? preparedValue : this.getNullString();
+        return preparedValue;
     };
     NumberParser.withPrecision = function (reservedWords, type, precision) {
         var parser = new NumberParser(reservedWords, precision);
