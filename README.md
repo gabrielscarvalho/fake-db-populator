@@ -27,7 +27,7 @@ DELETE  FROM user WHERE id=1;
 
 ## Examples
 
-Clone [random-db-populator](https://github.com/gabrielscarvalho/random-db-populator-example) and check the [scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios).  
+Clone [random-db-populator](https://github.com/gabrielscarvalho/random-db-populator-example) and check the [JS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios) or [TS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios-ts)).
 
 
 ## Available databases:
