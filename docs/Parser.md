@@ -1,15 +1,15 @@
 # Parsers
 
-Parsers are **previous registered functions** with an **unique name** which will format a value to a query valid value.
+Parsers are **previous registered functions** with an **unique name** which will format a value to a **string query valid value**.
 
 
 ## Topics
 
-* - What is that?
-* - Where should I use it?
-* - How do I know which are available?
-* - How do I create a new one or update an existing ?
-* - What is the `ReservedWords` param that they use ?
+* What is that?
+* Where should I use it?
+* How do I know which are available?
+* How do I create a new one or update an existing ?
+* What is the `ReservedWords` param that they use ?
 
 
 ## What is that?

@@ -6,7 +6,7 @@ import { IntParser } from '../core/parsers/int.parser';
 import { NumberParser } from '../core/parsers/number.parser';
 import { RawParser } from '../core/parsers/raw.parser';
 import { StringParser } from '../core/parsers/string.parser';
-import { iDatabase, iDataRow, iDataRowColumn } from '../interfaces';
+import { iDatabase, iDataRowParsed } from '../interfaces';
 
 export class PostgresDatabase extends Database implements iDatabase {
  
@@ -28,29 +28,23 @@ export class PostgresDatabase extends Database implements iDatabase {
     return `/* ${comment} */ `;
   }
 
-  protected createInsertQuery(dataRow: iDataRow) : string {
-    const columns: string = dataRow.getColumnsName().map((columnName: string) => {
-      return this.getEntityParser().parse(columnName);
-    }).join(', ');  
-    
-    const values: string  = dataRow.getColumnsParsedValue().join(', ');
-    
-    const table = this.getEntityParser().parse(dataRow.table.name);
+  protected createInsertQuery(dataRow: iDataRowParsed) : string {
+    const columns: string = dataRow.values.getKeys().join(', ');   
+    const values: string  = dataRow.values.getValues().join(', ');
+   
+    const table = dataRow.tableName;
 
     return `INSERT INTO ${table} (${columns}) VALUES (${values});`;
   }
 
 
-  protected createDeleteQuery(dataRow: iDataRow): string {
-    const tableName: string = this.getEntityParser().parse(dataRow.table.name);
-
-    const dataRowColumns: iDataRowColumn[] = dataRow.getUniqueKeyColumns();
-
+  protected createDeleteQuery(dataRow: iDataRowParsed): string {
+    const tableName = dataRow.tableName;
+    
     const whereData: string[] = [];
-    (dataRowColumns || []).forEach((dataRowColumn: iDataRowColumn) => {
 
-      const columnName: string = this.getEntityParser().parse(dataRowColumn.getColumnName());
-      whereData.push(`${columnName}=${dataRowColumn.parsedValue}`);
+    dataRow.unique.forEachEntry((columnName: string, value: string) => {
+      whereData.push(`${columnName}=${value}`);
     });
 
     const where = whereData.join(' AND ');

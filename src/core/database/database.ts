@@ -1,4 +1,4 @@
-import { iDatabase, iDataRow, iParser, iDatabaseReservedWords, iTable } from '../../interfaces';
+import { iDatabase, iDataRow, iParser, iDatabaseReservedWords, iTable, iDataRowParsed } from '../../interfaces';
 import { Table } from './table';
 import { NamedMap } from '../utils/map';
 import { Optional } from '../utils/optional';
@@ -6,6 +6,7 @@ import QueryCommand from '../query-builder/query-command.enum';
 import { DatabaseReservedWords } from './reserved-words';
 import _ from 'lodash';
 import { EntityParser } from '../parsers/entity.parser';
+import { DataRowParsed } from '../data/data-row-parsed';
 
 export abstract class Database implements iDatabase {
 
@@ -13,7 +14,7 @@ export abstract class Database implements iDatabase {
   public parsers: NamedMap<iParser>;
   public reservedWords: iDatabaseReservedWords = new DatabaseReservedWords();
   public dataRows: iDataRow[];
-  private entityParser: EntityParser;
+  private entityParser: iParser;
 
   public constructor() {
     this.tables = new NamedMap<iTable>();
@@ -30,10 +31,6 @@ export abstract class Database implements iDatabase {
   public getParser(parserName: string): iParser {
     const optParser: Optional<iParser> = this.parsers.get(parserName, { throwIfNotExists: true });
     return optParser.get({ skipValidation: true });
-  }
-
-  public getEntityParser(): EntityParser {
-    return this.entityParser;
   }
 
   public addTable(tableName: string): iTable {
@@ -66,7 +63,7 @@ export abstract class Database implements iDatabase {
     return dataRow;
   }
 
-  public addDataRow(dataRow: iDataRow): iDatabase {
+  public addDataRow(dataRow: iDataRow): iDatabase {  
     this.dataRows.push(dataRow);
     return this;
   }
@@ -122,11 +119,13 @@ export abstract class Database implements iDatabase {
   protected createCommand(dataRow: iDataRow): string {
     let query: string = null;
  
+    const dataRowParsed: iDataRowParsed = new DataRowParsed(this.entityParser, dataRow);
+
     if (dataRow.queryCommand === QueryCommand.INSERT) {
-      query = this.createInsertQuery(dataRow);
+      query = this.createInsertQuery(dataRowParsed);
 
     } else if (dataRow.queryCommand === QueryCommand.DELETE) {
-      query = this.createDeleteQuery(dataRow);
+      query = this.createDeleteQuery(dataRowParsed);
     }
     
     if (query === null) {
@@ -148,12 +147,12 @@ export abstract class Database implements iDatabase {
    * Creates the insert query command.
    * @return string
   */
-  protected abstract createInsertQuery(dataRow: iDataRow): string;
+  protected abstract createInsertQuery(dataRow: iDataRowParsed): string;
 
 
   /**
    * Creates the delete query command.
    * @return string
   */
-  protected abstract createDeleteQuery(dataRow: iDataRow): string;
+  protected abstract createDeleteQuery(dataRow: iDataRowParsed): string;
 }

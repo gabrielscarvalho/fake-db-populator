@@ -58,6 +58,14 @@ export class NamedMap<T> implements iMap<T> {
     return names;
   }
 
+
+  public forEachEntry(callback :(key: string, value: T) => void): void {
+    (this.getKeys() || []).forEach((keyName: string) => {
+      const value: T = this.get(keyName).get({ skipValidation: true});
+      callback(keyName, value);
+    });
+  }
+
   public getValues(): T[] {
     const values: T[] = [];
 

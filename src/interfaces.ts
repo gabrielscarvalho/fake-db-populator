@@ -8,7 +8,8 @@ export interface iMap<T> {
   delete: (name: string, config: { throwIfNotExists: boolean }) => boolean;
   find: (filter: any) => Optional<T>;
   getKeys: () => string[];
-  getValues: () =>T[];  
+  getValues: () =>T[];
+  forEachEntry(callback :(key: string, value: T) => void): void
 }
 
 export interface iParser {
@@ -81,14 +82,16 @@ export interface iDataRow {
   getColumnsName: () => string[];
   
   /**
-   * Return all parsed value
-  */
-  getColumnsParsedValue: () => string[];
-  
-  /**
    * Prints the object to help seeing data.
   */
   print: () => void;
+}
+
+export interface iDataRowParsed {
+  tableName: string;
+  queryCommand: QueryCommand;
+  values: iMap<string>;
+  unique: iMap<string>;
 }
 
 export interface iColumn {

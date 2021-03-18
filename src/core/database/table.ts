@@ -1,4 +1,4 @@
-import { iColumn, iDatabase, iDataRow, iTable, iValueGenerator } from '../../interfaces';
+import { iColumn, iDatabase, iDataRow, iParser, iTable, iValueGenerator } from '../../interfaces';
 import { DataRow } from '../data/data-row';
 import QueryCommand from '../query-builder/query-command.enum';
 import { NamedMap } from '../utils/map';

@@ -1,5 +1,4 @@
 import { iColumn, iDataRow, iDataRowColumn, iTable } from '../../interfaces';
-import { Table } from '../database/table';
 import QueryCommand from '../query-builder/query-command.enum';
 import { NamedMap } from '../utils/map';
 import { Optional } from '../utils/optional';
@@ -11,7 +10,6 @@ export class DataRow implements iDataRow {
 
   public data: NamedMap<DataRowColumn>;
   public hasCreatedQuery: boolean = false;
-
 
   public constructor(
     public queryCommand: QueryCommand, 

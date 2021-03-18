@@ -108,6 +108,7 @@ database.insert('t_order_item');
 
 
 console.log(database.toSQL().join("\n"));
+console.log(database.rollback().join("\n"));
 
 // Run to see the result:
 // node scenarios/5-make-data-more-realistic-othe-tables.js
