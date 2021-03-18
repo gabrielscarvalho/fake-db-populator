@@ -1,7 +1,7 @@
 {
   "name": "random-db-populator",
   "types": "./dist/index.d.ts",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "",
   "main": "generator.js",
   "scripts": {
