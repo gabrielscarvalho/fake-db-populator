@@ -1,4 +1,4 @@
-# Random Db Populator (PostgreSQL & MySQL)
+# Random Db Populator
 
 Make it easier to populate your **POSTGRES AND MYSQL** test environments, creating inserts with **consistent random data**. With a clear language, you can focus on what makes your scenario unique.
 
