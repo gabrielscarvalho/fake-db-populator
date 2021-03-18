@@ -78,33 +78,14 @@ console.log(database.rollback().join('\n');
 
 ### Parsers
 
+Parsers are **previous registered functions** with an **unique name** which will format a value to a query valid value.
+Check the [full docs](/docs/Parser.md)
+
 ```typescript
 const parser = "string";
-database.addColumn("column_name", parser, Random.FirstName());
+database.addTable('t_user').addColumn("column_name", parser, Random.FirstName());
 ```
 
-#### How do I know which are the available parsers ?
-
-```typescript
-const database = new PostgresDatabase();
-database.printParsers();
-```
-
-##### Currently, we have:
-
-|**type**| **description**|
-|--|--|
-|string| Parse as simple string|
-|number| Parse number to number with precision: 2|
-|int| Parse number to int|
-|date| Parse date to format: "YYYY-MM-DD"|
-|datetime| Parse date to format: "YYYY-MM-DD hh:mm:ss"|
-|raw| Will not parse. The received value will be used directly on the query. You can use this type to send functions, like NOW()|
-|boolean| Parses values to boolean.|
-
-#### How do I create a new Parser?
-
-Check this example: [javascript](https://github.com/gabrielscarvalho/random-db-populator-example/blob/master/scenarios/3-new-parser.js) or [typescript](https://github.com/gabrielscarvalho/random-db-populator-example/blob/master/scenarios-ts/3-new-parser.ts)
 
 ### Value Generators
 
