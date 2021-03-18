@@ -43,6 +43,12 @@ export interface iDataRowColumn {
    * @return string
    */
   getColumnName: () => string;
+
+  /**
+   * Check if value is part of unique key.
+   * @return boolean
+   */
+  isPartOfUniqueKey: () => boolean;
 }
 
 export interface iDataRow {
@@ -51,12 +57,6 @@ export interface iDataRow {
   hasCreatedQuery: boolean;
   table: iTable;
   comment: string;
-
-  /**
-   * Return all iDataRowColumn of columns that represent the primary key.
-   * @return iDataRowColumn[]
-  */
-  getUniqueKeyColumns: () => iDataRowColumn[];
 
   /**
    * Return the data from the specified column.
@@ -75,11 +75,6 @@ export interface iDataRow {
    * Set manually the new raw value of a column.
   */
   setRawValue: (columnName: string, newValue: any) => void;
-
-  /**
-   * Return all columns name.
-  */
-  getColumnsName: () => string[];
   
   /**
    * Prints the object to help seeing data.

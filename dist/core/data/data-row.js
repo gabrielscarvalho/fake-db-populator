@@ -26,21 +26,6 @@ var DataRow = /** @class */ (function () {
     DataRow.prototype.setRawValue = function (columnName, newRawValue) {
         this.getColumnData(columnName).setValue(newRawValue);
     };
-    DataRow.prototype.getUniqueKeyColumns = function () {
-        var _this = this;
-        var columns = this.table.getUniqueKeyColumns();
-        return (columns || []).map(function (column) {
-            return _this.getColumnData(column.name);
-        });
-    };
-    DataRow.prototype.getColumnsName = function () {
-        return this.data.getKeys();
-    };
-    DataRow.prototype.getColumnsParsedValue = function () {
-        return this.data.getValues().map(function (dataRowColumn) {
-            return dataRowColumn.parsedValue;
-        });
-    };
     DataRow.prototype.print = function () {
         var _this = this;
         var obj = new Object();

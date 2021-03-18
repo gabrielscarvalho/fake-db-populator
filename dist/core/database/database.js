@@ -8,12 +8,12 @@ var table_1 = require("./table");
 var map_1 = require("../utils/map");
 var optional_1 = require("../utils/optional");
 var query_command_enum_1 = __importDefault(require("../query-builder/query-command.enum"));
-var reserved_words_1 = require("./reserved-words");
 var lodash_1 = __importDefault(require("lodash"));
 var entity_parser_1 = require("../parsers/entity.parser");
+var data_row_parsed_1 = require("../data/data-row-parsed");
 var Database = /** @class */ (function () {
-    function Database() {
-        this.reservedWords = new reserved_words_1.DatabaseReservedWords();
+    function Database(reservedWords) {
+        this.reservedWords = reservedWords;
         this.tables = new map_1.NamedMap();
         this.parsers = new map_1.NamedMap();
         this.dataRows = [];
@@ -26,9 +26,6 @@ var Database = /** @class */ (function () {
     Database.prototype.getParser = function (parserName) {
         var optParser = this.parsers.get(parserName, { throwIfNotExists: true });
         return optParser.get({ skipValidation: true });
-    };
-    Database.prototype.getEntityParser = function () {
-        return this.entityParser;
     };
     Database.prototype.addTable = function (tableName) {
         var table = new table_1.Table(this, tableName);
@@ -97,11 +94,12 @@ var Database = /** @class */ (function () {
     };
     Database.prototype.createCommand = function (dataRow) {
         var query = null;
+        var dataRowParsed = new data_row_parsed_1.DataRowParsed(this.entityParser, dataRow);
         if (dataRow.queryCommand === query_command_enum_1["default"].INSERT) {
-            query = this.createInsertQuery(dataRow);
+            query = this.createInsertQuery(dataRowParsed);
         }
         else if (dataRow.queryCommand === query_command_enum_1["default"].DELETE) {
-            query = this.createDeleteQuery(dataRow);
+            query = this.createDeleteQuery(dataRowParsed);
         }
         if (query === null) {
             throw new Error("Impl not found to query command:  [" + dataRow.queryCommand + "].");

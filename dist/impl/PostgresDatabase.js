@@ -22,39 +22,37 @@ var int_parser_1 = require("../core/parsers/int.parser");
 var number_parser_1 = require("../core/parsers/number.parser");
 var raw_parser_1 = require("../core/parsers/raw.parser");
 var string_parser_1 = require("../core/parsers/string.parser");
+var database_2 = require("../shortcut/database");
 var PostgresDatabase = /** @class */ (function (_super) {
     __extends(PostgresDatabase, _super);
     function PostgresDatabase() {
-        var _this = _super.call(this) || this;
-        _this.addParser(new string_parser_1.StringParser(_this.reservedWords));
-        _this.addParser(new number_parser_1.NumberParser(_this.reservedWords));
-        _this.addParser(new int_parser_1.IntParser(_this.reservedWords));
-        _this.addParser(new date_parser_1.DateParser(_this.reservedWords));
-        _this.addParser(new datetime_parser_1.DateTimeParser(_this.reservedWords));
-        _this.addParser(new raw_parser_1.RawParser(_this.reservedWords));
-        _this.addParser(new boolean_parser_1.BooleanParser(_this.reservedWords));
+        var _this = this;
+        // change reserved words if your database has any structural diff from Postgres
+        var reservedWords = new database_2.DatabaseReservedWords();
+        _this = _super.call(this, reservedWords) || this;
+        _this.addParser(new string_parser_1.StringParser(reservedWords));
+        _this.addParser(new number_parser_1.NumberParser(reservedWords));
+        _this.addParser(new int_parser_1.IntParser(reservedWords));
+        _this.addParser(new date_parser_1.DateParser(reservedWords));
+        _this.addParser(new datetime_parser_1.DateTimeParser(reservedWords));
+        _this.addParser(new raw_parser_1.RawParser(reservedWords));
+        _this.addParser(new boolean_parser_1.BooleanParser(reservedWords));
         return _this;
     }
     PostgresDatabase.prototype.createComment = function (comment) {
         return "/* " + comment + " */ ";
     };
     PostgresDatabase.prototype.createInsertQuery = function (dataRow) {
-        var _this = this;
-        var columns = dataRow.getColumnsName().map(function (columnName) {
-            return _this.getEntityParser().parse(columnName);
-        }).join(', ');
-        var values = dataRow.getColumnsParsedValue().join(', ');
-        var table = this.getEntityParser().parse(dataRow.table.name);
+        var columns = dataRow.values.getKeys().join(', ');
+        var values = dataRow.values.getValues().join(', ');
+        var table = dataRow.tableName;
         return "INSERT INTO " + table + " (" + columns + ") VALUES (" + values + ");";
     };
     PostgresDatabase.prototype.createDeleteQuery = function (dataRow) {
-        var _this = this;
-        var tableName = this.getEntityParser().parse(dataRow.table.name);
-        var dataRowColumns = dataRow.getUniqueKeyColumns();
+        var tableName = dataRow.tableName;
         var whereData = [];
-        (dataRowColumns || []).forEach(function (dataRowColumn) {
-            var columnName = _this.getEntityParser().parse(dataRowColumn.getColumnName());
-            whereData.push(columnName + "=" + dataRowColumn.parsedValue);
+        dataRow.unique.forEachEntry(function (columnName, value) {
+            whereData.push(columnName + "=" + value);
         });
         var where = whereData.join(' AND ');
         return "DELETE FROM " + tableName + " WHERE " + where + ";";

@@ -1,6 +1,8 @@
 # Random Db Populator
 
-Make it easier to populate your **POSTGRES** test environments, creating inserts with **consistent random data**. With a clear language, you can focus on what makes your scenario unique. (Other databases will be added soon.)
+Make it easier to populate your **POSTGRES** test environments, creating inserts with **consistent random data**. With a clear language, you can focus on what makes your scenario unique.
+
+Other databases will be added soon. If you don't want to wait: [Create New Database doc](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/NewDatabase.md)
 
 **Example**: insert a user which name is **John** and is **inactive**. John must have **2 addresses**.
 All other params I accept a random (but still valid) value.
@@ -32,6 +34,9 @@ DELETE FROM "t_user" WHERE "id"=1;
 - Postgres
 
 Others database will be added in the future.
+**I want to create my own database**: Check [this doc](Check the [New Database Docs](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/NewDatabase.md)!
+
+
 
 # Examples
 

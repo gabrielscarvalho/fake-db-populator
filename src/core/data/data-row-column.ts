@@ -28,4 +28,13 @@ export class DataRowColumn implements iDataRowColumn {
   public getColumnName(): string {
     return this.column.name;
   }
+
+  public isPartOfUniqueKey(): boolean {
+    const isKey: iColumn = this.column.table.getUniqueKeyColumns().find((column: iColumn) => {
+      return column.name === this.column.name;
+    });
+    return !!isKey;
+  }
+
+
 }

@@ -14,6 +14,7 @@ export interface iMap<T> {
     find: (filter: any) => Optional<T>;
     getKeys: () => string[];
     getValues: () => T[];
+    forEachEntry(callback: (key: string, value: T) => void): void;
 }
 export interface iParser {
     type: string;
@@ -41,6 +42,11 @@ export interface iDataRowColumn {
      * @return string
      */
     getColumnName: () => string;
+    /**
+     * Check if value is part of unique key.
+     * @return boolean
+     */
+    isPartOfUniqueKey: () => boolean;
 }
 export interface iDataRow {
     data: iMap<iDataRowColumn>;
@@ -48,11 +54,6 @@ export interface iDataRow {
     hasCreatedQuery: boolean;
     table: iTable;
     comment: string;
-    /**
-     * Return all iDataRowColumn of columns that represent the primary key.
-     * @return iDataRowColumn[]
-    */
-    getUniqueKeyColumns: () => iDataRowColumn[];
     /**
      * Return the data from the specified column.
      * @param columnName
@@ -69,17 +70,15 @@ export interface iDataRow {
     */
     setRawValue: (columnName: string, newValue: any) => void;
     /**
-     * Return all columns name.
-    */
-    getColumnsName: () => string[];
-    /**
-     * Return all parsed value
-    */
-    getColumnsParsedValue: () => string[];
-    /**
      * Prints the object to help seeing data.
     */
     print: () => void;
+}
+export interface iDataRowParsed {
+    tableName: string;
+    queryCommand: QueryCommand;
+    values: iMap<string>;
+    unique: iMap<string>;
 }
 export interface iColumn {
     table: iTable;

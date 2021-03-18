@@ -12,11 +12,11 @@ export abstract class Database implements iDatabase {
 
   public tables: NamedMap<iTable>;
   public parsers: NamedMap<iParser>;
-  public reservedWords: iDatabaseReservedWords = new DatabaseReservedWords();
+  
   public dataRows: iDataRow[];
   private entityParser: iParser;
 
-  public constructor() {
+  public constructor(public reservedWords: iDatabaseReservedWords) {
     this.tables = new NamedMap<iTable>();
     this.parsers = new NamedMap<iParser>();
     this.dataRows = [];

@@ -51,6 +51,13 @@ var NamedMap = /** @class */ (function () {
         });
         return names;
     };
+    NamedMap.prototype.forEachEntry = function (callback) {
+        var _this = this;
+        (this.getKeys() || []).forEach(function (keyName) {
+            var value = _this.get(keyName).get({ skipValidation: true });
+            callback(keyName, value);
+        });
+    };
     NamedMap.prototype.getValues = function () {
         var values = [];
         this.data.forEach(function (val) {

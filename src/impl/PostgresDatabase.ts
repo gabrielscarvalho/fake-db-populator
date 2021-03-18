@@ -7,22 +7,23 @@ import { NumberParser } from '../core/parsers/number.parser';
 import { RawParser } from '../core/parsers/raw.parser';
 import { StringParser } from '../core/parsers/string.parser';
 import { iDatabase, iDataRowParsed } from '../interfaces';
+import { DatabaseReservedWords } from '../shortcut/database';
 
 export class PostgresDatabase extends Database implements iDatabase {
  
-
   public constructor() {
-    super();
+    // change reserved words if your database has any structural diff from Postgres
+    const reservedWords = new DatabaseReservedWords();
+    super(reservedWords);
 
-    this.addParser(new StringParser(this.reservedWords));
-    this.addParser(new NumberParser(this.reservedWords));
-    this.addParser(new IntParser(this.reservedWords));
-    this.addParser(new DateParser(this.reservedWords));
-    this.addParser(new DateTimeParser(this.reservedWords));
-    this.addParser(new RawParser(this.reservedWords));
-    this.addParser(new BooleanParser(this.reservedWords));
+    this.addParser(new StringParser(reservedWords));
+    this.addParser(new NumberParser(reservedWords));
+    this.addParser(new IntParser(reservedWords));
+    this.addParser(new DateParser(reservedWords));
+    this.addParser(new DateTimeParser(reservedWords));
+    this.addParser(new RawParser(reservedWords));
+    this.addParser(new BooleanParser(reservedWords));
   }
-
 
   protected createComment(comment: string): string {
     return `/* ${comment} */ `;
@@ -36,7 +37,6 @@ export class PostgresDatabase extends Database implements iDatabase {
 
     return `INSERT INTO ${table} (${columns}) VALUES (${values});`;
   }
-
 
   protected createDeleteQuery(dataRow: iDataRowParsed): string {
     const tableName = dataRow.tableName;

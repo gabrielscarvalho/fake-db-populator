@@ -1,17 +1,15 @@
-import { iDatabase, iDataRow, iParser, iDatabaseReservedWords, iTable } from '../../interfaces';
+import { iDatabase, iDataRow, iParser, iDatabaseReservedWords, iTable, iDataRowParsed } from '../../interfaces';
 import { NamedMap } from '../utils/map';
 import { Optional } from '../utils/optional';
-import { EntityParser } from '../parsers/entity.parser';
 export declare abstract class Database implements iDatabase {
+    reservedWords: iDatabaseReservedWords;
     tables: NamedMap<iTable>;
     parsers: NamedMap<iParser>;
-    reservedWords: iDatabaseReservedWords;
     dataRows: iDataRow[];
     private entityParser;
-    constructor();
+    constructor(reservedWords: iDatabaseReservedWords);
     addParser(parser: iParser): iDatabase;
     getParser(parserName: string): iParser;
-    getEntityParser(): EntityParser;
     addTable(tableName: string): iTable;
     getTable(tableName: string): iTable;
     getLastDataRow(tableName: string): Optional<iDataRow>;
@@ -30,10 +28,10 @@ export declare abstract class Database implements iDatabase {
      * Creates the insert query command.
      * @return string
     */
-    protected abstract createInsertQuery(dataRow: iDataRow): string;
+    protected abstract createInsertQuery(dataRow: iDataRowParsed): string;
     /**
      * Creates the delete query command.
      * @return string
     */
-    protected abstract createDeleteQuery(dataRow: iDataRow): string;
+    protected abstract createDeleteQuery(dataRow: iDataRowParsed): string;
 }

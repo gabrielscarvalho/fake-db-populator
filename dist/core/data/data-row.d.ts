@@ -13,9 +13,6 @@ export declare class DataRow implements iDataRow {
     getColumnData(columnName: string): iDataRowColumn;
     getRawValue(columnName: string): any;
     setRawValue(columnName: string, newRawValue: any): void;
-    getUniqueKeyColumns(): iDataRowColumn[];
-    getColumnsName(): string[];
-    getColumnsParsedValue(): string[];
     print(): void;
     protected generateData(): void;
 }

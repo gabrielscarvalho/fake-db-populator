@@ -8,4 +8,5 @@ export declare class DataRowColumn implements iDataRowColumn {
     getRawValueAsValueGen(): iValueGenerator;
     setValue(rawValue: any): void;
     getColumnName(): string;
+    isPartOfUniqueKey(): boolean;
 }

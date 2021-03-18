@@ -15,12 +15,15 @@ var __extends = (this && this.__extends) || (function () {
 exports.__esModule = true;
 exports.EntityParser = void 0;
 var parser_1 = require("./parser");
+/**
+ * Parser for table attributes like: column name and table name.
+*/
 var EntityParser = /** @class */ (function (_super) {
     __extends(EntityParser, _super);
     function EntityParser() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = 'entity';
-        _this.description = 'Parser for column names. You should not use for values.';
+        _this.description = 'Parser for table attributes, like column name and table name.';
         return _this;
     }
     EntityParser.prototype.parse = function (val) {

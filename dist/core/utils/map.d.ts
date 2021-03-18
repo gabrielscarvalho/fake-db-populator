@@ -14,6 +14,7 @@ export declare class NamedMap<T> implements iMap<T> {
         throwIfNotExists: boolean;
     }): boolean;
     getKeys(): string[];
+    forEachEntry(callback: (key: string, value: T) => void): void;
     getValues(): T[];
     find(filter: any): Optional<T>;
 }

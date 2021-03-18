@@ -25,16 +25,10 @@ export class DataRowParsed implements iDataRowParsed {
       const parsedValue: string = column.parsedValue;
 
       this.values.add(parsedColumnName, parsedValue);
+
+      if (column.isPartOfUniqueKey()){
+        this.unique.add(parsedColumnName, parsedValue);
+      }
     });
-
-    (dataRow.getUniqueKeyColumns() || []).forEach((dataColumn: iDataRowColumn) => {
-      
-      const parsedColumnName: string = this.entityParser.parse(dataColumn.column.name);
-      const parsedValue: string = dataColumn.parsedValue;
-      
-      this.unique.add(parsedColumnName, parsedValue);
-    });
-
-
   }
 }
