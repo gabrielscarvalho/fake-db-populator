@@ -79,7 +79,7 @@ console.log(database.rollback().join('\n');
 ### Parsers
 
 Parsers are **previous registered functions** with an **unique name** which will format a value to a query valid value.
-Check the [full docs](/docs/Parser.md)
+Check the [Parser Docs](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/Parser.md)
 
 ```typescript
 const parser = "string";
