@@ -17,3 +17,5 @@ var table_1 = require("../core/database/table");
 __createBinding(exports, table_1, "Table");
 var PostgresDatabase_1 = require("../impl/PostgresDatabase");
 __createBinding(exports, PostgresDatabase_1, "PostgresDatabase");
+var MySQLDatabase_1 = require("../impl/MySQLDatabase");
+__createBinding(exports, MySQLDatabase_1, "MySQLDatabase");

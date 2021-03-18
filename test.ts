@@ -1,4 +1,4 @@
-import { LastValue, Fixed }  from './src/index';
+import { LastValue, Fixed, MySQLDatabase }  from './src/index';
 import { PostgresDatabase }  from './src/index';
 import { AutoIncrement, Random, DateGen }  from './src/index';
 
@@ -13,7 +13,7 @@ import { AutoIncrement, Random, DateGen }  from './src/index';
 
 // Part 1: Database Configuration:  (When creating your own, split this part in a common file, to be reused)
 
-const database = new PostgresDatabase();
+const database = new MySQLDatabase();
 const autoIncrement = new AutoIncrement();
 
 autoIncrement

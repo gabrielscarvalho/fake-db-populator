@@ -1,6 +1,6 @@
 # Random Db Populator
 
-Make it easier to populate your **POSTGRES** test environments, creating inserts with **consistent random data**. With a clear language, you can focus on what makes your scenario unique.
+Make it easier to populate your **POSTGRES AND MYSQL** test environments, creating inserts with **consistent random data**. With a clear language, you can focus on what makes your scenario unique.
 
 Other databases will be added soon. If you don't want to wait: [Create New Database doc](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/NewDatabase.md)
 
@@ -32,6 +32,7 @@ DELETE FROM "t_user" WHERE "id"=1;
 ## Available databases:
 
 - Postgres
+- MySQL
 
 Others database will be added in the future.
 **I want to create my own database**: Check [this doc](Check the [New Database Docs](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/NewDatabase.md)!
@@ -59,7 +60,9 @@ Every table's column has 3 required info:
 Here you can see the table being created:
 
 ```typescript
-const database = new PostgresDatabase();
+import { PostgresDatabase, MySQLDatabase } from 'random-db-populator/dist/index';
+
+const database = new PostgresDatabase(); // new MySQLDatabase(); if you want to use as MySQL! 
 
 database.addTable("t_user")
   //.addColumn(name, parser, value_generator)
