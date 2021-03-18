@@ -82,3 +82,19 @@ For example, `NumberParser` you have this static method that give you a new Numb
 ## What is the `ReservedWords` param that they require ?
 
 ReservedWords are words or characters that are related to your database. For example, for Postgres you have the reserved word `null` when you want to add a null value.
+
+When you create a class that `extends Parser` you have some methods that can help you using these reserved words:
+
+For example, check the [DateParser](https://github.com/gabrielscarvalho/random-db-populator/blob/master/src/core/parsers/date.parser.ts):
+
+```typescript 
+  public parse(val: Date): string {
+    if (!val) {
+      return this.getNullString(); // -------------------------- Reserved word for null
+    }
+
+    const dateString: string = moment(val).format(this.format);
+    return this.addQuotes(dateString); // -------------------------- For Postgres, every string value must have single-quote involving it.
+  }
+```
+

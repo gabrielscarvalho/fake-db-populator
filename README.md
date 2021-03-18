@@ -86,75 +86,37 @@ const parser = "string";
 database.addTable('t_user').addColumn("column_name", parser, Random.FirstName());
 ```
 
+#### Available Types
+
+* string
+* number
+* int
+* date
+* datetime
+* raw
+* boolean
+
+Check the [Parser Docs](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/Parser.md)
+
 
 ### Value Generators
+
+Value generator are **pure functions** that **return random value** everytime they are executed.
+Check the [Value Generator Docs](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/ValueGenerator.md)
 
 ```typescript
 const valueGenerator = Random.FirstName();
 database.addColumn("column_name", "string", valueGenerator);
 ```
 
-#### Which are the available ValueGenerators ?
+#### Available types:
+* AutoIncrement
+* LastValue
+* Random
+* Date 
+* Fixed
 
-##### Random
-
-Random provides a huge variety of methods to help you generate your random data.
-Check all of them [here](https://github.com/gabrielscarvalho/random-db-populator/blob/master/src/core/value-generator/random.ts).
-
-[This example](https://github.com/gabrielscarvalho/random-db-populator-example/blob/master/scenarios-ts/7-full-scenario.ts) uses a lot of them.
-
-##### AutoIncrement
-
-Help you generating ids for example.
-
-```typescript
-const autoIncrement = new AutoIncrement();
-autoIncrement.initialId("user.id", 100);
-
-database
-  .addTable("t_user")
-  .addColumn("id", "int", autoIncrement.valueGen("user.id", 2)); // default increaseBy = 1
-
-database.insert("t_user"); // id = 102
-database.insert("t_user"); // id = 104
-database.insert("t_user"); // id = 106
-```
-
-##### LastValue
-
-Help you recovering the last emitted value from a column.
-Use this one for copying values from tables - for example, foreign keys.
-**Important**: You must use this method to recover data created from other tables. If you use to capture a column from your own table, you might collect data from previous register (not the register you are creating).
-
-```typescript
-const autoIncrement = new AutoIncrement();
-autoIncrement.initialId("user.id", 100);
-
-const tUser = database
-  .addTable("t_user")
-  .addColumn("id", "int", autoIncrement.valueGen("user.id"));
-
-const tAddress = database
-  .addTable("t_address")
-  .addColumn("id", "int", autoIncrement.valueGen("address.id"))
-  .addColumn("user_id", "int", LastValue(tUser.getColumn("id")));
-```
-
-##### Date
-
-Return valid random date.
-
-```typescript
-database.addColumn(
-  "birth",
-  "date",
-  DateGen.between({ year: { min: 2000, max: 2005 } })
-);
-```
-
-##### Fixed
-
-Return a fixed value. When you don't want to create a random function.
+Check the [Value Generator Docs](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/ValueGenerator.md)
 
 
 ## Next steps
