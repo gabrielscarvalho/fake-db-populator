@@ -48,8 +48,7 @@ export class Table implements iTable {
   }
 
   public getColumn(columnName: string): iColumn {
-    const column: Optional<iColumn> =this.columns.get(columnName, { throwIfNotExists: true});
-    return column.getForced();
+    return this.columns.getForced(columnName);
   }
 
   public getLastDataRow() : Optional<iDataRow> {

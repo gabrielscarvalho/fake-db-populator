@@ -8,6 +8,7 @@ export interface iMap<T> {
     get: (name: string, config: {
         throwIfNotExists: boolean;
     }) => Optional<T>;
+    getForced: (name: string) => T;
     delete: (name: string, config: {
         throwIfNotExists: boolean;
     }) => boolean;

@@ -11,7 +11,6 @@ export class NamedMap<T> implements iMap<T> {
     this.data = new Map<string, T>();
   }
 
-
   public has(name: string): boolean {
     return this.data.has(name);
   }
@@ -24,16 +23,21 @@ export class NamedMap<T> implements iMap<T> {
     return this;
   }
 
-  public get(name: string, config: { throwIfNotExists: boolean } = { throwIfNotExists : false } ): Optional<T> {
+  public get(name: string): Optional<T> {
     if (!this.has(name)) {
-      if(config.throwIfNotExists) {
-        const validKeys: string = this.getKeys().join(',');
-        throw new Error(`Could not get unknown '${name}' from list.  Did you spell it right? Valid values: [${validKeys}]`);
-      }
       return Optional.fromNull<T>();
     }
     return Optional.fromValue(this.data.get(name));
   }
+
+  public getForced(name: string): T {
+    if (!this.has(name)) {
+      const validKeys: string = this.getKeys().join(',');
+      throw new Error(`Could not get unknown '${name}' from list.  Did you spell it right? Valid values: [${validKeys}]`);
+    }
+    return this.data.get(name);
+  }
+
 
   public delete(name: string, config: { throwIfNotExists: boolean } = { throwIfNotExists : false }): boolean {
     if(!this.has(name)) {

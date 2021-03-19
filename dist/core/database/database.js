@@ -24,8 +24,7 @@ var Database = /** @class */ (function () {
         return this;
     };
     Database.prototype.getParser = function (parserName) {
-        var optParser = this.parsers.get(parserName, { throwIfNotExists: true });
-        return optParser.getForced();
+        return this.parsers.getForced(parserName);
     };
     Database.prototype.addTable = function (tableName) {
         var table = new table_1.Table(this, tableName);
@@ -33,8 +32,7 @@ var Database = /** @class */ (function () {
         return table;
     };
     Database.prototype.getTable = function (tableName) {
-        var optTable = this.tables.get(tableName, { throwIfNotExists: true });
-        return optTable.getForced();
+        return this.tables.getForced(tableName);
     };
     Database.prototype.getLastDataRow = function (tableName) {
         var lastRow = null;

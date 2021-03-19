@@ -7,9 +7,8 @@ export declare class NamedMap<T> implements iMap<T> {
     add(name: string, content: T, config?: {
         throwIfExists: boolean;
     }): iMap<T>;
-    get(name: string, config?: {
-        throwIfNotExists: boolean;
-    }): Optional<T>;
+    get(name: string): Optional<T>;
+    getForced(name: string): T;
     delete(name: string, config?: {
         throwIfNotExists: boolean;
     }): boolean;

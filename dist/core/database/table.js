@@ -36,8 +36,7 @@ var Table = /** @class */ (function () {
         return this;
     };
     Table.prototype.getColumn = function (columnName) {
-        var column = this.columns.get(columnName, { throwIfNotExists: true });
-        return column.getForced();
+        return this.columns.getForced(columnName);
     };
     Table.prototype.getLastDataRow = function () {
         return this.database.getLastDataRow(this.name);

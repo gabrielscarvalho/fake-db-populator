@@ -17,8 +17,7 @@ var DataRow = /** @class */ (function () {
         this.generateData();
     }
     DataRow.prototype.getColumnData = function (columnName) {
-        var optDataRow = this.data.get(columnName, { throwIfNotExists: true });
-        return optDataRow.getForced();
+        return this.data.getForced(columnName);
     };
     DataRow.prototype.getRawValue = function (columnName) {
         return this.getColumnData(columnName).rawValue;
@@ -30,8 +29,7 @@ var DataRow = /** @class */ (function () {
         var _this = this;
         var obj = new Object();
         this.data.getKeys().forEach(function (keyName) {
-            var optDataRowColumn = _this.data.get(keyName, { throwIfNotExists: true });
-            var dataRowColumn = optDataRowColumn.getForced();
+            var dataRowColumn = _this.data.getForced(keyName);
             obj[keyName] = dataRowColumn.rawValue;
         });
         console.log("DataRow object from: [" + this.table.name + "] contains value: ", JSON.stringify(obj));

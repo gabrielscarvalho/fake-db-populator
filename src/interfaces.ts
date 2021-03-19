@@ -5,6 +5,7 @@ export interface iMap<T> {
   has: (name: string) => boolean ;
   add: (name: string, content: T, config: { throwIfExists: boolean }) => iMap<T>;
   get: (name: string, config: { throwIfNotExists: boolean }) => Optional<T>;
+  getForced: (name: string) => T;
   delete: (name: string, config: { throwIfNotExists: boolean }) => boolean;
   find: (filter: any) => Optional<T>;
   getKeys: () => string[];

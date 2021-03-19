@@ -1,18 +1,17 @@
-import { iDatabase, iDataRow, iParser, iDatabaseReservedWords, iTable, iDataRowParsed } from '../../interfaces';
-import { Table } from './table';
+import _ from 'lodash';
+import { iDatabase, iDatabaseReservedWords, iDataRow, iDataRowParsed, iParser, iTable } from '../../interfaces';
+import { DataRowParsed } from '../data/data-row-parsed';
+import { EntityParser } from '../parsers/entity.parser';
+import QueryCommand from '../query-builder/query-command.enum';
 import { NamedMap } from '../utils/named.map';
 import { Optional } from '../utils/optional';
-import QueryCommand from '../query-builder/query-command.enum';
-import { DatabaseReservedWords } from './reserved-words';
-import _ from 'lodash';
-import { EntityParser } from '../parsers/entity.parser';
-import { DataRowParsed } from '../data/data-row-parsed';
+import { Table } from './table';
 
 export abstract class Database implements iDatabase {
 
   public tables: NamedMap<iTable>;
   public parsers: NamedMap<iParser>;
-  
+
   public dataRows: iDataRow[];
   private entityParser: iParser;
 
@@ -29,8 +28,8 @@ export abstract class Database implements iDatabase {
   }
 
   public getParser(parserName: string): iParser {
-    const optParser: Optional<iParser> = this.parsers.get(parserName, { throwIfNotExists: true });
-    return optParser.getForced();
+    return this.parsers.getForced(parserName);
+
   }
 
   public addTable(tableName: string): iTable {
@@ -40,8 +39,7 @@ export abstract class Database implements iDatabase {
   }
 
   public getTable(tableName: string): iTable {
-    const optTable: Optional<iTable> = this.tables.get(tableName, { throwIfNotExists: true });
-    return optTable.getForced();
+    return this.tables.getForced(tableName);
   }
 
   public getLastDataRow(tableName: string): Optional<iDataRow> {
@@ -63,7 +61,7 @@ export abstract class Database implements iDatabase {
     return dataRow;
   }
 
-  public addDataRow(dataRow: iDataRow): iDatabase {  
+  public addDataRow(dataRow: iDataRow): iDatabase {
     this.dataRows.push(dataRow);
     return this;
   }
@@ -94,7 +92,7 @@ export abstract class Database implements iDatabase {
 
     const deleteRows = _.cloneDeep(alreadyExecuted).reverse();
 
-    (deleteRows || []).forEach((dataRow: iDataRow) => {     
+    (deleteRows || []).forEach((dataRow: iDataRow) => {
       dataRow.queryCommand = QueryCommand.DELETE;
       queries.push(this.createCommand(dataRow));
 
@@ -118,7 +116,7 @@ export abstract class Database implements iDatabase {
 
   protected createCommand(dataRow: iDataRow): string {
     let query: string = null;
- 
+
     const dataRowParsed: iDataRowParsed = new DataRowParsed(this.entityParser, dataRow);
 
     if (dataRow.queryCommand === QueryCommand.INSERT) {
@@ -127,7 +125,7 @@ export abstract class Database implements iDatabase {
     } else if (dataRow.queryCommand === QueryCommand.DELETE) {
       query = this.createDeleteQuery(dataRowParsed);
     }
-    
+
     if (query === null) {
       throw new Error(`Impl not found to query command:  [${dataRow.queryCommand}].`);
     }
@@ -140,7 +138,7 @@ export abstract class Database implements iDatabase {
    * Creates the insert query command.
    * @return string
   */
- protected abstract createComment(comment: string): string;
+  protected abstract createComment(comment: string): string;
 
 
   /**
