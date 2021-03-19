@@ -4,13 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 exports.Database = void 0;
-var table_1 = require("./table");
+var lodash_1 = __importDefault(require("lodash"));
+var data_row_parsed_1 = require("../data/data-row-parsed");
+var entity_parser_1 = require("../parsers/entity.parser");
+var query_command_enum_1 = __importDefault(require("../query-builder/query-command.enum"));
 var named_map_1 = require("../utils/named.map");
 var optional_1 = require("../utils/optional");
-var query_command_enum_1 = __importDefault(require("../query-builder/query-command.enum"));
-var lodash_1 = __importDefault(require("lodash"));
-var entity_parser_1 = require("../parsers/entity.parser");
-var data_row_parsed_1 = require("../data/data-row-parsed");
+var table_1 = require("./table");
 var Database = /** @class */ (function () {
     function Database(reservedWords) {
         this.reservedWords = reservedWords;

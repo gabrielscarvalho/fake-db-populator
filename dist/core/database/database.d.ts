@@ -1,4 +1,4 @@
-import { iDatabase, iDataRow, iParser, iDatabaseReservedWords, iTable, iDataRowParsed } from '../../interfaces';
+import { iDatabase, iDatabaseReservedWords, iDataRow, iDataRowParsed, iParser, iTable } from '../../interfaces';
 import { NamedMap } from '../utils/named.map';
 import { Optional } from '../utils/optional';
 export declare abstract class Database implements iDatabase {
