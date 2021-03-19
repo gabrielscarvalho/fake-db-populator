@@ -1,9 +1,9 @@
 {
   "name": "random-db-populator",
   "types": "./dist/index.d.ts",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "",
-  "main": "generator.js",
+  "main": "./dist/index.js",
   "scripts": {
     "example": "ts-node example.ts",
     "format": "npx prettier --write src",
@@ -12,7 +12,7 @@
     "test:watch": "jest --coverage --watchAll=true"
   },
   "keywords": [
-    "data"
+    "data", "postgres", "mysql", "sql", "generator", "random"
   ],
   "jest": {
     "globals": {
