@@ -1,6 +1,6 @@
 import { iDatabase, iDataRow, iParser, iDatabaseReservedWords, iTable, iDataRowParsed } from '../../interfaces';
 import { Table } from './table';
-import { NamedMap } from '../utils/map';
+import { NamedMap } from '../utils/named.map';
 import { Optional } from '../utils/optional';
 import QueryCommand from '../query-builder/query-command.enum';
 import { DatabaseReservedWords } from './reserved-words';

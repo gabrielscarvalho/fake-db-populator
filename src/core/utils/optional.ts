@@ -29,7 +29,14 @@ export class Optional<T> {
   }
 
   public get(config: { skipValidation: boolean } = { skipValidation: false }): T {
-    if (!config.skipValidation && !this.hasChecked) {
+
+    if (config.skipValidation) {
+      
+      if (!this.isPresent()) {
+        throw new Error('Optional forced get of non existent value');  
+      }
+
+    } else if (!config.skipValidation && !this.hasChecked) {
       throw new Error('It is required to check if value is present before getting it. Call isPresent() before.');
     }
     return this.data;

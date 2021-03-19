@@ -43,7 +43,7 @@ export class NamedMap<T> implements iMap<T> {
       }
       return false;
     }
-    this.delete(name);
+    this.data.delete(name);
     return true;
   }  
 
@@ -60,7 +60,7 @@ export class NamedMap<T> implements iMap<T> {
 
 
   public forEachEntry(callback :(key: string, value: T) => void): void {
-    (this.getKeys() || []).forEach((keyName: string) => {
+    this.getKeys().forEach((keyName: string) => {
       const value: T = this.get(keyName).get({ skipValidation: true});
       callback(keyName, value);
     });

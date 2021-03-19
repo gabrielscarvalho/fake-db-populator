@@ -1,4 +1,3 @@
-import { DatabaseReservedWords } from '../shortcut/database';
 import { Fixed } from '../shortcut/value-gen';
 import { MySQLDatabase } from './mysql.database';
 

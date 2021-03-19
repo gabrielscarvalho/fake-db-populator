@@ -1,5 +1,5 @@
 import { iValueGenerator } from '../../interfaces';
-import { NamedMap } from '../utils/map';
+import { NamedMap } from '../utils/named.map';
 
 
 export class AutoIncrement {

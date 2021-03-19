@@ -1,7 +1,7 @@
 import { iColumn, iDatabase, iDataRow, iParser, iTable, iValueGenerator } from '../../interfaces';
 import { DataRow } from '../data/data-row';
 import QueryCommand from '../query-builder/query-command.enum';
-import { NamedMap } from '../utils/map';
+import { NamedMap } from '../utils/named.map';
 import { Optional } from '../utils/optional';
 import { Column } from './column';
 
