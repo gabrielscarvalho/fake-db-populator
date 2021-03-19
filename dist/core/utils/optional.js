@@ -8,10 +8,7 @@ var Optional = /** @class */ (function () {
         this.hasChecked = false;
         this.data = value;
     }
-    Optional.prototype.set = function (value) {
-        this.data = value;
-    };
-    Optional.fromNullable = function () {
+    Optional.fromNull = function () {
         return new Optional();
     };
     Optional.fromValue = function (value) {
@@ -21,10 +18,19 @@ var Optional = /** @class */ (function () {
         this.hasChecked = true;
         return !!this.data;
     };
-    Optional.prototype.get = function (config) {
-        if (config === void 0) { config = { skipValidation: false }; }
-        if (!config.skipValidation && !this.hasChecked) {
+    Optional.prototype.get = function () {
+        if (!this.hasChecked) {
             throw new Error('It is required to check if value is present before getting it. Call isPresent() before.');
+        }
+        return this.data;
+    };
+    /**
+     * Skip the isPresent step - but will throw error if value is not present.
+     * @return T
+    */
+    Optional.prototype.getForced = function () {
+        if (!this.isPresent()) {
+            throw new Error('Optional forced get of non existent value');
         }
         return this.data;
     };

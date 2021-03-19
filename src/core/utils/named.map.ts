@@ -30,7 +30,7 @@ export class NamedMap<T> implements iMap<T> {
         const validKeys: string = this.getKeys().join(',');
         throw new Error(`Could not get unknown '${name}' from list.  Did you spell it right? Valid values: [${validKeys}]`);
       }
-      return Optional.fromNullable<T>();
+      return Optional.fromNull<T>();
     }
     return Optional.fromValue(this.data.get(name));
   }
@@ -61,7 +61,7 @@ export class NamedMap<T> implements iMap<T> {
 
   public forEachEntry(callback :(key: string, value: T) => void): void {
     this.getKeys().forEach((keyName: string) => {
-      const value: T = this.get(keyName).get({ skipValidation: true});
+      const value: T = this.get(keyName).getForced();
       callback(keyName, value);
     });
   }

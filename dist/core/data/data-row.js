@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.DataRow = void 0;
-var map_1 = require("../utils/map");
+var named_map_1 = require("../utils/named.map");
 var data_row_column_1 = require("./data-row-column");
 var DataRow = /** @class */ (function () {
     function DataRow(queryCommand, table, extraData, comment) {
@@ -13,12 +13,12 @@ var DataRow = /** @class */ (function () {
         this.comment = comment;
         this.hasCreatedQuery = false;
         this.hasCreatedQuery = false;
-        this.data = new map_1.NamedMap();
+        this.data = new named_map_1.NamedMap();
         this.generateData();
     }
     DataRow.prototype.getColumnData = function (columnName) {
         var optDataRow = this.data.get(columnName, { throwIfNotExists: true });
-        return optDataRow.get({ skipValidation: true });
+        return optDataRow.getForced();
     };
     DataRow.prototype.getRawValue = function (columnName) {
         return this.getColumnData(columnName).rawValue;
@@ -31,7 +31,7 @@ var DataRow = /** @class */ (function () {
         var obj = new Object();
         this.data.getKeys().forEach(function (keyName) {
             var optDataRowColumn = _this.data.get(keyName, { throwIfNotExists: true });
-            var dataRowColumn = optDataRowColumn.get({ skipValidation: true });
+            var dataRowColumn = optDataRowColumn.getForced();
             obj[keyName] = dataRowColumn.rawValue;
         });
         console.log("DataRow object from: [" + this.table.name + "] contains value: ", JSON.stringify(obj));

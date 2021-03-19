@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-exports.PostgresDatabase = void 0;
+exports.MySQLDatabase = void 0;
 var database_1 = require("../core/database/database");
 var boolean_parser_1 = require("../core/parsers/boolean.parser");
 var date_parser_1 = require("../core/parsers/date.parser");
@@ -23,12 +23,12 @@ var number_parser_1 = require("../core/parsers/number.parser");
 var raw_parser_1 = require("../core/parsers/raw.parser");
 var string_parser_1 = require("../core/parsers/string.parser");
 var database_2 = require("../shortcut/database");
-var PostgresDatabase = /** @class */ (function (_super) {
-    __extends(PostgresDatabase, _super);
-    function PostgresDatabase() {
+var MySQLDatabase = /** @class */ (function (_super) {
+    __extends(MySQLDatabase, _super);
+    function MySQLDatabase() {
         var _this = this;
-        // change reserved words if your database has any structural diff from Postgres
         var reservedWords = new database_2.DatabaseReservedWords();
+        reservedWords.quotesForEntities = '`';
         _this = _super.call(this, reservedWords) || this;
         _this.addParser(new string_parser_1.StringParser(reservedWords));
         _this.addParser(new number_parser_1.NumberParser(reservedWords));
@@ -39,16 +39,16 @@ var PostgresDatabase = /** @class */ (function (_super) {
         _this.addParser(new boolean_parser_1.BooleanParser(reservedWords));
         return _this;
     }
-    PostgresDatabase.prototype.createComment = function (comment) {
-        return "/* " + comment + " */ ";
+    MySQLDatabase.prototype.createComment = function (comment) {
+        return "/* " + comment + " */";
     };
-    PostgresDatabase.prototype.createInsertQuery = function (dataRow) {
+    MySQLDatabase.prototype.createInsertQuery = function (dataRow) {
         var columns = dataRow.values.getKeys().join(', ');
         var values = dataRow.values.getValues().join(', ');
         var table = dataRow.tableName;
         return "INSERT INTO " + table + " (" + columns + ") VALUES (" + values + ");";
     };
-    PostgresDatabase.prototype.createDeleteQuery = function (dataRow) {
+    MySQLDatabase.prototype.createDeleteQuery = function (dataRow) {
         var tableName = dataRow.tableName;
         var whereData = [];
         dataRow.unique.forEachEntry(function (columnName, value) {
@@ -57,6 +57,6 @@ var PostgresDatabase = /** @class */ (function (_super) {
         var where = whereData.join(' AND ');
         return "DELETE FROM " + tableName + " WHERE " + where + ";";
     };
-    return PostgresDatabase;
+    return MySQLDatabase;
 }(database_1.Database));
-exports.PostgresDatabase = PostgresDatabase;
+exports.MySQLDatabase = MySQLDatabase;

@@ -1,10 +1,10 @@
 "use strict";
 exports.__esModule = true;
 exports.AutoIncrement = void 0;
-var map_1 = require("../utils/map");
+var named_map_1 = require("../utils/named.map");
 var AutoIncrement = /** @class */ (function () {
     function AutoIncrement() {
-        this.ids = new map_1.NamedMap();
+        this.ids = new named_map_1.NamedMap();
     }
     AutoIncrement.prototype.initialId = function (uniqueName, initialValue) {
         this.ids.add(uniqueName, initialValue, { throwIfExists: true });

@@ -1,6 +1,6 @@
 import { iDataRow, iDataRowColumn, iTable } from '../../interfaces';
 import QueryCommand from '../query-builder/query-command.enum';
-import { NamedMap } from '../utils/map';
+import { NamedMap } from '../utils/named.map';
 import { DataRowColumn } from './data-row-column';
 export declare class DataRow implements iDataRow {
     queryCommand: QueryCommand;

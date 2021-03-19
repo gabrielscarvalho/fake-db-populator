@@ -49,7 +49,7 @@ export class Table implements iTable {
 
   public getColumn(columnName: string): iColumn {
     const column: Optional<iColumn> =this.columns.get(columnName, { throwIfNotExists: true});
-    return column.get({ skipValidation: true });
+    return column.getForced();
   }
 
   public getLastDataRow() : Optional<iDataRow> {

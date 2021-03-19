@@ -24,7 +24,7 @@ export class DataRow implements iDataRow {
 
   public getColumnData(columnName: string): iDataRowColumn {
     const optDataRow = this.data.get(columnName, { throwIfNotExists: true });
-    return optDataRow.get({skipValidation: true });
+    return optDataRow.getForced();
   }
 
   public getRawValue(columnName: string): any {
@@ -39,7 +39,7 @@ export class DataRow implements iDataRow {
     const obj = new Object();
     this.data.getKeys().forEach((keyName: string) => {
       const optDataRowColumn: Optional<iDataRowColumn> = this.data.get(keyName, { throwIfNotExists: true });
-      const dataRowColumn: iDataRowColumn = optDataRowColumn.get({ skipValidation: true });
+      const dataRowColumn: iDataRowColumn = optDataRowColumn.getForced();
       
       obj[keyName] = dataRowColumn.rawValue;
     });

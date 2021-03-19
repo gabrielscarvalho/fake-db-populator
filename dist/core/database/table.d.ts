@@ -1,6 +1,6 @@
 import { iColumn, iDatabase, iDataRow, iTable, iValueGenerator } from '../../interfaces';
 import QueryCommand from '../query-builder/query-command.enum';
-import { NamedMap } from '../utils/map';
+import { NamedMap } from '../utils/named.map';
 import { Optional } from '../utils/optional';
 export declare class Table implements iTable {
     name: string;

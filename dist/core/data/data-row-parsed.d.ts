@@ -1,6 +1,6 @@
 import { iDataRow, iDataRowParsed, iParser } from '../../interfaces';
 import QueryCommand from '../query-builder/query-command.enum';
-import { NamedMap } from '../utils/map';
+import { NamedMap } from '../utils/named.map';
 /**
  * Contains `DataRow` only parsed values to simplify query creation doubts.
  */

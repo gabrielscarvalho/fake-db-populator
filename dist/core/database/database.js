@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.Database = void 0;
 var table_1 = require("./table");
-var map_1 = require("../utils/map");
+var named_map_1 = require("../utils/named.map");
 var optional_1 = require("../utils/optional");
 var query_command_enum_1 = __importDefault(require("../query-builder/query-command.enum"));
 var lodash_1 = __importDefault(require("lodash"));
@@ -14,8 +14,8 @@ var data_row_parsed_1 = require("../data/data-row-parsed");
 var Database = /** @class */ (function () {
     function Database(reservedWords) {
         this.reservedWords = reservedWords;
-        this.tables = new map_1.NamedMap();
-        this.parsers = new map_1.NamedMap();
+        this.tables = new named_map_1.NamedMap();
+        this.parsers = new named_map_1.NamedMap();
         this.dataRows = [];
         this.entityParser = new entity_parser_1.EntityParser(this.reservedWords);
     }
@@ -25,7 +25,7 @@ var Database = /** @class */ (function () {
     };
     Database.prototype.getParser = function (parserName) {
         var optParser = this.parsers.get(parserName, { throwIfNotExists: true });
-        return optParser.get({ skipValidation: true });
+        return optParser.getForced();
     };
     Database.prototype.addTable = function (tableName) {
         var table = new table_1.Table(this, tableName);
@@ -34,7 +34,7 @@ var Database = /** @class */ (function () {
     };
     Database.prototype.getTable = function (tableName) {
         var optTable = this.tables.get(tableName, { throwIfNotExists: true });
-        return optTable.get({ skipValidation: true });
+        return optTable.getForced();
     };
     Database.prototype.getLastDataRow = function (tableName) {
         var lastRow = null;

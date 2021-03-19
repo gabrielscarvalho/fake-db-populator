@@ -30,7 +30,7 @@ export abstract class Database implements iDatabase {
 
   public getParser(parserName: string): iParser {
     const optParser: Optional<iParser> = this.parsers.get(parserName, { throwIfNotExists: true });
-    return optParser.get({ skipValidation: true });
+    return optParser.getForced();
   }
 
   public addTable(tableName: string): iTable {
@@ -41,7 +41,7 @@ export abstract class Database implements iDatabase {
 
   public getTable(tableName: string): iTable {
     const optTable: Optional<iTable> = this.tables.get(tableName, { throwIfNotExists: true });
-    return optTable.get({ skipValidation: true });
+    return optTable.getForced();
   }
 
   public getLastDataRow(tableName: string): Optional<iDataRow> {

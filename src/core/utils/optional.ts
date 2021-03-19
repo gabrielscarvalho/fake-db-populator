@@ -11,11 +11,7 @@ export class Optional<T> {
     this.data = value;
   }
 
-  public set(value: T): void {
-    this.data = value;
-  }
-
-  public static fromNullable<T>() {
+  public static fromNull<T>() {
     return new Optional<T>()
   }
 
@@ -28,16 +24,21 @@ export class Optional<T> {
     return !!this.data;
   }
 
-  public get(config: { skipValidation: boolean } = { skipValidation: false }): T {
+  public get(): T {
 
-    if (config.skipValidation) {
-      
-      if (!this.isPresent()) {
-        throw new Error('Optional forced get of non existent value');  
-      }
-
-    } else if (!config.skipValidation && !this.hasChecked) {
+    if (!this.hasChecked) {
       throw new Error('It is required to check if value is present before getting it. Call isPresent() before.');
+    }
+    return this.data;
+  }
+
+  /**
+   * Skip the isPresent step - but will throw error if value is not present.
+   * @return T
+  */
+  public getForced(): T {
+    if (!this.isPresent()) {
+      throw new Error('Optional forced get of non existent value');
     }
     return this.data;
   }

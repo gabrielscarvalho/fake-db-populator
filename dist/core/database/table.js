@@ -2,14 +2,14 @@
 exports.__esModule = true;
 exports.Table = void 0;
 var data_row_1 = require("../data/data-row");
-var map_1 = require("../utils/map");
+var named_map_1 = require("../utils/named.map");
 var column_1 = require("./column");
 var Table = /** @class */ (function () {
     function Table(database, name) {
         this._afterGenDataFn = function (dataRow) { return (dataRow); };
         this.name = name;
         this.database = database;
-        this.columns = new map_1.NamedMap();
+        this.columns = new named_map_1.NamedMap();
     }
     Table.prototype.setUniqueKeys = function () {
         var _this = this;
@@ -37,7 +37,7 @@ var Table = /** @class */ (function () {
     };
     Table.prototype.getColumn = function (columnName) {
         var column = this.columns.get(columnName, { throwIfNotExists: true });
-        return column.get({ skipValidation: true });
+        return column.getForced();
     };
     Table.prototype.getLastDataRow = function () {
         return this.database.getLastDataRow(this.name);

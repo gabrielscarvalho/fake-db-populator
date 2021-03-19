@@ -28,7 +28,7 @@ var NamedMap = /** @class */ (function () {
                 var validKeys = this.getKeys().join(',');
                 throw new Error("Could not get unknown '" + name + "' from list.  Did you spell it right? Valid values: [" + validKeys + "]");
             }
-            return optional_1.Optional.fromNullable();
+            return optional_1.Optional.fromNull();
         }
         return optional_1.Optional.fromValue(this.data.get(name));
     };
@@ -41,7 +41,7 @@ var NamedMap = /** @class */ (function () {
             }
             return false;
         }
-        this["delete"](name);
+        this.data["delete"](name);
         return true;
     };
     NamedMap.prototype.getKeys = function () {
@@ -53,8 +53,8 @@ var NamedMap = /** @class */ (function () {
     };
     NamedMap.prototype.forEachEntry = function (callback) {
         var _this = this;
-        (this.getKeys() || []).forEach(function (keyName) {
-            var value = _this.get(keyName).get({ skipValidation: true });
+        this.getKeys().forEach(function (keyName) {
+            var value = _this.get(keyName).getForced();
             callback(keyName, value);
         });
     };
