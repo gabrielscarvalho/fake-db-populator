@@ -1,15 +1,13 @@
 # Random-db-populator
 
-Make it easier to populate your **POSTGRES AND MYSQL** test environments, creating inserts with **consistent random data**. With a clear language, you can focus on what makes your scenario unique.
+Make it easier to populate your **PostgreSQL** and **MySQL** test environments, creating inserts with **consistent random data**. With clear language, you can focus on **what makes your scenario unique**.
 
-Other databases will be added soon. If you don't want to wait: [Create New Database doc](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/NewDatabase.md)
+**Example**: insert an **inactive** user which name is **John**. John must have **2 addresses**. For all other params, I accept a random (but still valid) value.
 
-**Example**: insert a user which name is **John** and is **inactive**. John must have **2 addresses**.
-All other params I accept a random (but still valid) value.
 
 ```typescript
 // some pre-configurations steps that will be explained below...
-database.insert('t_user', { name: 'John', is_active: false, email: 'john@doe.com' });
+database.insert('t_user', { name: 'John', is_active: false });
 
 database.insert('t_address');
 database.insert('t_address');
@@ -34,16 +32,18 @@ DELETE FROM "t_user" WHERE "id"=1;
 - Postgres
 - MySQL
 
-Others database will be added in the future.
-**I want to create my own database**: Check [this doc](Check the [New Database Docs](https://github.com/gabrielscarvalho/random-db-populator/blob/master/docs/NewDatabase.md)!
+Others databases will be added soon.
+
+If you don't want to wait: check [New Database Docs](/NewDatabase.md).
 
 
+## Examples
 
-# Examples
+Clone [random-db-populator-example](https://github.com/gabrielscarvalho/random-db-populator-example). There you will find:
 
-Clone [random-db-populator-example](https://github.com/gabrielscarvalho/random-db-populator-example) and check the [JS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios) or [TS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios-ts).
-
-Here you have a [cleaner typescript version](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/ts-organized-example), which I recommend for development.
+* [JS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios)
+* [TS scenarios folder](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/scenarios-ts).
+* [cleaner typescript version](https://github.com/gabrielscarvalho/random-db-populator-example/tree/master/ts-organized-example)
 
 
 **Tip**: Use typescript version. It will make it easier!
