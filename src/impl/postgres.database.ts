@@ -9,12 +9,11 @@ import { StringParser } from '../core/parsers/string.parser';
 import { iDatabase, iDataRowParsed } from '../interfaces';
 import { DatabaseReservedWords } from '../shortcut/database';
 
-export class MySQLDatabase extends Database implements iDatabase {
+export class PostgresDatabase extends Database implements iDatabase {
  
   public constructor() {
+    // change reserved words if your database has any structural diff from Postgres
     const reservedWords = new DatabaseReservedWords();
-    reservedWords.quotesForEntities='`';
-
     super(reservedWords);
 
     this.addParser(new StringParser(reservedWords));
@@ -27,7 +26,7 @@ export class MySQLDatabase extends Database implements iDatabase {
   }
 
   protected createComment(comment: string): string {
-    return `/* ${comment} */ `;
+    return `/* ${comment} */`;
   }
 
   protected createInsertQuery(dataRow: iDataRowParsed) : string {
