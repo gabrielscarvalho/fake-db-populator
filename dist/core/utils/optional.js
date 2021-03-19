@@ -27,7 +27,7 @@ var Optional = /** @class */ (function () {
     /**
      * Skip the isPresent step - but will throw error if value is not present.
      * @return T
-    */
+     */
     Optional.prototype.getForced = function () {
         if (!this.isPresent()) {
             throw new Error('Optional forced get of non existent value');

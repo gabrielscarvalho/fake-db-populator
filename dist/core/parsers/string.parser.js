@@ -26,7 +26,8 @@ var StringParser = /** @class */ (function (_super) {
     StringParser.prototype.parse = function (val) {
         if (val !== null && val !== undefined) {
             if (typeof val === 'object') {
-                throw new Error('StringParser received invalid value: object. Valid values are: string or number. Received value:' + val);
+                throw new Error('StringParser received invalid value: object. Valid values are: string or number. Received value:' +
+                    val);
             }
             return this.addQuotes(val);
         }

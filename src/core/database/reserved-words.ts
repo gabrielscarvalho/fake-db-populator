@@ -1,9 +1,7 @@
 import { iDatabaseReservedWords } from '../../interfaces';
 
-
 const SINGLE_QUOTES = "'";
 const DOUBLE_QUOTES = '"';
-
 
 export class DatabaseReservedWords implements iDatabaseReservedWords {
   public null: string = 'null';
@@ -12,7 +10,6 @@ export class DatabaseReservedWords implements iDatabaseReservedWords {
 
   public boolean = {
     true: 'true',
-    false: 'false'
-  }
-
+    false: 'false',
+  };
 }

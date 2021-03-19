@@ -7,5 +7,4 @@ var QueryCommand;
     QueryCommand[QueryCommand["DELETE"] = 1] = "DELETE";
     QueryCommand[QueryCommand["COMMENT"] = 2] = "COMMENT";
 })(QueryCommand = exports.QueryCommand || (exports.QueryCommand = {}));
-;
 exports["default"] = QueryCommand;

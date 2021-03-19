@@ -17,7 +17,7 @@ describe('PostgreSQL Tests', function () {
         var sqls = db.toSQL();
         expect(sqls).toBeDefined();
         expect(sqls.length).toBe(1);
-        expect(sqls[0]).toBe("INSERT INTO \"t_user\" (\"id\", \"name\", \"active\", \"birth\", \"updated_at\", \"raw_value\") VALUES (1, 'John', false, '2000-02-01', '2000-02-01 12:30:35', now());");
+        expect(sqls[0]).toBe('INSERT INTO "t_user" ("id", "name", "active", "birth", "updated_at", "raw_value") VALUES (1, \'John\', false, \'2000-02-01\', \'2000-02-01 12:30:35\', now());');
         var rollback = db.rollback();
         expect(rollback).toBeDefined();
         expect(rollback.length).toBe(2);

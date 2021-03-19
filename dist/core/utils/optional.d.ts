@@ -9,6 +9,6 @@ export declare class Optional<T> {
     /**
      * Skip the isPresent step - but will throw error if value is not present.
      * @return T
-    */
+     */
     getForced(): T;
 }

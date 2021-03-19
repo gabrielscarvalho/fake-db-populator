@@ -6,6 +6,7 @@
   "main": "generator.js",
   "scripts": {
     "example": "ts-node example.ts",
+    "format": "npx prettier --write src",
     "convert": "rm dist/ -rf && tsc ./src/index.ts ./src/**/*.ts --outDir ./dist --esModuleInterop --declaration",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watchAll=true"
@@ -15,8 +16,7 @@
   ],
   "jest": {
     "globals": {
-      "ts-jest": {
-      }
+      "ts-jest": {}
     },
     "collectCoverageFrom": [
       "./src/**/*.ts"
@@ -39,6 +39,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "jest": "^26.6.1",
+    "prettier": "2.2.1",
     "ts-jest": "^26.5.4",
     "ts-loader": "^7.0.5",
     "ts-node": "^8.10.2",

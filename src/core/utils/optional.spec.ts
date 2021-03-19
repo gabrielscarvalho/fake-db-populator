@@ -1,7 +1,6 @@
 import { Optional } from './optional';
 
 describe('Optional tests', () => {
-
   it('should be able to get the value if present', () => {
     const opt = Optional.fromValue('test');
     expect(opt.isPresent()).toBe(true);
@@ -9,7 +8,7 @@ describe('Optional tests', () => {
   });
 
   it('should return not present fromNull', () => {
-    const opt = Optional.fromNull()
+    const opt = Optional.fromNull();
     expect(opt.isPresent()).toBe(false);
   });
 
@@ -22,7 +21,7 @@ describe('Optional tests', () => {
     const opt = Optional.fromNull();
 
     expect(() => {
-      opt.getForced()
+      opt.getForced();
     }).toThrowError('Optional forced get of non existent value');
   });
 
@@ -30,10 +29,9 @@ describe('Optional tests', () => {
     const opt = Optional.fromValue('valid value');
 
     expect(() => {
-      opt.get()
-    }).toThrowError('It is required to check if value is present before getting it. Call isPresent() before.');
+      opt.get();
+    }).toThrowError(
+      'It is required to check if value is present before getting it. Call isPresent() before.'
+    );
   });
-
-
-
 });

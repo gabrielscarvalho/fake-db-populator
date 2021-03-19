@@ -2,23 +2,25 @@ import { iTable, PostgresDatabase } from '../../shortcut/database';
 import { NumberParser } from '../../shortcut/parser';
 
 describe('Database Spec', () => {
-  let db: PostgresDatabase = null
+  let db: PostgresDatabase = null;
 
   beforeEach(() => {
     db = new PostgresDatabase();
   });
-   
+
   it('should be able to add parser', () => {
     db.addParser(NumberParser.withPrecision(db.reservedWords, 'money', 3));
 
-    const parser = db.getParser('money')
+    const parser = db.getParser('money');
     expect(parser.type).toBe('money');
   });
 
   it('should throw error if get unknown parser', () => {
     expect(() => {
-      const parser = db.getParser('unknown')
-    }).toThrowError("Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: [string,number,int,date,datetime,raw,boolean]");
+      const parser = db.getParser('unknown');
+    }).toThrowError(
+      "Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: [string,number,int,date,datetime,raw,boolean]"
+    );
   });
 
   it('should be able to add table', () => {
@@ -30,7 +32,9 @@ describe('Database Spec', () => {
 
   it('should throw error if get unknown table', () => {
     expect(() => {
-      db.getTable('unknown')
-    }).toThrowError("Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: []");
+      db.getTable('unknown');
+    }).toThrowError(
+      "Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: []"
+    );
   });
 });

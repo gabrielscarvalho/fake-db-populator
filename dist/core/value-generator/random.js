@@ -19,9 +19,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random item from list
-    * @see docs https://chancejs.com/basics/string.html
-    */
+     * Returns a random item from list
+     * @see docs https://chancejs.com/basics/string.html
+     */
     Random.String = function (options) {
         if (options === void 0) { options = { length: 8, alpha: true }; }
         return function () {
@@ -29,25 +29,25 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random number with specific length
-    * @see docs https://chancejs.com/basics/string.html
-    */
+     * Returns a random number with specific length
+     * @see docs https://chancejs.com/basics/string.html
+     */
     Random.NumberWithLength = function (length) {
         return Random.String({ length: length, numeric: true, alpha: false });
     };
     /**
-    * Returns a random value from a regex.
-    * @see docs https://www.npmjs.com/package/randexp
-    */
+     * Returns a random value from a regex.
+     * @see docs https://www.npmjs.com/package/randexp
+     */
     Random.FromRegularExpression = function (pattern) {
         return function () {
             return randexp_1.randexp(pattern);
         };
     };
     /**
-    * Returns a random item from list
-    * @see docs https://chancejs.com/text/pickone.html
-    */
+     * Returns a random item from list
+     * @see docs https://chancejs.com/text/pickone.html
+     */
     Random.PickOne = function (list) {
         return function () {
             return chance.pickone(list);
@@ -56,7 +56,7 @@ var Random = /** @class */ (function () {
     /**
      * Returns a random word
      * @see docs https://chancejs.com/text/bool.html
-    */
+     */
     Random.Boolean = function (options) {
         if (options === void 0) { options = { likelihood: 50 }; }
         return function () {
@@ -74,9 +74,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random name
-    * @see docs https://chancejs.com/person/name.html
-    */
+     * Returns a random name
+     * @see docs https://chancejs.com/person/name.html
+     */
     Random.FullName = function (options) {
         if (options === void 0) { options = { nationality: 'en' }; }
         return function () {
@@ -84,9 +84,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random char
-    * @see docs https://chancejs.com/person/last.html
-    */
+     * Returns a random char
+     * @see docs https://chancejs.com/person/last.html
+     */
     Random.LastName = function (options) {
         if (options === void 0) { options = { nationality: 'en' }; }
         return function () {
@@ -94,9 +94,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random email
-    * @see docs https://chancejs.com/web/email.html
-    */
+     * Returns a random email
+     * @see docs https://chancejs.com/web/email.html
+     */
     Random.Email = function (options) {
         if (options === void 0) { options = {}; }
         return function () {
@@ -106,7 +106,7 @@ var Random = /** @class */ (function () {
     /**
      * Returns a random word
      * @see docs https://chancejs.com/text/word.html
-    */
+     */
     Random.Word = function (options) {
         if (options === void 0) { options = { syllables: 3 }; }
         return function () {
@@ -114,9 +114,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random word
-    * @see docs https://chancejs.com/text/word.html
-    */
+     * Returns a random word
+     * @see docs https://chancejs.com/text/word.html
+     */
     Random.Sentence = function (options) {
         if (options === void 0) { options = { words: 3 }; }
         return function () {
@@ -124,9 +124,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-      * Returns a random guid
-      * @see docs https://chancejs.com/miscellaneous/guid.html
-    */
+     * Returns a random guid
+     * @see docs https://chancejs.com/miscellaneous/guid.html
+     */
     Random.Guid = function (options) {
         if (options === void 0) { options = {}; }
         return function () {
@@ -134,9 +134,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random hash
-    * @see docs https://chancejs.com/miscellaneous/hash.html
-    */
+     * Returns a random hash
+     * @see docs https://chancejs.com/miscellaneous/hash.html
+     */
     Random.Hash = function (options) {
         if (options === void 0) { options = {}; }
         return function () {
@@ -144,9 +144,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random char
-    * @see docs https://chancejs.com/miscellaneous/hash.html
-    */
+     * Returns a random char
+     * @see docs https://chancejs.com/miscellaneous/hash.html
+     */
     Random.Char = function (options) {
         if (options === void 0) { options = { alpha: true }; }
         return function () {
@@ -154,9 +154,9 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-    * Returns a random cpf
-    * @see docs https://chancejs.com/person/cpf.html
-    */
+     * Returns a random cpf
+     * @see docs https://chancejs.com/person/cpf.html
+     */
     Random.Cpf = function () {
         return function () {
             return chance.cpf();

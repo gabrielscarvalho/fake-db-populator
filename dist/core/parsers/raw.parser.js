@@ -28,7 +28,8 @@ var RawParser = /** @class */ (function (_super) {
             return this.getNullString();
         }
         if (typeof val === 'object') {
-            throw new Error('RawParser received invalid value: object. Valid values are: string or number. Received value:' + val);
+            throw new Error('RawParser received invalid value: object. Valid values are: string or number. Received value:' +
+                val);
         }
         return String(val);
     };

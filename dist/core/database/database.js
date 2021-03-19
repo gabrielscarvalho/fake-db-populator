@@ -46,8 +46,7 @@ var Database = /** @class */ (function () {
     Database.prototype.insert = function (tableName, extraData, comment) {
         if (extraData === void 0) { extraData = {}; }
         if (comment === void 0) { comment = null; }
-        var dataRow = this.getTable(tableName)
-            .createNewDataRowAndStore(query_command_enum_1["default"].INSERT, extraData, comment);
+        var dataRow = this.getTable(tableName).createNewDataRowAndStore(query_command_enum_1["default"].INSERT, extraData, comment);
         return dataRow;
     };
     Database.prototype.addDataRow = function (dataRow) {
@@ -85,7 +84,9 @@ var Database = /** @class */ (function () {
     Database.prototype.printParsers = function () {
         console.log('|-- PARSERS ------------------------');
         (this.parsers.getValues() || []).forEach(function (value) {
-            var description = value.description ? value.description : "Parses to format " + value.type;
+            var description = value.description
+                ? value.description
+                : "Parses to format " + value.type;
             var type = value.type.padEnd(30, ' ');
             console.log("\t" + type + " " + description);
         });

@@ -10,7 +10,6 @@ import { iDatabase, iDataRowParsed } from '../interfaces';
 import { DatabaseReservedWords } from '../shortcut/database';
 
 export class PostgresDatabase extends Database implements iDatabase {
- 
   public constructor() {
     // change reserved words if your database has any structural diff from Postgres
     const reservedWords = new DatabaseReservedWords();
@@ -29,10 +28,10 @@ export class PostgresDatabase extends Database implements iDatabase {
     return `/* ${comment} */`;
   }
 
-  protected createInsertQuery(dataRow: iDataRowParsed) : string {
-    const columns: string = dataRow.values.getKeys().join(', ');   
-    const values: string  = dataRow.values.getValues().join(', ');
-   
+  protected createInsertQuery(dataRow: iDataRowParsed): string {
+    const columns: string = dataRow.values.getKeys().join(', ');
+    const values: string = dataRow.values.getValues().join(', ');
+
     const table = dataRow.tableName;
 
     return `INSERT INTO ${table} (${columns}) VALUES (${values});`;
@@ -40,7 +39,7 @@ export class PostgresDatabase extends Database implements iDatabase {
 
   protected createDeleteQuery(dataRow: iDataRowParsed): string {
     const tableName = dataRow.tableName;
-    
+
     const whereData: string[] = [];
 
     dataRow.unique.forEachEntry((columnName: string, value: string) => {

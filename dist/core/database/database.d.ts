@@ -22,16 +22,16 @@ export declare abstract class Database implements iDatabase {
     /**
      * Creates the insert query command.
      * @return string
-    */
+     */
     protected abstract createComment(comment: string): string;
     /**
      * Creates the insert query command.
      * @return string
-    */
+     */
     protected abstract createInsertQuery(dataRow: iDataRowParsed): string;
     /**
      * Creates the delete query command.
      * @return string
-    */
+     */
     protected abstract createDeleteQuery(dataRow: iDataRowParsed): string;
 }

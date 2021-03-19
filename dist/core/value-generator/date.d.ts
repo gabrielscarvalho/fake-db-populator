@@ -31,7 +31,7 @@ export declare class DateGen {
     /**
      * Returns a random date
      * @see docs https://chancejs.com/text/date.html
-    */
+     */
     static Random(): iValueGenerator;
 }
 export {};

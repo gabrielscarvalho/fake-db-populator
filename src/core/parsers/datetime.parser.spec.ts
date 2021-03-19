@@ -2,9 +2,7 @@ import { DatabaseReservedWords } from '../database/reserved-words';
 import { iParser } from '../../interfaces';
 import { DateTimeParser } from './datetime.parser';
 
-
 describe('DateTimeParser tests', () => {
-
   const reservedWords = new DatabaseReservedWords();
 
   it('should have the right type', () => {
@@ -13,15 +11,13 @@ describe('DateTimeParser tests', () => {
   });
 
   it('should return valid values', () => {
-    
     reservedWords.quotesForValues = '"';
     reservedWords.quotesForEntities = '`';
-    
+
     const parser: iParser = new DateTimeParser(reservedWords);
     const date = new Date(2021, 2, 19, 0, 3);
     expect(parser.parse(date)).toEqual('"2021-03-19 12:03:00"');
   });
-
 
   it('should return error if informed boolean as param.', () => {
     const parser: iParser = new DateTimeParser(reservedWords);
@@ -43,6 +39,4 @@ describe('DateTimeParser tests', () => {
       parser.parse('invalid');
     }).toThrow(Error);
   });
-
-
 });

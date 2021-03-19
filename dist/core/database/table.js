@@ -6,7 +6,7 @@ var named_map_1 = require("../utils/named.map");
 var column_1 = require("./column");
 var Table = /** @class */ (function () {
     function Table(database, name) {
-        this._afterGenDataFn = function (dataRow) { return (dataRow); };
+        this._afterGenDataFn = function (dataRow) { return dataRow; };
         this.name = name;
         this.database = database;
         this.columns = new named_map_1.NamedMap();
@@ -52,7 +52,6 @@ var Table = /** @class */ (function () {
         this._afterGenDataFn = fn;
         return this;
     };
-    ;
     return Table;
 }());
 exports.Table = Table;

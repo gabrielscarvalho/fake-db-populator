@@ -32,7 +32,7 @@ export interface iDataRowColumn {
     /**
      * Creates a value generator that will return the raw value.
      * Useful for example, for geting the last generated id.
-    */
+     */
     getRawValueAsValueGen: iValueGenerator;
     /**
      * Set the value and prepared the parsed value.
@@ -59,20 +59,20 @@ export interface iDataRow {
      * Return the data from the specified column.
      * @param columnName
      * @return iDataRowColumn
-    */
+     */
     getColumnData: (columnName: string) => iDataRowColumn;
     /**
      * Return the raw value of the column (that has not been parsed)
      * @return any
-    */
+     */
     getRawValue: (columnName: string) => any;
     /**
      * Set manually the new raw value of a column.
-    */
+     */
     setRawValue: (columnName: string, newValue: any) => void;
     /**
      * Prints the object to help seeing data.
-    */
+     */
     print: () => void;
 }
 export interface iDataRowParsed {
@@ -95,16 +95,16 @@ export interface iTable {
     columns: iMap<iColumn>;
     /**
      * What defines the register as unique ?
-    */
+     */
     setUniqueKeys: (...columnNames: string[]) => iTable;
     /**
      * Return the list of columns that make a register unique.
      * @return iColumn[]
-    */
+     */
     getUniqueKeyColumns: () => iColumn[];
     /**
      * Return the last DataRow generated - if present.
-    */
+     */
     getLastDataRow: () => Optional<iDataRow>;
     getColumn: (columnName: string) => iColumn;
     /**
@@ -112,7 +112,7 @@ export interface iTable {
      * @param columnName the unique name or nickname.
      * @param type the type of the column. 'string', 'number', or created parsers.
      * @param valueGen the function that will generate the value.
-    */
+     */
     addColumn: (columnName: string, type: string | iParser, valueGen: iValueGenerator) => iTable;
     /**
      * Creates a new data object.
@@ -123,7 +123,7 @@ export interface iTable {
      * Function that can be called after the data is generate.
      * It is a place to fix info before releasing the DataRow
      *
-    */
+     */
     afterGenerateData: (fn: (dataRow: iDataRow) => iDataRow) => iTable;
 }
 export interface iDatabase {
@@ -139,15 +139,15 @@ export interface iDatabase {
      * @param tableName the table name
      * @param extraData which manually informed data must be put?
      * @return iDataRow
-    */
+     */
     insert: (tableName: string, extraData: object, comment?: string) => iDataRow;
     /**
      * Return the last DataRow generated - if present.
-    */
+     */
     getLastDataRow: (tableName: string) => Optional<iDataRow>;
     /**
      * Add a new dataRow. Don't use it manually!
-    */
+     */
     addDataRow: (dataRow: iDataRow) => iDatabase;
     /**
      * Convert all data to SQL
@@ -161,19 +161,19 @@ export interface iDatabase {
     /**
      * Print all parsers descriptions.
      * @return void
-    */
+     */
     printParsers: () => void;
 }
 export interface iDatabaseReservedWords {
     /**
      * Which reserved word represents null values?
      * @default 'null'
-    */
+     */
     null: string;
     /**
      * Which character represents the quotes on every insert?
      * @default '"'
-    */
+     */
     quotesForValues: string;
     /**
      * PostgreSQL for example, use double quotes for columns definitions: ex: "name"
@@ -184,7 +184,7 @@ export interface iDatabaseReservedWords {
     /**
      * Represents the values of true and false.
      * @default 'true' and 'false'
-    */
+     */
     boolean: {
         false: string;
         true: string;

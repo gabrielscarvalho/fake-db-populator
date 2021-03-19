@@ -7,12 +7,15 @@ export class Column implements iColumn {
   public valueGen: iValueGenerator;
   public isPartOfUniqueKey: false;
 
-
-  public constructor(table: iTable, name: string, parser: iParser, valueGen: iValueGenerator) {
+  public constructor(
+    table: iTable,
+    name: string,
+    parser: iParser,
+    valueGen: iValueGenerator
+  ) {
     this.table = table;
     this.name = name;
     this.parser = parser;
     this.valueGen = valueGen;
   }
-  
 }

@@ -28,7 +28,7 @@ var BooleanParser = /** @class */ (function (_super) {
             return this.getNullString();
         }
         var bool = this.reservedWords.boolean;
-        return (!!val) ? bool["true"] : bool["false"];
+        return !!val ? bool["true"] : bool["false"];
     };
     return BooleanParser;
 }(parser_1.Parser));

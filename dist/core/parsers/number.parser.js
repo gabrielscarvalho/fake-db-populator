@@ -32,7 +32,8 @@ var NumberParser = /** @class */ (function (_super) {
             return this.getNullString();
         }
         if ((!lodash_1.isString(val) && !lodash_1.isNumber(val)) || isNaN(Number(val))) {
-            throw new Error('NumberParser received invalid value: object. Valid values are: number or string. Received value:' + val);
+            throw new Error('NumberParser received invalid value: object. Valid values are: number or string. Received value:' +
+                val);
         }
         var preparedValue = null;
         if (this.precision === 0) {

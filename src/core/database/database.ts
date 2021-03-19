@@ -1,5 +1,12 @@
 import _ from 'lodash';
-import { iDatabase, iDatabaseReservedWords, iDataRow, iDataRowParsed, iParser, iTable } from '../../interfaces';
+import {
+  iDatabase,
+  iDatabaseReservedWords,
+  iDataRow,
+  iDataRowParsed,
+  iParser,
+  iTable,
+} from '../../interfaces';
 import { DataRowParsed } from '../data/data-row-parsed';
 import { EntityParser } from '../parsers/entity.parser';
 import QueryCommand from '../query-builder/query-command.enum';
@@ -8,7 +15,6 @@ import { Optional } from '../utils/optional';
 import { Table } from './table';
 
 export abstract class Database implements iDatabase {
-
   public tables: NamedMap<iTable>;
   public parsers: NamedMap<iParser>;
 
@@ -29,7 +35,6 @@ export abstract class Database implements iDatabase {
 
   public getParser(parserName: string): iParser {
     return this.parsers.getForced(parserName);
-
   }
 
   public addTable(tableName: string): iTable {
@@ -43,10 +48,8 @@ export abstract class Database implements iDatabase {
   }
 
   public getLastDataRow(tableName: string): Optional<iDataRow> {
-
     let lastRow: iDataRow = null;
     this.dataRows.forEach((dataRow: iDataRow) => {
-
       if (dataRow.table.name === tableName) {
         lastRow = dataRow;
       }
@@ -55,9 +58,16 @@ export abstract class Database implements iDatabase {
     return Optional.fromValue(lastRow);
   }
 
-  public insert(tableName: string, extraData: object = {}, comment: string = null): iDataRow {
-    const dataRow: iDataRow = this.getTable(tableName)
-      .createNewDataRowAndStore(QueryCommand.INSERT, extraData, comment);
+  public insert(
+    tableName: string,
+    extraData: object = {},
+    comment: string = null
+  ): iDataRow {
+    const dataRow: iDataRow = this.getTable(tableName).createNewDataRowAndStore(
+      QueryCommand.INSERT,
+      extraData,
+      comment
+    );
     return dataRow;
   }
 
@@ -69,7 +79,6 @@ export abstract class Database implements iDatabase {
   public toSQL(): string[] {
     const sqls = [];
     this.dataRows.forEach((dataRow: iDataRow) => {
-
       if (!!dataRow.comment) {
         sqls.push(this.createComment(dataRow.comment));
       }
@@ -79,16 +88,16 @@ export abstract class Database implements iDatabase {
     return sqls;
   }
 
-
   public rollback(): string[] {
-
     const queries: string[] = [];
 
     queries.push(this.createComment(' --- ROLLBACK'));
 
-    const alreadyExecuted: iDataRow[] = (this.dataRows || []).filter((dataRow: iDataRow) => {
-      return dataRow.hasCreatedQuery;
-    });
+    const alreadyExecuted: iDataRow[] = (this.dataRows || []).filter(
+      (dataRow: iDataRow) => {
+        return dataRow.hasCreatedQuery;
+      }
+    );
 
     const deleteRows = _.cloneDeep(alreadyExecuted).reverse();
 
@@ -108,8 +117,10 @@ export abstract class Database implements iDatabase {
     console.log('|-- PARSERS ------------------------');
 
     (this.parsers.getValues() || []).forEach((value: iParser) => {
-      const description: string = value.description ? value.description : `Parses to format ${value.type}`;
-      const type = value.type.padEnd(30, ' ')
+      const description: string = value.description
+        ? value.description
+        : `Parses to format ${value.type}`;
+      const type = value.type.padEnd(30, ' ');
       console.log(`\t${type} ${description}`);
     });
   }
@@ -117,17 +128,21 @@ export abstract class Database implements iDatabase {
   protected createCommand(dataRow: iDataRow): string {
     let query: string = null;
 
-    const dataRowParsed: iDataRowParsed = new DataRowParsed(this.entityParser, dataRow);
+    const dataRowParsed: iDataRowParsed = new DataRowParsed(
+      this.entityParser,
+      dataRow
+    );
 
     if (dataRow.queryCommand === QueryCommand.INSERT) {
       query = this.createInsertQuery(dataRowParsed);
-
     } else if (dataRow.queryCommand === QueryCommand.DELETE) {
       query = this.createDeleteQuery(dataRowParsed);
     }
 
     if (query === null) {
-      throw new Error(`Impl not found to query command:  [${dataRow.queryCommand}].`);
+      throw new Error(
+        `Impl not found to query command:  [${dataRow.queryCommand}].`
+      );
     }
 
     dataRow.hasCreatedQuery = true;
@@ -137,20 +152,18 @@ export abstract class Database implements iDatabase {
   /**
    * Creates the insert query command.
    * @return string
-  */
+   */
   protected abstract createComment(comment: string): string;
-
 
   /**
    * Creates the insert query command.
    * @return string
-  */
+   */
   protected abstract createInsertQuery(dataRow: iDataRowParsed): string;
-
 
   /**
    * Creates the delete query command.
    * @return string
-  */
+   */
   protected abstract createDeleteQuery(dataRow: iDataRowParsed): string;
 }

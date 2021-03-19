@@ -2,12 +2,10 @@ import _ from 'lodash';
 import { iMap } from '../../interfaces';
 import { Optional } from './optional';
 
-
 export class NamedMap<T> implements iMap<T> {
-  
   private data: Map<string, T>;
 
-  public constructor(){
+  public constructor() {
     this.data = new Map<string, T>();
   }
 
@@ -15,9 +13,15 @@ export class NamedMap<T> implements iMap<T> {
     return this.data.has(name);
   }
 
-  public add(name: string, content: T, config: { throwIfExists: boolean } = { throwIfExists : false }): iMap<T> {
+  public add(
+    name: string,
+    content: T,
+    config: { throwIfExists: boolean } = { throwIfExists: false }
+  ): iMap<T> {
     if (this.has(name) && config.throwIfExists) {
-      throw new Error(`Cannot add ${name} to list. The value is already in use.`);
+      throw new Error(
+        `Cannot add ${name} to list. The value is already in use.`
+      );
     }
     this.data.set(name, content);
     return this;
@@ -33,37 +37,41 @@ export class NamedMap<T> implements iMap<T> {
   public getForced(name: string): T {
     if (!this.has(name)) {
       const validKeys: string = this.getKeys().join(',');
-      throw new Error(`Could not get unknown '${name}' from list.  Did you spell it right? Valid values: [${validKeys}]`);
+      throw new Error(
+        `Could not get unknown '${name}' from list.  Did you spell it right? Valid values: [${validKeys}]`
+      );
     }
     return this.data.get(name);
   }
 
-
-  public delete(name: string, config: { throwIfNotExists: boolean } = { throwIfNotExists : false }): boolean {
-    if(!this.has(name)) {
-      if(config.throwIfNotExists) {
+  public delete(
+    name: string,
+    config: { throwIfNotExists: boolean } = { throwIfNotExists: false }
+  ): boolean {
+    if (!this.has(name)) {
+      if (config.throwIfNotExists) {
         const validKeys: string = this.getKeys().join(',');
-        throw new Error(`Could not delete unknown '${name}' from list. Did you spell it right? Valid values: [${validKeys}]`);
+        throw new Error(
+          `Could not delete unknown '${name}' from list. Did you spell it right? Valid values: [${validKeys}]`
+        );
       }
       return false;
     }
     this.data.delete(name);
     return true;
-  }  
+  }
 
-
-  public getKeys() : string[] {
+  public getKeys(): string[] {
     const names: string[] = [];
 
     this.data.forEach((val, name) => {
-        names.push(name);
+      names.push(name);
     });
 
     return names;
   }
 
-
-  public forEachEntry(callback :(key: string, value: T) => void): void {
+  public forEachEntry(callback: (key: string, value: T) => void): void {
     this.getKeys().forEach((keyName: string) => {
       const value: T = this.get(keyName).getForced();
       callback(keyName, value);
@@ -74,14 +82,14 @@ export class NamedMap<T> implements iMap<T> {
     const values: T[] = [];
 
     this.data.forEach((val) => {
-        values.push(val);
+      values.push(val);
     });
 
     return values;
   }
 
   public find(filter: any): Optional<T> {
-    const x : T = _.find<T>(this.getValues(), filter);
+    const x: T = _.find<T>(this.getValues(), filter);
     return Optional.fromValue(x);
-  }   
+  }
 }

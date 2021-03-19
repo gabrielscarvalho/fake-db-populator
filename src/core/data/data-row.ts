@@ -3,10 +3,7 @@ import QueryCommand from '../query-builder/query-command.enum';
 import { NamedMap } from '../utils/named.map';
 import { DataRowColumn } from './data-row-column';
 
-
 export class DataRow implements iDataRow {
-
-
   public data: NamedMap<DataRowColumn>;
   public hasCreatedQuery: boolean = false;
 
@@ -14,8 +11,8 @@ export class DataRow implements iDataRow {
     public queryCommand: QueryCommand,
     public table: iTable,
     public extraData: object = {},
-    public comment: string = null) {
-
+    public comment: string = null
+  ) {
     this.hasCreatedQuery = false;
     this.data = new NamedMap<DataRowColumn>();
     this.generateData();
@@ -30,7 +27,7 @@ export class DataRow implements iDataRow {
   }
 
   public setRawValue(columnName: string, newRawValue: any): void {
-    this.getColumnData(columnName).setValue(newRawValue)
+    this.getColumnData(columnName).setValue(newRawValue);
   }
 
   public print(): void {
@@ -40,12 +37,14 @@ export class DataRow implements iDataRow {
       obj[keyName] = dataRowColumn.rawValue;
     });
 
-    console.log(`DataRow object from: [${this.table.name}] contains value: `, JSON.stringify(obj));
+    console.log(
+      `DataRow object from: [${this.table.name}] contains value: `,
+      JSON.stringify(obj)
+    );
   }
 
   protected generateData(): void {
     this.table.columns.getValues().forEach((column: iColumn) => {
-
       let value = null;
 
       if ((this.extraData || {}).hasOwnProperty(column.name)) {
@@ -55,7 +54,9 @@ export class DataRow implements iDataRow {
         try {
           value = column.valueGen();
         } catch (err) {
-          throw new Error(`Error while calculating the value of column: ${column.table.name}.${column.name}: ${err.message}`,);
+          throw new Error(
+            `Error while calculating the value of column: ${column.table.name}.${column.name}: ${err.message}`
+          );
         }
       }
 
@@ -63,5 +64,4 @@ export class DataRow implements iDataRow {
       this.data.add(column.name, dataColumn, { throwIfExists: true });
     });
   }
-
 }

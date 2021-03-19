@@ -1,15 +1,21 @@
-import { iColumn, iDataRow, iDataRowColumn, iValueGenerator } from '../../interfaces';
+import {
+  iColumn,
+  iDataRow,
+  iDataRowColumn,
+  iValueGenerator,
+} from '../../interfaces';
 import { Optional } from '../utils/optional';
-
 
 interface LastValueConfig {
   throwErrorIfNotExists: boolean;
 }
 
-export const LastValue = (column: iColumn, defaultValue: any = null, config: LastValueConfig = { throwErrorIfNotExists : false }) : iValueGenerator => {
-
+export const LastValue = (
+  column: iColumn,
+  defaultValue: any = null,
+  config: LastValueConfig = { throwErrorIfNotExists: false }
+): iValueGenerator => {
   return () => {
-
     const optLastDataRow: Optional<iDataRow> = column.table.getLastDataRow();
 
     if (optLastDataRow.isPresent()) {
@@ -18,10 +24,11 @@ export const LastValue = (column: iColumn, defaultValue: any = null, config: Las
     }
 
     if (config.throwErrorIfNotExists) {
-      throw new Error(`There was no last value for column: [${column.table.name}.${column.name}]. Assure to create a register to this table before or change the flag throwErrorIfNotExists to false.`);
+      throw new Error(
+        `There was no last value for column: [${column.table.name}.${column.name}]. Assure to create a register to this table before or change the flag throwErrorIfNotExists to false.`
+      );
     }
 
     return defaultValue;
-  }
-
-}
+  };
+};

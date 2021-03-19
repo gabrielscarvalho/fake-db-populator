@@ -1,6 +1,3 @@
-
-
-
 import { Chance } from 'chance';
 import _ from 'lodash';
 import { iValueGenerator } from '../../interfaces';
@@ -33,44 +30,41 @@ interface DateRange {
   };
 }
 
-
-
 export class DateGen {
-
-
   public static getDefaultDateRange(): DateRange {
     return {
       year: {
         min: 1970,
-        max: 2050
+        max: 2050,
       },
       month: {
         min: 0,
-        max: 11
+        max: 11,
       },
       day: {
         min: 1,
-        max: 30
+        max: 30,
       },
       hour: {
         min: 0,
-        max: 12
+        max: 12,
       },
       minute: {
         min: 0,
-        max: 60
+        max: 60,
       },
       second: {
         min: 0,
-        max: 60
-      }
-    }
+        max: 60,
+      },
+    };
   }
 
-
   public static between(range: Partial<DateRange> = {}): iValueGenerator {
-    
-    const dateRange = Object.assign(_.cloneDeep(DateGen.getDefaultDateRange()), range);
+    const dateRange = Object.assign(
+      _.cloneDeep(DateGen.getDefaultDateRange()),
+      range
+    );
 
     return () => {
       const year = chance.integer(dateRange.year);
@@ -81,20 +75,16 @@ export class DateGen {
       const second = chance.integer(dateRange.second);
 
       return new Date(year, month, day, hour, minute, second);
-    }
+    };
   }
 
-
-    /**
-     * Returns a random date
-     * @see docs https://chancejs.com/text/date.html
-    */
-    public static Random(): iValueGenerator {
-      return () => {
-        return chance.date();
-      }
-    }
-
-  
-
+  /**
+   * Returns a random date
+   * @see docs https://chancejs.com/text/date.html
+   */
+  public static Random(): iValueGenerator {
+    return () => {
+      return chance.date();
+    };
+  }
 }

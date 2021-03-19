@@ -1,9 +1,7 @@
-
 export enum QueryCommand {
   INSERT,
   DELETE,
-  COMMENT
-};
-
+  COMMENT,
+}
 
 export default QueryCommand;

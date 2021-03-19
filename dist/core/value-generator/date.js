@@ -54,7 +54,7 @@ var DateGen = /** @class */ (function () {
     /**
      * Returns a random date
      * @see docs https://chancejs.com/text/date.html
-    */
+     */
     DateGen.Random = function () {
         return function () {
             return chance.date();

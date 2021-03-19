@@ -4,4 +4,4 @@ export { DatabaseReservedWords } from '../core/database/reserved-words';
 export { Table } from '../core/database/table';
 export { PostgresDatabase } from '../impl/postgres.database';
 export { MySQLDatabase } from '../impl/mysql.database';
-export { iDatabase, iTable, iColumn, iDataRow, iDataRowColumn, iDataRowParsed, iDatabaseReservedWords, iMap, iParser, iValueGenerator } from '../interfaces';
+export { iDatabase, iTable, iColumn, iDataRow, iDataRowColumn, iDataRowParsed, iDatabaseReservedWords, iMap, iParser, iValueGenerator, } from '../interfaces';
