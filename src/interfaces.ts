@@ -194,11 +194,6 @@ export interface iDatabase {
 }
 
 
-export interface iQueryBuilder {
-  insert: (tableName: string, extraData: object) => iQueryBuilder;
-}
-
-
 export interface iDatabaseReservedWords {
   /**
    * Which reserved word represents null values?
