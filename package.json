@@ -5,15 +5,19 @@
   "description": "",
   "main": "generator.js",
   "scripts": {
-    "sql": "ts-node test.ts",
+    "example": "ts-node example.ts",
     "convert": "rm dist/ -rf && tsc ./src/index.ts ./src/**/*.ts --outDir ./dist --esModuleInterop --declaration",
     "test": "jest --coverage",
-    "test:watch": "jest --coverage --watchAll=false"
+    "test:watch": "jest --coverage --watchAll=true"
   },
   "keywords": [
     "data"
   ],
   "jest": {
+    "globals": {
+      "ts-jest": {
+      }
+    },
     "collectCoverageFrom": [
       "./src/**/*.ts"
     ]
@@ -35,7 +39,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "jest": "^26.6.1",
-    "ts-jest": "^26.4.3",
+    "ts-jest": "^26.5.4",
     "ts-loader": "^7.0.5",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7",

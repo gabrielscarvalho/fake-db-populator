@@ -1,3 +1,4 @@
+import { isNumber, isObject, isString } from 'lodash';
 import { iDatabaseReservedWords, iParser } from '../../interfaces';
 import { Parser } from './parser';
 
@@ -14,10 +15,14 @@ export class NumberParser extends Parser implements iParser {
     this.description = `Parse number to number with precision: ${precision}`;
   }
 
-  public parse(val: number): string {
+  public parse(val: any): string {
 
-    if (!val) {
+    if (val === null || val === undefined) {
       return this.getNullString();
+    }
+
+    if ((!isString(val) && !isNumber(val)) || isNaN(Number(val))) {
+      throw new Error('NumberParser received invalid value: object. Valid values are: number or string. Received value:' + val);
     }
 
     let preparedValue: string = null;

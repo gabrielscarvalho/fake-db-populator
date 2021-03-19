@@ -30,8 +30,11 @@ var DateParser = /** @class */ (function (_super) {
         return _this;
     }
     DateParser.prototype.parse = function (val) {
-        if (!val) {
+        if (val === null || val === undefined) {
             return this.getNullString();
+        }
+        if (!(val instanceof Date)) {
+            throw new Error('DateParser received invalid value. Valid values are: Date. Received value:' + val);
         }
         var dateString = moment_1["default"](val).format(this.format);
         return this.addQuotes(dateString);

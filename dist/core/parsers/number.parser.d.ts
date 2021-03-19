@@ -5,6 +5,6 @@ export declare class NumberParser extends Parser implements iParser {
     precision: number;
     description: string;
     constructor(reservedWords: iDatabaseReservedWords, precision?: number);
-    parse(val: number): string;
+    parse(val: any): string;
     static withPrecision(reservedWords: iDatabaseReservedWords, type: string, precision: number): NumberParser;
 }

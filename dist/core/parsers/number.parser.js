@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 exports.NumberParser = void 0;
+var lodash_1 = require("lodash");
 var parser_1 = require("./parser");
 var NumberParser = /** @class */ (function (_super) {
     __extends(NumberParser, _super);
@@ -27,8 +28,11 @@ var NumberParser = /** @class */ (function (_super) {
         return _this;
     }
     NumberParser.prototype.parse = function (val) {
-        if (!val) {
+        if (val === null || val === undefined) {
             return this.getNullString();
+        }
+        if ((!lodash_1.isString(val) && !lodash_1.isNumber(val)) || isNaN(Number(val))) {
+            throw new Error('NumberParser received invalid value: object. Valid values are: number or string. Received value:' + val);
         }
         var preparedValue = null;
         if (this.precision === 0) {

@@ -14,8 +14,12 @@ export class DateParser extends Parser implements iParser {
   }
 
   public parse(val: Date): string {
-    if (!val) {
+    if (val === null || val === undefined) {
       return this.getNullString();
+    }
+
+    if (!(val instanceof Date)) {
+      throw new Error('DateParser received invalid value. Valid values are: Date. Received value:' + val);
     }
 
     const dateString: string = moment(val).format(this.format);

@@ -24,6 +24,12 @@ var RawParser = /** @class */ (function (_super) {
         return _this;
     }
     RawParser.prototype.parse = function (val) {
+        if (val === null || val === undefined) {
+            return this.getNullString();
+        }
+        if (typeof val === 'object') {
+            throw new Error('RawParser received invalid value: object. Valid values are: string or number. Received value:' + val);
+        }
         return String(val);
     };
     return RawParser;

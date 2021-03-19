@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 exports.EntityParser = void 0;
+var lodash_1 = require("lodash");
 var parser_1 = require("./parser");
 /**
  * Parser for table attributes like: column name and table name.
@@ -27,6 +28,9 @@ var EntityParser = /** @class */ (function (_super) {
         return _this;
     }
     EntityParser.prototype.parse = function (val) {
+        if (!lodash_1.isString(val)) {
+            throw new Error('EntityParser received invalid value. Valid values are: string. Received value:' + val);
+        }
         return this.addQuotesForEntities(val);
     };
     return EntityParser;
