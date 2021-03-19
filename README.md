@@ -1,3 +1,6 @@
+ ![Type](https://img.shields.io/badge/type-CLI-yellow.svg?style=flat-square) ![NPM License](https://img.shields.io/npm/l/random-db-populator) ![GitHub issues](https://img.shields.io/github/issues/gabrielscarvalho/random-db-populator) [![GitHub stars](https://img.shields.io/github/stars/gabrielscarvalho/random-db-populator.svg?style=social&label=Stars)](https://github.com/gabrielscarvalho/random-db-populator)
+
+
 Make it easier to populate your **PostgreSQL** and **MySQL** test environments, creating inserts with **consistent random data**. With clear language, you can focus on **what makes your scenario unique**.
 
 **Example**: insert an **inactive** user which name is **John**. John must have **2 addresses**. For all other params, I accept a random (but still valid) value.
