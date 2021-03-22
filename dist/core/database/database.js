@@ -35,6 +35,8 @@ var Database = /** @class */ (function () {
         return this.tables.getForced(tableName);
     };
     Database.prototype.getLastDataRow = function (tableName) {
+        //will assure that table exists
+        this.getTable(tableName);
         var lastRow = null;
         this.dataRows.forEach(function (dataRow) {
             if (dataRow.table.name === tableName) {
@@ -49,7 +51,7 @@ var Database = /** @class */ (function () {
         var dataRow = this.getTable(tableName).createNewDataRowAndStore(query_command_enum_1["default"].INSERT, extraData, comment);
         return dataRow;
     };
-    Database.prototype.addDataRow = function (dataRow) {
+    Database.prototype.dangerous_addDataRow = function (dataRow) {
         this.dataRows.push(dataRow);
         return this;
     };
@@ -71,6 +73,9 @@ var Database = /** @class */ (function () {
         var alreadyExecuted = (this.dataRows || []).filter(function (dataRow) {
             return dataRow.hasCreatedQuery;
         });
+        if (this.dataRows.length > 0 && alreadyExecuted.length === 0) {
+            throw new Error('You should call `database.toSQL()` before calling `database.rollback()`.');
+        }
         var deleteRows = lodash_1["default"].cloneDeep(alreadyExecuted).reverse();
         (deleteRows || []).forEach(function (dataRow) {
             dataRow.queryCommand = query_command_enum_1["default"].DELETE;

@@ -14,7 +14,7 @@ export declare abstract class Database implements iDatabase {
     getTable(tableName: string): iTable;
     getLastDataRow(tableName: string): Optional<iDataRow>;
     insert(tableName: string, extraData?: object, comment?: string): iDataRow;
-    addDataRow(dataRow: iDataRow): iDatabase;
+    dangerous_addDataRow(dataRow: iDataRow): iDatabase;
     toSQL(): string[];
     rollback(): string[];
     printParsers(): void;

@@ -45,7 +45,7 @@ var Table = /** @class */ (function () {
         if (extraData === void 0) { extraData = {}; }
         if (comment === void 0) { comment = null; }
         var dataRow = this._afterGenDataFn(new data_row_1.DataRow(queryCommand, this, extraData, comment));
-        this.database.addDataRow(dataRow);
+        this.database.dangerous_addDataRow(dataRow);
         return dataRow;
     };
     Table.prototype.afterGenerateData = function (fn) {

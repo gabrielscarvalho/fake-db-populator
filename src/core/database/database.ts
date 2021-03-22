@@ -103,7 +103,13 @@ export abstract class Database implements iDatabase {
       }
     );
 
-    const deleteRows = _.cloneDeep(this.dataRows).reverse();
+    if (this.dataRows.length > 0 && alreadyExecuted.length === 0) {
+      throw new Error(
+        'You should call `database.toSQL()` before calling `database.rollback()`.'
+      );
+    }
+
+    const deleteRows = _.cloneDeep(alreadyExecuted).reverse();
 
     (deleteRows || []).forEach((dataRow: iDataRow) => {
       dataRow.queryCommand = QueryCommand.DELETE;

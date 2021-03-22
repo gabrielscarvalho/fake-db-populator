@@ -148,7 +148,7 @@ export interface iDatabase {
     /**
      * Add a new dataRow. Don't use it manually!
      */
-    addDataRow: (dataRow: iDataRow) => iDatabase;
+    dangerous_addDataRow: (dataRow: iDataRow) => iDatabase;
     /**
      * Convert all data to SQL
      * @return string[]

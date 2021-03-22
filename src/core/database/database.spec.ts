@@ -155,6 +155,20 @@ describe('Database Spec', () => {
       const sqls = db.toSQL();
       expect(sqls.length).toBe(0);
     });
+
+    it('when query is not INSERT or DELETE it must throw error', () => {
+      db.addTable('t_user')
+        .addColumn('email', 'string', Fixed('gabriel@random-db-pop.com'))
+        .addColumn('name', 'string', Fixed('Gabriel'))
+        .setUniqueKeys('email');
+
+      const row = db.insert('t_user');
+      row.queryCommand = 'FakeCommand' as any;
+
+      expect(() => {
+        db.toSQL();
+      }).toThrowError('Impl not found to query command:  [FakeCommand]');
+    });
   });
 
   describe('rollback', () => {
@@ -170,7 +184,6 @@ describe('Database Spec', () => {
         { name: 'Peter', email: 'peter@random-db-pop.com' },
         'A comment'
       );
-
       db.toSQL();
       const sqls = db.rollback();
       expect(sqls.length).toBe(4);
@@ -184,14 +197,18 @@ describe('Database Spec', () => {
       );
     });
 
-    it('when there is no queries, must return empty list', () => {
-      db.addTable('t_user')
-        .addColumn('email', 'string', Fixed('gabriel@random-db-pop.com'))
-        .addColumn('name', 'string', Fixed('Gabriel'))
-        .setUniqueKeys('email');
+    it('should throw error if user ask for rollback before printing the queries', () => {
+      expect(() => {
+        db.addTable('t_user')
+          .addColumn('email', 'string', Fixed('gabriel@random-db-pop.com'))
+          .addColumn('name', 'string', Fixed('Gabriel'))
+          .setUniqueKeys('email');
 
-      const sqls = db.toSQL();
-      expect(sqls.length).toBe(0);
+        db.insert('t_user');
+        db.rollback();
+      }).toThrowError(
+        'You should call `database.toSQL()` before calling `database.rollback()`.'
+      );
     });
   });
 });
