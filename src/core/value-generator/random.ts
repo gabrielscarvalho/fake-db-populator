@@ -66,7 +66,7 @@ export class Random {
   }
 
   /**
-   * Returns a random word
+   * Returns a random boolean
    * @see docs https://chancejs.com/text/bool.html
    */
   public static Boolean(options: { likelihood: number } = { likelihood: 50 }): iValueGenerator {
@@ -79,19 +79,9 @@ export class Random {
    * Returns a random first name
    * @see docs https://chancejs.com/person/first.html
    */
-  public static FirstName(options: { gender?: 'male' | 'female'; nationality?: 'us' } = {}): iValueGenerator {
+  public static FirstName(options: { gender?: 'male' | 'female'; nationality?: 'us' | 'en' } = {}): iValueGenerator {
     return () => {
       return chance.first(options);
-    };
-  }
-
-  /**
-   * Returns a random name
-   * @see docs https://chancejs.com/person/name.html
-   */
-  public static FullName(options: { nationality: string } = { nationality: 'en' }): iValueGenerator {
-    return () => {
-      return chance.name(options);
     };
   }
 
@@ -102,6 +92,16 @@ export class Random {
   public static LastName(options: { nationality: string } = { nationality: 'en' }): iValueGenerator {
     return () => {
       return chance.last(options);
+    };
+  }
+
+  /**
+   * Returns a random name
+   * @see docs https://chancejs.com/person/name.html
+   */
+  public static FullName(options: { nationality: string } = { nationality: 'en' }): iValueGenerator {
+    return () => {
+      return chance.name(options);
     };
   }
 
@@ -159,9 +159,13 @@ export class Random {
    * Returns a random char
    * @see docs https://chancejs.com/miscellaneous/hash.html
    */
-  public static Char(options: { alpha: boolean } = { alpha: true }): iValueGenerator {
+  public static Char(
+    options: { alpha: boolean; pool?: string; numeric?: boolean; casing?: 'lower' | 'upper'; symbols?: boolean } = {
+      alpha: true,
+    }
+  ): iValueGenerator {
     return () => {
-      return chance.char(options);
+      return chance.character(options);
     };
   }
 
@@ -181,7 +185,7 @@ export class Random {
    */
   public static AvatarURL(options: { protocol?: 'http' | 'https'; fileExtension?: string } = {}): iValueGenerator {
     return () => {
-      return chance.first(options);
+      return chance.avatar(options);
     };
   }
 

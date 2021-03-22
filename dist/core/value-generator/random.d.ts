@@ -33,7 +33,7 @@ export declare class Random {
      */
     static PickOne(list: any[]): iValueGenerator;
     /**
-     * Returns a random word
+     * Returns a random boolean
      * @see docs https://chancejs.com/text/bool.html
      */
     static Boolean(options?: {
@@ -45,20 +45,20 @@ export declare class Random {
      */
     static FirstName(options?: {
         gender?: 'male' | 'female';
-        nationality?: 'us';
-    }): iValueGenerator;
-    /**
-     * Returns a random name
-     * @see docs https://chancejs.com/person/name.html
-     */
-    static FullName(options?: {
-        nationality: string;
+        nationality?: 'us' | 'en';
     }): iValueGenerator;
     /**
      * Returns a random char
      * @see docs https://chancejs.com/person/last.html
      */
     static LastName(options?: {
+        nationality: string;
+    }): iValueGenerator;
+    /**
+     * Returns a random name
+     * @see docs https://chancejs.com/person/name.html
+     */
+    static FullName(options?: {
         nationality: string;
     }): iValueGenerator;
     /**
@@ -103,6 +103,10 @@ export declare class Random {
      */
     static Char(options?: {
         alpha: boolean;
+        pool?: string;
+        numeric?: boolean;
+        casing?: 'lower' | 'upper';
+        symbols?: boolean;
     }): iValueGenerator;
     /**
      * Returns a random cpf

@@ -54,7 +54,7 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-     * Returns a random word
+     * Returns a random boolean
      * @see docs https://chancejs.com/text/bool.html
      */
     Random.Boolean = function (options) {
@@ -74,16 +74,6 @@ var Random = /** @class */ (function () {
         };
     };
     /**
-     * Returns a random name
-     * @see docs https://chancejs.com/person/name.html
-     */
-    Random.FullName = function (options) {
-        if (options === void 0) { options = { nationality: 'en' }; }
-        return function () {
-            return chance.name(options);
-        };
-    };
-    /**
      * Returns a random char
      * @see docs https://chancejs.com/person/last.html
      */
@@ -91,6 +81,16 @@ var Random = /** @class */ (function () {
         if (options === void 0) { options = { nationality: 'en' }; }
         return function () {
             return chance.last(options);
+        };
+    };
+    /**
+     * Returns a random name
+     * @see docs https://chancejs.com/person/name.html
+     */
+    Random.FullName = function (options) {
+        if (options === void 0) { options = { nationality: 'en' }; }
+        return function () {
+            return chance.name(options);
         };
     };
     /**
@@ -148,9 +148,11 @@ var Random = /** @class */ (function () {
      * @see docs https://chancejs.com/miscellaneous/hash.html
      */
     Random.Char = function (options) {
-        if (options === void 0) { options = { alpha: true }; }
+        if (options === void 0) { options = {
+            alpha: true
+        }; }
         return function () {
-            return chance.char(options);
+            return chance.character(options);
         };
     };
     /**
@@ -169,7 +171,7 @@ var Random = /** @class */ (function () {
     Random.AvatarURL = function (options) {
         if (options === void 0) { options = {}; }
         return function () {
-            return chance.first(options);
+            return chance.avatar(options);
         };
     };
     /**
