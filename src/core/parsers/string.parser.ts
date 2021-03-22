@@ -9,8 +9,7 @@ export class StringParser extends Parser implements iParser {
     if (val !== null && val !== undefined) {
       if (typeof val === 'object') {
         throw new Error(
-          'StringParser received invalid value: object. Valid values are: string or number. Received value:' +
-            val
+          'StringParser received invalid value: object. Valid values are: string or number. Received value:' + val
         );
       }
 

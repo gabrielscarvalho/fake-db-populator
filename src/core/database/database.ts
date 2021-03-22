@@ -1,13 +1,6 @@
 import { table } from 'console';
 import _ from 'lodash';
-import {
-  iDatabase,
-  iDatabaseReservedWords,
-  iDataRow,
-  iDataRowParsed,
-  iParser,
-  iTable,
-} from '../../interfaces';
+import { iDatabase, iDatabaseReservedWords, iDataRow, iDataRowParsed, iParser, iTable } from '../../interfaces';
 import { DataRowParsed } from '../data/data-row-parsed';
 import { EntityParser } from '../parsers/entity.parser';
 import QueryCommand from '../query-builder/query-command.enum';
@@ -62,15 +55,8 @@ export abstract class Database implements iDatabase {
     return Optional.fromValue(lastRow);
   }
 
-  public insert(
-    tableName: string,
-    extraData: object = {},
-    comment: string = null
-  ): iDataRow {
-    const dataRow: iDataRow = this.getTable(tableName).insert(
-      extraData,
-      comment
-    );
+  public insert(tableName: string, extraData: object = {}, comment: string = null): iDataRow {
+    const dataRow: iDataRow = this.getTable(tableName).insert(extraData, comment);
     return dataRow;
   }
 
@@ -96,16 +82,12 @@ export abstract class Database implements iDatabase {
 
     queries.push(this.createComment(' --- ROLLBACK'));
 
-    const alreadyExecuted: iDataRow[] = (this.dataRows || []).filter(
-      (dataRow: iDataRow) => {
-        return dataRow.hasCreatedQuery;
-      }
-    );
+    const alreadyExecuted: iDataRow[] = (this.dataRows || []).filter((dataRow: iDataRow) => {
+      return dataRow.hasCreatedQuery;
+    });
 
     if (this.dataRows.length > 0 && alreadyExecuted.length === 0) {
-      throw new Error(
-        'You should call `database.toSQL()` before calling `database.rollback()`.'
-      );
+      throw new Error('You should call `database.toSQL()` before calling `database.rollback()`.');
     }
 
     const deleteRows = _.cloneDeep(alreadyExecuted).reverse();
@@ -126,9 +108,7 @@ export abstract class Database implements iDatabase {
     console.log('|-- PARSERS ------------------------');
 
     (this.parsers.getValues() || []).forEach((value: iParser) => {
-      const description: string = value.description
-        ? value.description
-        : `Parses to format ${value.type}`;
+      const description: string = value.description ? value.description : `Parses to format ${value.type}`;
       const type = value.type.padEnd(30, ' ');
       console.log(`\t${type} ${description}`);
     });
@@ -137,10 +117,7 @@ export abstract class Database implements iDatabase {
   protected createCommand(dataRow: iDataRow): string {
     let query: string = null;
 
-    const dataRowParsed: iDataRowParsed = new DataRowParsed(
-      this.entityParser,
-      dataRow
-    );
+    const dataRowParsed: iDataRowParsed = new DataRowParsed(this.entityParser, dataRow);
 
     if (dataRow.queryCommand === QueryCommand.INSERT) {
       query = this.createInsertQuery(dataRowParsed);
@@ -150,9 +127,7 @@ export abstract class Database implements iDatabase {
     }
 
     if (query === null) {
-      throw new Error(
-        `Impl not found to query command:  [${dataRow.queryCommand}].`
-      );
+      throw new Error(`Impl not found to query command:  [${dataRow.queryCommand}].`);
     }
 
     dataRow.hasCreatedQuery = true;

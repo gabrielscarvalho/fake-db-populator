@@ -3,11 +3,7 @@ import { Optional } from './core/utils/optional';
 
 export interface iMap<T> {
   has: (name: string) => boolean;
-  add: (
-    name: string,
-    content: T,
-    config?: { throwIfExists: boolean }
-  ) => iMap<T>;
+  add: (name: string, content: T, config?: { throwIfExists: boolean }) => iMap<T>;
   get: (name: string, config: { throwIfNotExists: boolean }) => Optional<T>;
   getForced: (name: string) => T;
   delete: (name: string, config: { throwIfNotExists: boolean }) => boolean;
@@ -132,11 +128,7 @@ export interface iTable {
    * @param type the type of the column. 'string', 'number', or created parsers.
    * @param valueGen the function that will generate the value.
    */
-  addColumn: (
-    columnName: string,
-    type: string | iParser,
-    valueGen: iValueGenerator
-  ) => iTable;
+  addColumn: (columnName: string, type: string | iParser, valueGen: iValueGenerator) => iTable;
 
   /**
    * Creates a new insert

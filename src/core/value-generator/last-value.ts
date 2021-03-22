@@ -1,9 +1,4 @@
-import {
-  iColumn,
-  iDataRow,
-  iDataRowColumn,
-  iValueGenerator,
-} from '../../interfaces';
+import { iColumn, iDataRow, iDataRowColumn, iValueGenerator } from '../../interfaces';
 import { Optional } from '../utils/optional';
 
 interface LastValueConfig {

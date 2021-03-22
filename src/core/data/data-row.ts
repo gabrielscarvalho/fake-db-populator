@@ -37,10 +37,7 @@ export class DataRow implements iDataRow {
       obj[keyName] = dataRowColumn.rawValue;
     });
 
-    console.log(
-      `DataRow object from: [${this.table.name}] contains value: `,
-      JSON.stringify(obj)
-    );
+    console.log(`DataRow object from: [${this.table.name}] contains value: `, JSON.stringify(obj));
   }
 
   protected generateData(): void {

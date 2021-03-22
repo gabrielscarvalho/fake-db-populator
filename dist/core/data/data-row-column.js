@@ -27,9 +27,7 @@ var DataRowColumn = /** @class */ (function () {
     };
     DataRowColumn.prototype.isPartOfUniqueKey = function () {
         var _this = this;
-        var isKey = this.column.table
-            .getUniqueKeyColumns()
-            .find(function (column) {
+        var isKey = this.column.table.getUniqueKeyColumns().find(function (column) {
             return column.name === _this.column.name;
         });
         return !!isKey;

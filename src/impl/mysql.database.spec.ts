@@ -9,11 +9,7 @@ describe('MySQL Tests', () => {
     .addColumn('name', 'string', Fixed('John'))
     .addColumn('active', 'boolean', Fixed(false))
     .addColumn('birth', 'date', Fixed(new Date(2000, 1, 1)))
-    .addColumn(
-      'updated_at',
-      'datetime',
-      Fixed(new Date(2000, 1, 1, 12, 30, 35))
-    )
+    .addColumn('updated_at', 'datetime', Fixed(new Date(2000, 1, 1, 12, 30, 35)))
     .addColumn('raw_value', 'raw', Fixed('now()'))
     .setUniqueKeys('id', 'name');
 
@@ -34,8 +30,6 @@ describe('MySQL Tests', () => {
     expect(rollback.length).toBe(2);
 
     expect(rollback[0]).toBe('/*  --- ROLLBACK */');
-    expect(rollback[1]).toBe(
-      "DELETE FROM `t_user` WHERE `id`=1 AND `name`='John';"
-    );
+    expect(rollback[1]).toBe("DELETE FROM `t_user` WHERE `id`=1 AND `name`='John';");
   });
 });

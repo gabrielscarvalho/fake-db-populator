@@ -29,8 +29,7 @@ var EntityParser = /** @class */ (function (_super) {
     }
     EntityParser.prototype.parse = function (val) {
         if (!lodash_1.isString(val)) {
-            throw new Error('EntityParser received invalid value. Valid values are: string. Received value:' +
-                val);
+            throw new Error('EntityParser received invalid value. Valid values are: string. Received value:' + val);
         }
         return this.addQuotesForEntities(val);
     };

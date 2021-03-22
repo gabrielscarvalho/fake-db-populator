@@ -41,9 +41,7 @@ describe('Database Spec', () => {
     it('should throw error if get unknown table', () => {
       expect(() => {
         db.getTable('unknown');
-      }).toThrowError(
-        "Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: []"
-      );
+      }).toThrowError("Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: []");
     });
   });
 
@@ -52,9 +50,7 @@ describe('Database Spec', () => {
       db.addTable('t_user').addColumn('name', 'string', Fixed('Gabriel'));
       db.insert('t_user', { name: 'John' });
 
-      expect(db.getLastDataRow('t_user').getForced().getRawValue('name')).toBe(
-        'John'
-      );
+      expect(db.getLastDataRow('t_user').getForced().getRawValue('name')).toBe('John');
 
       db.insert('t_user');
 
@@ -73,17 +69,13 @@ describe('Database Spec', () => {
     it('should throw error if get unknown table', () => {
       expect(() => {
         db.getLastDataRow('unknown');
-      }).toThrowError(
-        "Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: []"
-      );
+      }).toThrowError("Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: []");
     });
   });
 
   describe('insert', () => {
     it('should return ok to insert valid register', () => {
-      db.addTable('t_user')
-        .addColumn('name', 'string', Fixed('Gabriel'))
-        .addColumn('age', 'int', Fixed(30));
+      db.addTable('t_user').addColumn('name', 'string', Fixed('Gabriel')).addColumn('age', 'int', Fixed(30));
       const user = db.insert('t_user', { age: 29 }, 'A comment');
       const optUser: Optional<iDataRow> = db.getLastDataRow('t_user');
 
@@ -101,9 +93,7 @@ describe('Database Spec', () => {
       expect(() => {
         db.addTable('t_user');
         db.insert('unknown');
-      }).toThrowError(
-        "Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: [t_user]"
-      );
+      }).toThrowError("Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: [t_user]");
     });
   });
 
@@ -129,11 +119,7 @@ describe('Database Spec', () => {
         .setUniqueKeys('email');
 
       db.insert('t_user');
-      db.insert(
-        't_user',
-        { name: 'Peter', email: 'peter@random-db-pop.com' },
-        'A comment'
-      );
+      db.insert('t_user', { name: 'Peter', email: 'peter@random-db-pop.com' }, 'A comment');
 
       const sqls = db.toSQL();
       expect(sqls.length).toBe(3);
@@ -141,9 +127,7 @@ describe('Database Spec', () => {
         'INSERT INTO "t_user" ("email", "name") VALUES (\'gabriel@random-db-pop.com\', \'Gabriel\');'
       );
       expect(sqls[1]).toBe('/* A comment */');
-      expect(sqls[2]).toBe(
-        'INSERT INTO "t_user" ("email", "name") VALUES (\'peter@random-db-pop.com\', \'Peter\');'
-      );
+      expect(sqls[2]).toBe('INSERT INTO "t_user" ("email", "name") VALUES (\'peter@random-db-pop.com\', \'Peter\');');
     });
 
     it('when there is no queries, must return empty list', () => {
@@ -179,22 +163,14 @@ describe('Database Spec', () => {
         .setUniqueKeys('email');
 
       db.insert('t_user');
-      db.insert(
-        't_user',
-        { name: 'Peter', email: 'peter@random-db-pop.com' },
-        'A comment'
-      );
+      db.insert('t_user', { name: 'Peter', email: 'peter@random-db-pop.com' }, 'A comment');
       db.toSQL();
       const sqls = db.rollback();
       expect(sqls.length).toBe(4);
       expect(sqls[0]).toBe('/*  --- ROLLBACK */');
-      expect(sqls[1]).toBe(
-        'DELETE FROM "t_user" WHERE "email"=\'peter@random-db-pop.com\';'
-      );
+      expect(sqls[1]).toBe('DELETE FROM "t_user" WHERE "email"=\'peter@random-db-pop.com\';');
       expect(sqls[2]).toBe('/* A comment */');
-      expect(sqls[3]).toBe(
-        'DELETE FROM "t_user" WHERE "email"=\'gabriel@random-db-pop.com\';'
-      );
+      expect(sqls[3]).toBe('DELETE FROM "t_user" WHERE "email"=\'gabriel@random-db-pop.com\';');
     });
 
     it('should throw error if user ask for rollback before printing the queries', () => {
@@ -206,9 +182,7 @@ describe('Database Spec', () => {
 
         db.insert('t_user');
         db.rollback();
-      }).toThrowError(
-        'You should call `database.toSQL()` before calling `database.rollback()`.'
-      );
+      }).toThrowError('You should call `database.toSQL()` before calling `database.rollback()`.');
     });
 
     it('should throw error if table has not unique keys', () => {

@@ -65,9 +65,7 @@ describe('NamedMap tests', () => {
 
     expect(() => {
       map.getForced('unknown-prop');
-    }).toThrowError(
-      "Could not get unknown 'unknown-prop' from list.  Did you spell it right? Valid values: [age]"
-    );
+    }).toThrowError("Could not get unknown 'unknown-prop' from list.  Did you spell it right? Valid values: [age]");
   });
 
   it('should be able to get unexistent values', () => {
@@ -101,12 +99,8 @@ describe('NamedMap tests', () => {
     expect(map.has('unknown-prop')).toBe(false);
 
     expect(() => {
-      expect(map.delete('unknown-prop', { throwIfNotExists: true })).toBe(
-        false
-      );
-    }).toThrowError(
-      "Could not delete unknown 'unknown-prop' from list. Did you spell it right? Valid values: [age]"
-    );
+      expect(map.delete('unknown-prop', { throwIfNotExists: true })).toBe(false);
+    }).toThrowError("Could not delete unknown 'unknown-prop' from list. Did you spell it right? Valid values: [age]");
   });
 
   it('should be able to get empty keys', () => {

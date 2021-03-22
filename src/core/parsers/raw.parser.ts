@@ -13,8 +13,7 @@ export class RawParser extends Parser implements iParser {
 
     if (typeof val === 'object') {
       throw new Error(
-        'RawParser received invalid value: object. Valid values are: string or number. Received value:' +
-          val
+        'RawParser received invalid value: object. Valid values are: string or number. Received value:' + val
       );
     }
 

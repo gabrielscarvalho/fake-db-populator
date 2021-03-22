@@ -89,9 +89,7 @@ var Database = /** @class */ (function () {
     Database.prototype.printParsers = function () {
         console.log('|-- PARSERS ------------------------');
         (this.parsers.getValues() || []).forEach(function (value) {
-            var description = value.description
-                ? value.description
-                : "Parses to format " + value.type;
+            var description = value.description ? value.description : "Parses to format " + value.type;
             var type = value.type.padEnd(30, ' ');
             console.log("\t" + type + " " + description);
         });

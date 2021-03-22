@@ -21,9 +21,7 @@ export class Optional<T> {
 
   public get(): T {
     if (!this.hasChecked) {
-      throw new Error(
-        'It is required to check if value is present before getting it. Call isPresent() before.'
-      );
+      throw new Error('It is required to check if value is present before getting it. Call isPresent() before.');
     }
     return this.data;
   }

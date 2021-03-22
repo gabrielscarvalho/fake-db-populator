@@ -61,10 +61,7 @@ export class DateGen {
   }
 
   public static between(range: Partial<DateRange> = {}): iValueGenerator {
-    const dateRange = Object.assign(
-      _.cloneDeep(DateGen.getDefaultDateRange()),
-      range
-    );
+    const dateRange = Object.assign(_.cloneDeep(DateGen.getDefaultDateRange()), range);
 
     return () => {
       const year = chance.integer(dateRange.year);

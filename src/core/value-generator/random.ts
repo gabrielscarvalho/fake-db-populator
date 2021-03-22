@@ -11,11 +11,7 @@ export class Random {
     },
   };
 
-  public static Number(
-    min: number = 0,
-    max: number = 999,
-    decimals: number = 5
-  ): iValueGenerator {
+  public static Number(min: number = 0, max: number = 999, decimals: number = 5): iValueGenerator {
     return () => {
       if (decimals && decimals > 0) {
         return chance.floating({ min, max, fixed: decimals });
@@ -73,9 +69,7 @@ export class Random {
    * Returns a random word
    * @see docs https://chancejs.com/text/bool.html
    */
-  public static Boolean(
-    options: { likelihood: number } = { likelihood: 50 }
-  ): iValueGenerator {
+  public static Boolean(options: { likelihood: number } = { likelihood: 50 }): iValueGenerator {
     return () => {
       return chance.bool(options);
     };
@@ -85,9 +79,7 @@ export class Random {
    * Returns a random first name
    * @see docs https://chancejs.com/person/first.html
    */
-  public static FirstName(
-    options: { gender?: 'male' | 'female'; nationality?: 'us' } = {}
-  ): iValueGenerator {
+  public static FirstName(options: { gender?: 'male' | 'female'; nationality?: 'us' } = {}): iValueGenerator {
     return () => {
       return chance.first(options);
     };
@@ -97,9 +89,7 @@ export class Random {
    * Returns a random name
    * @see docs https://chancejs.com/person/name.html
    */
-  public static FullName(
-    options: { nationality: string } = { nationality: 'en' }
-  ): iValueGenerator {
+  public static FullName(options: { nationality: string } = { nationality: 'en' }): iValueGenerator {
     return () => {
       return chance.name(options);
     };
@@ -109,9 +99,7 @@ export class Random {
    * Returns a random char
    * @see docs https://chancejs.com/person/last.html
    */
-  public static LastName(
-    options: { nationality: string } = { nationality: 'en' }
-  ): iValueGenerator {
+  public static LastName(options: { nationality: string } = { nationality: 'en' }): iValueGenerator {
     return () => {
       return chance.last(options);
     };
@@ -131,9 +119,7 @@ export class Random {
    * Returns a random word
    * @see docs https://chancejs.com/text/word.html
    */
-  public static Word(
-    options: { syllables: number } = { syllables: 3 }
-  ): iValueGenerator {
+  public static Word(options: { syllables: number } = { syllables: 3 }): iValueGenerator {
     return () => {
       return chance.word(options);
     };
@@ -143,9 +129,7 @@ export class Random {
    * Returns a random word
    * @see docs https://chancejs.com/text/word.html
    */
-  public static Sentence(
-    options: { words: number } = { words: 3 }
-  ): iValueGenerator {
+  public static Sentence(options: { words: number } = { words: 3 }): iValueGenerator {
     return () => {
       return chance.sentence(options);
     };
@@ -165,9 +149,7 @@ export class Random {
    * Returns a random hash
    * @see docs https://chancejs.com/miscellaneous/hash.html
    */
-  public static Hash(
-    options: { length?: number; casing?: 'upper' } = {}
-  ): iValueGenerator {
+  public static Hash(options: { length?: number; casing?: 'upper' } = {}): iValueGenerator {
     return () => {
       return chance.hash(options);
     };
@@ -177,9 +159,7 @@ export class Random {
    * Returns a random char
    * @see docs https://chancejs.com/miscellaneous/hash.html
    */
-  public static Char(
-    options: { alpha: boolean } = { alpha: true }
-  ): iValueGenerator {
+  public static Char(options: { alpha: boolean } = { alpha: true }): iValueGenerator {
     return () => {
       return chance.char(options);
     };
@@ -199,9 +179,7 @@ export class Random {
    * Returns a random avatar image url
    * @see docs https://chancejs.com/web/avatar.html
    */
-  public static AvatarURL(
-    options: { protocol?: 'http' | 'https'; fileExtension?: string } = {}
-  ): iValueGenerator {
+  public static AvatarURL(options: { protocol?: 'http' | 'https'; fileExtension?: string } = {}): iValueGenerator {
     return () => {
       return chance.first(options);
     };
@@ -237,9 +215,7 @@ export class Random {
    * Returns a random country
    * @see docs https://chancejs.com/location/country.html
    */
-  public static Country(
-    options: { full: boolean } = { full: true }
-  ): iValueGenerator {
+  public static Country(options: { full: boolean } = { full: true }): iValueGenerator {
     return () => {
       return chance.country(options);
     };

@@ -7,10 +7,7 @@ export class DateParser extends Parser implements iParser {
   public type: string = 'date';
   public description: string;
 
-  public constructor(
-    reservedWords: iDatabaseReservedWords,
-    public format: string = 'YYYY-MM-DD'
-  ) {
+  public constructor(reservedWords: iDatabaseReservedWords, public format: string = 'YYYY-MM-DD') {
     super(reservedWords);
     this.description = `Parse date to format: "${this.format}"`;
   }
@@ -21,10 +18,7 @@ export class DateParser extends Parser implements iParser {
     }
 
     if (!(val instanceof Date)) {
-      throw new Error(
-        'DateParser received invalid value. Valid values are: Date. Received value:' +
-          val
-      );
+      throw new Error('DateParser received invalid value. Valid values are: Date. Received value:' + val);
     }
 
     const dateString: string = moment(val).format(this.format);

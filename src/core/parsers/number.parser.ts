@@ -7,10 +7,7 @@ export class NumberParser extends Parser implements iParser {
   public precision: number = 2;
   public description: string = 'Parse number to float or int string';
 
-  public constructor(
-    reservedWords: iDatabaseReservedWords,
-    precision: number = 2
-  ) {
+  public constructor(reservedWords: iDatabaseReservedWords, precision: number = 2) {
     super(reservedWords);
     this.description = `Parse number to number with precision: ${precision}`;
   }
@@ -22,8 +19,7 @@ export class NumberParser extends Parser implements iParser {
 
     if ((!isString(val) && !isNumber(val)) || isNaN(Number(val))) {
       throw new Error(
-        'NumberParser received invalid value: object. Valid values are: number or string. Received value:' +
-          val
+        'NumberParser received invalid value: object. Valid values are: number or string. Received value:' + val
       );
     }
 
@@ -38,11 +34,7 @@ export class NumberParser extends Parser implements iParser {
     return preparedValue;
   }
 
-  public static withPrecision(
-    reservedWords: iDatabaseReservedWords,
-    type: string,
-    precision: number
-  ) {
+  public static withPrecision(reservedWords: iDatabaseReservedWords, type: string, precision: number) {
     const parser = new NumberParser(reservedWords, precision);
     parser.type = type;
     parser.precision = precision;

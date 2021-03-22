@@ -40,11 +40,7 @@ describe('NumberParser tests', () => {
   });
 
   it('should create new type properly', () => {
-    const parser: iParser = NumberParser.withPrecision(
-      reservedWords,
-      'my-type',
-      3
-    );
+    const parser: iParser = NumberParser.withPrecision(reservedWords, 'my-type', 3);
     expect(parser.type).toBe('my-type');
     expect(parser.parse(2.43225)).toBe('2.432');
   });

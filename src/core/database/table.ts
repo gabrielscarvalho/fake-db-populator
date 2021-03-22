@@ -1,11 +1,4 @@
-import {
-  iColumn,
-  iDatabase,
-  iDataRow,
-  iParser,
-  iTable,
-  iValueGenerator,
-} from '../../interfaces';
+import { iColumn, iDatabase, iDataRow, iParser, iTable, iValueGenerator } from '../../interfaces';
 import { DataRow } from '../data/data-row';
 import QueryCommand from '../query-builder/query-command.enum';
 import { NamedMap } from '../utils/named.map';
@@ -17,9 +10,7 @@ export class Table implements iTable {
   public database: iDatabase;
   public columns: NamedMap<iColumn>;
 
-  protected _afterGenDataFn: (dataRow: iDataRow) => iDataRow = (
-    dataRow: iDataRow
-  ) => dataRow;
+  protected _afterGenDataFn: (dataRow: iDataRow) => iDataRow = (dataRow: iDataRow) => dataRow;
 
   /**
    * **WARNING**: Do not create this object by yourself.
@@ -43,19 +34,13 @@ export class Table implements iTable {
   }
 
   public getUniqueKeyColumns(): iColumn[] {
-    const uniqueColumns = (this.columns.getValues() || []).filter(
-      (column: iColumn) => {
-        return column.isPartOfUniqueKey;
-      }
-    );
+    const uniqueColumns = (this.columns.getValues() || []).filter((column: iColumn) => {
+      return column.isPartOfUniqueKey;
+    });
     return uniqueColumns;
   }
 
-  public addColumn(
-    columnName: string,
-    type: string,
-    valueGen: iValueGenerator
-  ): iTable {
+  public addColumn(columnName: string, type: string, valueGen: iValueGenerator): iTable {
     const parser = this.database.getParser(type);
     const column: iColumn = new Column(this, columnName, parser, valueGen);
 
@@ -78,9 +63,7 @@ export class Table implements iTable {
   }
 
   public insert(extraData: object = {}, comment: string = null): iDataRow {
-    const dataRow = this._afterGenDataFn(
-      new DataRow(QueryCommand.INSERT, this, extraData, comment)
-    );
+    const dataRow = this._afterGenDataFn(new DataRow(QueryCommand.INSERT, this, extraData, comment));
 
     this.database.dangerous_addDataRow(dataRow);
     return dataRow;

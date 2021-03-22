@@ -30,8 +30,6 @@ describe('Optional tests', () => {
 
     expect(() => {
       opt.get();
-    }).toThrowError(
-      'It is required to check if value is present before getting it. Call isPresent() before.'
-    );
+    }).toThrowError('It is required to check if value is present before getting it. Call isPresent() before.');
   });
 });

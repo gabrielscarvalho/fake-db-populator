@@ -13,15 +13,9 @@ export class NamedMap<T> implements iMap<T> {
     return this.data.has(name);
   }
 
-  public add(
-    name: string,
-    content: T,
-    config: { throwIfExists: boolean } = { throwIfExists: false }
-  ): iMap<T> {
+  public add(name: string, content: T, config: { throwIfExists: boolean } = { throwIfExists: false }): iMap<T> {
     if (this.has(name) && config.throwIfExists) {
-      throw new Error(
-        `Cannot add [${name}] to list. The value is already in use.`
-      );
+      throw new Error(`Cannot add [${name}] to list. The value is already in use.`);
     }
     this.data.set(name, content);
     return this;
@@ -44,10 +38,7 @@ export class NamedMap<T> implements iMap<T> {
     return this.data.get(name);
   }
 
-  public delete(
-    name: string,
-    config: { throwIfNotExists: boolean } = { throwIfNotExists: false }
-  ): boolean {
+  public delete(name: string, config: { throwIfNotExists: boolean } = { throwIfNotExists: false }): boolean {
     if (!this.has(name)) {
       if (config.throwIfNotExists) {
         const validKeys: string = this.getKeys().join(',');
