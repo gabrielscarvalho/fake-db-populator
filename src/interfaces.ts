@@ -6,7 +6,7 @@ export interface iMap<T> {
   add: (
     name: string,
     content: T,
-    config: { throwIfExists: boolean }
+    config?: { throwIfExists: boolean }
   ) => iMap<T>;
   get: (name: string, config: { throwIfNotExists: boolean }) => Optional<T>;
   getForced: (name: string) => T;

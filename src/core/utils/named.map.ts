@@ -20,7 +20,7 @@ export class NamedMap<T> implements iMap<T> {
   ): iMap<T> {
     if (this.has(name) && config.throwIfExists) {
       throw new Error(
-        `Cannot add ${name} to list. The value is already in use.`
+        `Cannot add [${name}] to list. The value is already in use.`
       );
     }
     this.data.set(name, content);

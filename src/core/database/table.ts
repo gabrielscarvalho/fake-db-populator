@@ -55,6 +55,10 @@ export class Table implements iTable {
     const parser = this.database.getParser(type);
     const column: iColumn = new Column(this, columnName, parser, valueGen);
 
+    if (!valueGen) {      
+      throw new Error(`Column: [${this.name}.${columnName}] is missing valueGenerator param. Example: table.addColumn('column_name', 'parser', valGeneratorFn);`)
+    }
+
     this.columns.add(columnName, column, { throwIfExists: true });
     return this;
   }

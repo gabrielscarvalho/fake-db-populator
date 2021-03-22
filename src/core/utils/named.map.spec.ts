@@ -52,7 +52,7 @@ describe('NamedMap tests', () => {
 
     expect(() => {
       map.add('age', 15, { throwIfExists: true });
-    }).toThrowError('Cannot add age to list. The value is already in use.');
+    }).toThrowError('Cannot add [age] to list. The value is already in use.');
   });
 
   it('should not be able to get inexistent value if config does not allow', () => {
