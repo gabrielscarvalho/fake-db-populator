@@ -35,7 +35,7 @@ DELETE FROM "t_user" WHERE "id"=1;
 
 Others databases will be added soon.
 
-If you don't want to wait: check [New Database Docs](/NewDatabase.md).
+If you don't want to wait: check [New Database Docs](https://github.com/gabrielscarvalho/random-db-populator/wiki/Creating-new-Database).
 
 
 ## Examples

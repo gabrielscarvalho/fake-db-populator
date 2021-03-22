@@ -100,6 +100,23 @@ describe('Table Spec', () => {
   });
 
   describe('insert', () => {
+    it('should return valid DataRow with default params', () => {
+      const tUser = db
+        .addTable('t_user')
+        .addColumn('name', 'string', Fixed('Gabriel'))
+        .addColumn('surname', 'string', Fixed('Test'));
+
+      tUser.insert();
+
+      const optData = db.getLastDataRow('t_user');
+      expect(optData.isPresent()).toBe(true);
+      const dataRow = optData.get();
+
+      expect(dataRow.getRawValue('name')).toBe('Gabriel');
+      expect(dataRow.getRawValue('surname')).toBe('Test');
+      expect(dataRow.comment).toBe(null);
+    });
+
     it('should return valid DataRow if there is data', () => {
       const tUser = db
         .addTable('t_user')

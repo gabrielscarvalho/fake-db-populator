@@ -28,6 +28,10 @@ describe('Database Spec', () => {
         "Could not get unknown 'unknown' from list.  Did you spell it right? Valid values: [string,number,int,date,datetime,raw,boolean]"
       );
     });
+
+    it('should print', () => {
+      db.printParsers();
+    });
   });
 
   describe('add/get table', () => {
