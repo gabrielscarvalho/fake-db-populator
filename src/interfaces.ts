@@ -139,14 +139,10 @@ export interface iTable {
   ) => iTable;
 
   /**
-   * Creates a new data object.
+   * Creates a new insert
    * @param extraData object that contains the column key and value to be replaced.
    */
-  createNewDataRowAndStore: (
-    queryCommand: QueryCommand,
-    extraData: object,
-    comment?: string
-  ) => iDataRow;
+  insert: (extraData: object, comment?: string) => iDataRow;
 
   /**
    * Function that can be called after the data is generate.

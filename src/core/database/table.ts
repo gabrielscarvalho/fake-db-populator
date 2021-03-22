@@ -21,6 +21,10 @@ export class Table implements iTable {
     dataRow: iDataRow
   ) => dataRow;
 
+  /**
+   * **WARNING**: Do not create this object by yourself.
+   * Use `database.addTable(tableName)` instead
+   */
   public constructor(database: iDatabase, name: string) {
     this.name = name;
     this.database = database;
@@ -55,8 +59,10 @@ export class Table implements iTable {
     const parser = this.database.getParser(type);
     const column: iColumn = new Column(this, columnName, parser, valueGen);
 
-    if (!valueGen) {      
-      throw new Error(`Column: [${this.name}.${columnName}] is missing valueGenerator param. Example: table.addColumn('column_name', 'parser', valGeneratorFn);`)
+    if (!valueGen) {
+      throw new Error(
+        `Column: [${this.name}.${columnName}] is missing valueGenerator param. Example: table.addColumn('column_name', 'parser', valGeneratorFn);`
+      );
     }
 
     this.columns.add(columnName, column, { throwIfExists: true });
@@ -71,13 +77,9 @@ export class Table implements iTable {
     return this.database.getLastDataRow(this.name);
   }
 
-  public createNewDataRowAndStore(
-    queryCommand: QueryCommand,
-    extraData: object = {},
-    comment: string = null
-  ): iDataRow {
+  public insert(extraData: object = {}, comment: string = null): iDataRow {
     const dataRow = this._afterGenDataFn(
-      new DataRow(queryCommand, this, extraData, comment)
+      new DataRow(QueryCommand.INSERT, this, extraData, comment)
     );
 
     this.database.dangerous_addDataRow(dataRow);

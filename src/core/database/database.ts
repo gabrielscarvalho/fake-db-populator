@@ -67,8 +67,7 @@ export abstract class Database implements iDatabase {
     extraData: object = {},
     comment: string = null
   ): iDataRow {
-    const dataRow: iDataRow = this.getTable(tableName).createNewDataRowAndStore(
-      QueryCommand.INSERT,
+    const dataRow: iDataRow = this.getTable(tableName).insert(
       extraData,
       comment
     );

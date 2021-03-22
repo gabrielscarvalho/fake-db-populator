@@ -2,7 +2,7 @@ import QueryCommand from './core/query-builder/query-command.enum';
 import { Optional } from './core/utils/optional';
 export interface iMap<T> {
     has: (name: string) => boolean;
-    add: (name: string, content: T, config: {
+    add: (name: string, content: T, config?: {
         throwIfExists: boolean;
     }) => iMap<T>;
     get: (name: string, config: {
@@ -115,10 +115,10 @@ export interface iTable {
      */
     addColumn: (columnName: string, type: string | iParser, valueGen: iValueGenerator) => iTable;
     /**
-     * Creates a new data object.
+     * Creates a new insert
      * @param extraData object that contains the column key and value to be replaced.
      */
-    createNewDataRowAndStore: (queryCommand: QueryCommand, extraData: object, comment?: string) => iDataRow;
+    insert: (extraData: object, comment?: string) => iDataRow;
     /**
      * Function that can be called after the data is generate.
      * It is a place to fix info before releasing the DataRow

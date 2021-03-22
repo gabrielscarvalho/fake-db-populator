@@ -1,10 +1,18 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.Table = void 0;
 var data_row_1 = require("../data/data-row");
+var query_command_enum_1 = __importDefault(require("../query-builder/query-command.enum"));
 var named_map_1 = require("../utils/named.map");
 var column_1 = require("./column");
 var Table = /** @class */ (function () {
+    /**
+     * **WARNING**: Do not create this object by yourself.
+     * Use `database.addTable(tableName)` instead
+     */
     function Table(database, name) {
         this._afterGenDataFn = function (dataRow) { return dataRow; };
         this.name = name;
@@ -32,6 +40,9 @@ var Table = /** @class */ (function () {
     Table.prototype.addColumn = function (columnName, type, valueGen) {
         var parser = this.database.getParser(type);
         var column = new column_1.Column(this, columnName, parser, valueGen);
+        if (!valueGen) {
+            throw new Error("Column: [" + this.name + "." + columnName + "] is missing valueGenerator param. Example: table.addColumn('column_name', 'parser', valGeneratorFn);");
+        }
         this.columns.add(columnName, column, { throwIfExists: true });
         return this;
     };
@@ -41,10 +52,10 @@ var Table = /** @class */ (function () {
     Table.prototype.getLastDataRow = function () {
         return this.database.getLastDataRow(this.name);
     };
-    Table.prototype.createNewDataRowAndStore = function (queryCommand, extraData, comment) {
+    Table.prototype.insert = function (extraData, comment) {
         if (extraData === void 0) { extraData = {}; }
         if (comment === void 0) { comment = null; }
-        var dataRow = this._afterGenDataFn(new data_row_1.DataRow(queryCommand, this, extraData, comment));
+        var dataRow = this._afterGenDataFn(new data_row_1.DataRow(query_command_enum_1["default"].INSERT, this, extraData, comment));
         this.database.dangerous_addDataRow(dataRow);
         return dataRow;
     };

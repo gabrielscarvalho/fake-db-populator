@@ -16,7 +16,7 @@ var NamedMap = /** @class */ (function () {
     NamedMap.prototype.add = function (name, content, config) {
         if (config === void 0) { config = { throwIfExists: false }; }
         if (this.has(name) && config.throwIfExists) {
-            throw new Error("Cannot add " + name + " to list. The value is already in use.");
+            throw new Error("Cannot add [" + name + "] to list. The value is already in use.");
         }
         this.data.set(name, content);
         return this;

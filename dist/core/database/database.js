@@ -48,7 +48,7 @@ var Database = /** @class */ (function () {
     Database.prototype.insert = function (tableName, extraData, comment) {
         if (extraData === void 0) { extraData = {}; }
         if (comment === void 0) { comment = null; }
-        var dataRow = this.getTable(tableName).createNewDataRowAndStore(query_command_enum_1["default"].INSERT, extraData, comment);
+        var dataRow = this.getTable(tableName).insert(extraData, comment);
         return dataRow;
     };
     Database.prototype.dangerous_addDataRow = function (dataRow) {
