@@ -1,26 +1,30 @@
 import { iValueGenerator } from '../../interfaces';
 interface DateRange {
-    year: {
+    year: number | {
         min: number;
         max: number;
     };
-    month: {
+    month: number | {
         min: number;
         max: number;
     };
-    day: {
+    day: number | {
         min: number;
         max: number;
     };
-    hour: {
+    hour: number | {
         min: number;
         max: number;
     };
-    minute: {
+    minute: number | {
         min: number;
         max: number;
     };
-    second: {
+    second: number | {
+        min: number;
+        max: number;
+    };
+    ms: number | {
         min: number;
         max: number;
     };

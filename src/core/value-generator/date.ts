@@ -4,31 +4,66 @@ import { iValueGenerator } from '../../interfaces';
 const chance = new Chance();
 
 interface DateRange {
-  year: {
-    min: number;
-    max: number;
-  };
-  month: {
-    min: number;
-    max: number;
-  };
-  day: {
-    min: number;
-    max: number;
-  };
-  hour: {
-    min: number;
-    max: number;
-  };
-  minute: {
-    min: number;
-    max: number;
-  };
-  second: {
-    min: number;
-    max: number;
-  };
+  year:
+    | number
+    | {
+        min: number;
+        max: number;
+      };
+  month:
+    | number
+    | {
+        min: number;
+        max: number;
+      };
+  day:
+    | number
+    | {
+        min: number;
+        max: number;
+      };
+  hour:
+    | number
+    | {
+        min: number;
+        max: number;
+      };
+  minute:
+    | number
+    | {
+        min: number;
+        max: number;
+      };
+  second:
+    | number
+    | {
+        min: number;
+        max: number;
+      };
+  ms:
+    | number
+    | {
+        min: number;
+        max: number;
+      };
 }
+
+const checkRange = (fieldName: string, value: number, min: number, max: number) => {
+  if (value < min || value > max) {
+    throw new Error(
+      `Invalid date param: ${fieldName}. Informed value: [${value}] must be between: [${min}] and [${max}]`
+    );
+  }
+};
+
+const checkLimits = (fieldName: string, value: number | { min: number; max: number }, min: number, max: number) => {
+  if (_.isNumber(value)) {
+    checkRange(fieldName, value, min, max);
+  } else {
+    checkRange(`${fieldName}- min`, value.min, min, max);
+    checkRange(`${fieldName}- max`, value.max, min, max);
+  }
+};
 
 export class DateGen {
   public static getDefaultDateRange(): DateRange {
@@ -43,7 +78,7 @@ export class DateGen {
       },
       day: {
         min: 1,
-        max: 30,
+        max: 31,
       },
       hour: {
         min: 0,
@@ -51,11 +86,15 @@ export class DateGen {
       },
       minute: {
         min: 0,
-        max: 60,
+        max: 59,
       },
       second: {
         min: 0,
-        max: 60,
+        max: 59,
+      },
+      ms: {
+        min: 0,
+        max: 999,
       },
     };
   }
@@ -63,15 +102,25 @@ export class DateGen {
   public static between(range: Partial<DateRange> = {}): iValueGenerator {
     const dateRange = Object.assign(_.cloneDeep(DateGen.getDefaultDateRange()), range);
 
-    return () => {
-      const year = chance.integer(dateRange.year);
-      const month = chance.integer(dateRange.month);
-      const day = chance.integer(dateRange.day);
-      const hour = chance.integer(dateRange.hour);
-      const minute = chance.integer(dateRange.minute);
-      const second = chance.integer(dateRange.second);
+    checkLimits('year', dateRange.year, 1500, 2500);
 
-      return new Date(year, month, day, hour, minute, second);
+    checkLimits('month', dateRange.month, 0, 11);
+    checkLimits('day', dateRange.day, 1, 31);
+    checkLimits('hour', dateRange.hour, 0, 23);
+    checkLimits('minute', dateRange.minute, 0, 59);
+    checkLimits('second', dateRange.second, 0, 59);
+    checkLimits('ms', dateRange.ms, 0, 999);
+
+    return () => {
+      const year = _.isNumber(dateRange.year) ? dateRange.year : chance.integer(dateRange.year);
+      const month = _.isNumber(dateRange.month) ? dateRange.month : chance.integer(dateRange.month);
+      const day = _.isNumber(dateRange.day) ? dateRange.day : chance.integer(dateRange.day);
+      const hour = _.isNumber(dateRange.hour) ? dateRange.hour : chance.integer(dateRange.hour);
+      const minute = _.isNumber(dateRange.minute) ? dateRange.minute : chance.integer(dateRange.minute);
+      const second = _.isNumber(dateRange.second) ? dateRange.second : chance.integer(dateRange.second);
+      const ms = _.isNumber(dateRange.ms) ? dateRange.ms : chance.integer(dateRange.ms);
+
+      return new Date(year, month, day, hour, minute, second, ms);
     };
   }
 

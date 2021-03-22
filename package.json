@@ -8,8 +8,8 @@
     "example": "ts-node example.ts",
     "format": "npx prettier --write src",
     "convert": "rm dist/ -rf && tsc ./src/index.ts ./src/**/*.ts --outDir ./dist --esModuleInterop --declaration",
-    "test": "jest --coverage",
-    "test:watch": "jest --coverage --watchAll=true --detectOpenHandles"
+    "test": "jest --coverage --testPathPattern=src/*",
+    "test:watch": "jest --coverage --watchAll=true --detectOpenHandles --testPathPattern=src/*"
   },
   "keywords": [
     "data", "postgres", "mysql", "sql", "generator", "random"
