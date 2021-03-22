@@ -146,6 +146,7 @@ export abstract class Database implements iDatabase {
     if (dataRow.queryCommand === QueryCommand.INSERT) {
       query = this.createInsertQuery(dataRowParsed);
     } else if (dataRow.queryCommand === QueryCommand.DELETE) {
+      this.throwIfHasNotUniqueKeys(dataRow.table);
       query = this.createDeleteQuery(dataRowParsed);
     }
 
@@ -157,6 +158,14 @@ export abstract class Database implements iDatabase {
 
     dataRow.hasCreatedQuery = true;
     return query;
+  }
+
+  protected throwIfHasNotUniqueKeys(table: iTable) {
+    if (table.getUniqueKeyColumns().length === 0) {
+      throw new Error(
+        `To create DELETE command to table: [${table.name}] it is required to table to have called: 'table.setUniqueKeys(column_name1,...)'`
+      );
+    }
   }
 
   /**

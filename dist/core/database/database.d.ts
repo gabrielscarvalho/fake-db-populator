@@ -19,6 +19,7 @@ export declare abstract class Database implements iDatabase {
     rollback(): string[];
     printParsers(): void;
     protected createCommand(dataRow: iDataRow): string;
+    protected throwIfHasNotUniqueKeys(table: iTable): void;
     /**
      * Creates the insert query command.
      * @return string

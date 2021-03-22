@@ -210,5 +210,19 @@ describe('Database Spec', () => {
         'You should call `database.toSQL()` before calling `database.rollback()`.'
       );
     });
+
+    it('should throw error if table has not unique keys', () => {
+      expect(() => {
+        db.addTable('t_user')
+          .addColumn('email', 'string', Fixed('gabriel@random-db-pop.com'))
+          .addColumn('name', 'string', Fixed('Gabriel'));
+
+        db.insert('t_user');
+        db.toSQL();
+        db.rollback();
+      }).toThrowError(
+        "To create DELETE command to table: [t_user] it is required to table to have called: 'table.setUniqueKeys(column_name1,...)'"
+      );
+    });
   });
 });

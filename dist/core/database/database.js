@@ -103,6 +103,7 @@ var Database = /** @class */ (function () {
             query = this.createInsertQuery(dataRowParsed);
         }
         else if (dataRow.queryCommand === query_command_enum_1["default"].DELETE) {
+            this.throwIfHasNotUniqueKeys(dataRow.table);
             query = this.createDeleteQuery(dataRowParsed);
         }
         if (query === null) {
@@ -110,6 +111,11 @@ var Database = /** @class */ (function () {
         }
         dataRow.hasCreatedQuery = true;
         return query;
+    };
+    Database.prototype.throwIfHasNotUniqueKeys = function (table) {
+        if (table.getUniqueKeyColumns().length === 0) {
+            throw new Error("To create DELETE command to table: [" + table.name + "] it is required to table to have called: 'table.setUniqueKeys(column_name1,...)'");
+        }
     };
     return Database;
 }());
