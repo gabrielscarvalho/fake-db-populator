@@ -2,6 +2,10 @@
 exports.__esModule = true;
 exports.Column = void 0;
 var Column = /** @class */ (function () {
+    /**
+     * **WARNING**: Do not create this object by yourself.
+     * Use `database.addTable(tableName).addColumn` instead
+     */
     function Column(table, name, parser, valueGen) {
         this.isPartOfUniqueKey = false;
         this.table = table;

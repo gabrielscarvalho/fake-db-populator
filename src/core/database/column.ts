@@ -7,6 +7,10 @@ export class Column implements iColumn {
   public valueGen: iValueGenerator;
   public isPartOfUniqueKey: boolean = false;
 
+  /**
+   * **WARNING**: Do not create this object by yourself.
+   * Use `database.addTable(tableName).addColumn` instead
+   */
   public constructor(table: iTable, name: string, parser: iParser, valueGen: iValueGenerator) {
     this.table = table;
     this.name = name;
