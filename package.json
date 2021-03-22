@@ -9,7 +9,7 @@
     "format": "npx prettier --write src",
     "convert": "rm dist/ -rf && tsc ./src/index.ts ./src/**/*.ts --outDir ./dist --esModuleInterop --declaration",
     "test": "jest --coverage",
-    "test:watch": "jest --coverage --watchAll=true"
+    "test:watch": "jest --coverage --watchAll=true --detectOpenHandles"
   },
   "keywords": [
     "data", "postgres", "mysql", "sql", "generator", "random"

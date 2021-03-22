@@ -76,7 +76,7 @@ export class Table implements iTable {
       new DataRow(queryCommand, this, extraData, comment)
     );
 
-    this.database.addDataRow(dataRow);
+    this.database.dangerous_addDataRow(dataRow);
     return dataRow;
   }
 

@@ -1,3 +1,4 @@
+import { table } from 'console';
 import _ from 'lodash';
 import {
   iDatabase,
@@ -48,6 +49,9 @@ export abstract class Database implements iDatabase {
   }
 
   public getLastDataRow(tableName: string): Optional<iDataRow> {
+    //will assure that table exists
+    this.getTable(tableName);
+
     let lastRow: iDataRow = null;
     this.dataRows.forEach((dataRow: iDataRow) => {
       if (dataRow.table.name === tableName) {
@@ -71,7 +75,7 @@ export abstract class Database implements iDatabase {
     return dataRow;
   }
 
-  public addDataRow(dataRow: iDataRow): iDatabase {
+  public dangerous_addDataRow(dataRow: iDataRow): iDatabase {
     this.dataRows.push(dataRow);
     return this;
   }
@@ -99,7 +103,7 @@ export abstract class Database implements iDatabase {
       }
     );
 
-    const deleteRows = _.cloneDeep(alreadyExecuted).reverse();
+    const deleteRows = _.cloneDeep(this.dataRows).reverse();
 
     (deleteRows || []).forEach((dataRow: iDataRow) => {
       dataRow.queryCommand = QueryCommand.DELETE;
