@@ -34,6 +34,15 @@ var DataRow = /** @class */ (function () {
         });
         console.log("DataRow object from: [" + this.table.name + "] contains value: ", JSON.stringify(obj));
     };
+    DataRow.prototype.reApplyForcedValues = function () {
+        var _this = this;
+        this.table.columns.getValues().forEach(function (column) {
+            if ((_this.extraData || {}).hasOwnProperty(column.name)) {
+                var forcedValue = _this.extraData[column.name];
+                _this.getColumnData(column.name).setValue(forcedValue);
+            }
+        });
+    };
     DataRow.prototype.generateData = function () {
         var _this = this;
         this.table.columns.getValues().forEach(function (column) {

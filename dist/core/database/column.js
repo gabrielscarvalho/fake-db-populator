@@ -3,6 +3,7 @@ exports.__esModule = true;
 exports.Column = void 0;
 var Column = /** @class */ (function () {
     function Column(table, name, parser, valueGen) {
+        this.isPartOfUniqueKey = false;
         this.table = table;
         this.name = name;
         this.parser = parser;

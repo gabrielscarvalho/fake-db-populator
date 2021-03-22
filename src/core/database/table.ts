@@ -25,7 +25,11 @@ export class Table implements iTable {
   data: iDataRow[];
 
   public setUniqueKeys(...columnNames: string[]): iTable {
-    (columnNames || []).forEach((columnName: string) => {
+    if (columnNames.length == 0) {
+      throw new Error('setUniqueKeys require at least 1 column');
+    }
+
+    columnNames.forEach((columnName: string) => {
       const column = this.getColumn(columnName);
       column.isPartOfUniqueKey = true;
     });
@@ -34,7 +38,7 @@ export class Table implements iTable {
   }
 
   public getUniqueKeyColumns(): iColumn[] {
-    const uniqueColumns = (this.columns.getValues() || []).filter((column: iColumn) => {
+    const uniqueColumns = this.columns.getValues().filter((column: iColumn) => {
       return column.isPartOfUniqueKey;
     });
     return uniqueColumns;
@@ -64,6 +68,8 @@ export class Table implements iTable {
 
   public insert(extraData: object = {}, comment: string = null): iDataRow {
     const dataRow = this._afterGenDataFn(new DataRow(QueryCommand.INSERT, this, extraData, comment));
+
+    dataRow.reApplyForcedValues();
 
     this.database.dangerous_addDataRow(dataRow);
     return dataRow;

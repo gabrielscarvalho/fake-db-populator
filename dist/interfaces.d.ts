@@ -71,6 +71,13 @@ export interface iDataRow {
      */
     setRawValue: (columnName: string, newValue: any) => void;
     /**
+     * Sometimes user might replace forced values through afterGenerateData.
+     * This function makes the forced value to return.
+     * forcedValues: db.insert('tableName', forcedValues = { name: 'John'})
+     * No matter what, this register must have name equals to John.
+     */
+    reApplyForcedValues: () => void;
+    /**
      * Prints the object to help seeing data.
      */
     print: () => void;
@@ -118,7 +125,7 @@ export interface iTable {
      * Creates a new insert
      * @param extraData object that contains the column key and value to be replaced.
      */
-    insert: (extraData: object, comment?: string) => iDataRow;
+    insert: (extraData?: object, comment?: string) => iDataRow;
     /**
      * Function that can be called after the data is generate.
      * It is a place to fix info before releasing the DataRow

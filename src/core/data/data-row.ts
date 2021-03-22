@@ -40,6 +40,15 @@ export class DataRow implements iDataRow {
     console.log(`DataRow object from: [${this.table.name}] contains value: `, JSON.stringify(obj));
   }
 
+  public reApplyForcedValues(): void {
+    this.table.columns.getValues().forEach((column: iColumn) => {
+      if ((this.extraData || {}).hasOwnProperty(column.name)) {
+        const forcedValue = this.extraData[column.name];
+        this.getColumnData(column.name).setValue(forcedValue);
+      }
+    });
+  }
+
   protected generateData(): void {
     this.table.columns.getValues().forEach((column: iColumn) => {
       let value = null;

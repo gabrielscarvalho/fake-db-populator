@@ -4,6 +4,6 @@ export declare class Column implements iColumn {
     name: string;
     parser: iParser;
     valueGen: iValueGenerator;
-    isPartOfUniqueKey: false;
+    isPartOfUniqueKey: boolean;
     constructor(table: iTable, name: string, parser: iParser, valueGen: iValueGenerator);
 }

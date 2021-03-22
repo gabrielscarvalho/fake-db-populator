@@ -1,5 +1,5 @@
 import { table } from 'console';
-import { PostgresDatabase, Table } from '../../shortcut/database';
+import { iDataRow, PostgresDatabase, Table } from '../../shortcut/database';
 import QueryCommand from '../query-builder/query-command.enum';
 import { Fixed } from '../value-generator/fixed';
 
@@ -96,6 +96,91 @@ describe('Table Spec', () => {
 
       const optData = table.getLastDataRow();
       expect(optData.isPresent()).toBe(false);
+    });
+  });
+
+  describe('insert', () => {
+    it('should return valid DataRow if there is data', () => {
+      const tUser = db
+        .addTable('t_user')
+        .addColumn('name', 'string', Fixed('Gabriel'))
+        .addColumn('surname', 'string', Fixed('Test'));
+
+      tUser.insert({ surname: 'Modified Surname' }, 'A comment');
+
+      const optData = db.getLastDataRow('t_user');
+      expect(optData.isPresent()).toBe(true);
+      const dataRow = optData.get();
+
+      expect(dataRow.getRawValue('name')).toBe('Gabriel');
+      expect(dataRow.getRawValue('surname')).toBe('Modified Surname');
+      expect(dataRow.comment).toBe('A comment');
+    });
+
+    it('after generate should not replace forced values', () => {
+      const tUser = db
+        .addTable('t_user')
+        .addColumn('name', 'string', Fixed('Gabriel'))
+        .addColumn('surname', 'string', Fixed('Test'))
+        .afterGenerateData(
+          (dataRow: iDataRow): iDataRow => {
+            dataRow.setRawValue('name', 'After Generated overrided name');
+            dataRow.setRawValue('surname', 'Not possible to override due to insert forcing surname manually.');
+            return dataRow;
+          }
+        );
+
+      tUser.insert({ surname: 'Forced Surname' }, 'A comment');
+
+      const optData = db.getLastDataRow('t_user');
+      expect(optData.isPresent()).toBe(true);
+      const dataRow = optData.get();
+
+      expect(dataRow.getRawValue('name')).toBe('After Generated overrided name');
+      expect(dataRow.getRawValue('surname')).toBe('Forced Surname');
+      expect(dataRow.comment).toBe('A comment');
+    });
+  });
+
+  describe('setUniqueKeys', () => {
+    it('should set if column is valid', () => {
+      const tUser = db
+        .addTable('t_user')
+        .addColumn('id', 'string', Fixed(1))
+        .addColumn('email', 'string', Fixed('gabriel@random-db-pop.com'))
+        .addColumn('name', 'string', Fixed('Gabriel'))
+        .setUniqueKeys('id', 'email');
+
+      expect(tUser.getColumn('id').isPartOfUniqueKey).toBe(true);
+      expect(tUser.getColumn('email').isPartOfUniqueKey).toBe(true);
+      expect(tUser.getColumn('name').isPartOfUniqueKey).toBe(false);
+    });
+
+    it('should not throw error if param is empty', () => {
+      expect(() => {
+        const tUser = db.addTable('t_user').addColumn('id', 'string', Fixed(1)).setUniqueKeys();
+      }).toThrowError('setUniqueKeys require at least 1 column');
+    });
+
+    it('should throw error if column is invalid', () => {
+      expect(() => {
+        db.addTable('t_user').addColumn('id', 'string', Fixed(1)).setUniqueKeys('unkown');
+      }).toThrowError("Could not get unknown 'unkown' from list.  Did you spell it right? Valid values: [id]");
+    });
+  });
+
+  describe('getUniqueKeyColumns', () => {
+    it('should get if column is valid', () => {
+      const tUser = db
+        .addTable('t_user')
+        .addColumn('id', 'string', Fixed(1))
+        .addColumn('email', 'string', Fixed('gabriel@random-db-pop.com'))
+        .addColumn('name', 'string', Fixed('Gabriel'))
+        .setUniqueKeys('id', 'email');
+
+      const columns = tUser.getUniqueKeyColumns();
+      expect(columns.length).toBe(2);
+      expect(columns.map((col) => col.name)).toEqual(['id', 'email']);
     });
   });
 });

@@ -14,5 +14,6 @@ export declare class DataRow implements iDataRow {
     getRawValue(columnName: string): any;
     setRawValue(columnName: string, newRawValue: any): void;
     print(): void;
+    reApplyForcedValues(): void;
     protected generateData(): void;
 }

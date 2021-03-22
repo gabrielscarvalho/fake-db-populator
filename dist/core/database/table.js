@@ -25,14 +25,17 @@ var Table = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             columnNames[_i] = arguments[_i];
         }
-        (columnNames || []).forEach(function (columnName) {
+        if (columnNames.length == 0) {
+            throw new Error('setUniqueKeys require at least 1 column');
+        }
+        columnNames.forEach(function (columnName) {
             var column = _this.getColumn(columnName);
             column.isPartOfUniqueKey = true;
         });
         return this;
     };
     Table.prototype.getUniqueKeyColumns = function () {
-        var uniqueColumns = (this.columns.getValues() || []).filter(function (column) {
+        var uniqueColumns = this.columns.getValues().filter(function (column) {
             return column.isPartOfUniqueKey;
         });
         return uniqueColumns;
@@ -56,6 +59,7 @@ var Table = /** @class */ (function () {
         if (extraData === void 0) { extraData = {}; }
         if (comment === void 0) { comment = null; }
         var dataRow = this._afterGenDataFn(new data_row_1.DataRow(query_command_enum_1["default"].INSERT, this, extraData, comment));
+        dataRow.reApplyForcedValues();
         this.database.dangerous_addDataRow(dataRow);
         return dataRow;
     };
